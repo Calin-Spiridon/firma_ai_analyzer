@@ -68,11 +68,11 @@ def generate_pdf_report(
         years=years_text,
         table_rows=table_rows,
         interpretation=formatted_analysis,
-        kpi_cagr=table_data["Valoare"][-1] and f"CAGR CA — {table_data['Valoare'][-1]}",
-        kpi_profit=f"Profit — {table_data['Valoare'][0]}",
-        kpi_roe=f"ROE — {table_data['Valoare'][17]}",
-        kpi_debt=f"Debt ratio — {table_data['Valoare'][13]}",
-        kpi_stoc=f"Zile stoc — {table_data['Valoare'][3]}",
+        kpi_cagr=table_data["Valoare"][-1],
+        kpi_profit=table_data["Valoare"][0],
+        kpi_roe=table_data["Valoare"][17],
+        kpi_debt=table_data["Valoare"][13],
+        kpi_stoc=table_data["Valoare"][3],
     )
 
     pdf_bytes = HTML(string=html_content, base_url=str((Path(__file__).parent / "templates").resolve())).write_pdf()
