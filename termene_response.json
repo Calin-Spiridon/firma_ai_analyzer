@@ -1,0 +1,2903 @@
+{
+  "firma": {
+    "cui": 5052558,
+    "nume_mfinante": "MACROMEX SRL"
+  },
+  "cod_caen": {
+    "principal_mfinante": {
+      "cod": "4632",
+      "label": "Comert cu ridicata al carnii si produselor din carne"
+    }
+  },
+  "statut_tva": {
+    "curent": {
+      "cod": 2,
+      "label": "Plătitor TVA",
+      "data_interogare": "2026-04-15",
+      "data_anulare_tva": null,
+      "data_inceput_tva": "1994-03-01",
+      "data_operare_anulare_tva": null
+    }
+  },
+  "datorii_anaf": {
+    "curent": {
+      "activa": false,
+      "observatii": "",
+      "bugetul_stat": {
+        "total": 0,
+        "accesorii": 0,
+        "contestate": 0,
+        "principale": 0,
+        "necontestate": 0
+      },
+      "data_datorie": "2016-12-07",
+      "bugetul_sanatate": {
+        "total": 0,
+        "accesorii": 0,
+        "contestate": 0,
+        "principale": 0,
+        "necontestate": 0
+      },
+      "data_datorie_reala": "2016-09-30",
+      "bugetul_asigurarilor_somaj": {
+        "total": 0,
+        "accesorii": 0,
+        "contestate": 0,
+        "principale": 0,
+        "necontestate": 0
+      },
+      "bugetul_asigurarilor_sociale": {
+        "total": 217037,
+        "accesorii": 217037,
+        "contestate": 217037,
+        "principale": 0,
+        "necontestate": 0
+      }
+    },
+    "istoric": [
+      {
+        "activa": false,
+        "observatii": "",
+        "bugetul_stat": {
+          "total": 0,
+          "accesorii": 0,
+          "contestate": 0,
+          "principale": 0,
+          "necontestate": 0
+        },
+        "data_datorie": "2016-12-07",
+        "bugetul_sanatate": {
+          "total": 0,
+          "accesorii": 0,
+          "contestate": 0,
+          "principale": 0,
+          "necontestate": 0
+        },
+        "data_datorie_reala": "2016-09-30",
+        "bugetul_asigurarilor_somaj": {
+          "total": 0,
+          "accesorii": 0,
+          "contestate": 0,
+          "principale": 0,
+          "necontestate": 0
+        },
+        "bugetul_asigurarilor_sociale": {
+          "total": 217037,
+          "accesorii": 217037,
+          "contestate": 217037,
+          "principale": 0,
+          "necontestate": 0
+        }
+      },
+      {
+        "activa": false,
+        "observatii": "",
+        "bugetul_stat": {
+          "total": 0,
+          "accesorii": 0,
+          "contestate": 0,
+          "principale": 0,
+          "necontestate": 0
+        },
+        "data_datorie": "2016-09-01",
+        "bugetul_sanatate": {
+          "total": 0,
+          "accesorii": 0,
+          "contestate": 0,
+          "principale": 0,
+          "necontestate": 0
+        },
+        "data_datorie_reala": "2016-06-30",
+        "bugetul_asigurarilor_somaj": {
+          "total": 0,
+          "accesorii": 0,
+          "contestate": 0,
+          "principale": 0,
+          "necontestate": 0
+        },
+        "bugetul_asigurarilor_sociale": {
+          "total": 217037,
+          "accesorii": 217037,
+          "contestate": 217037,
+          "principale": 0,
+          "necontestate": 0
+        }
+      },
+      {
+        "activa": false,
+        "observatii": "",
+        "bugetul_stat": {
+          "total": 0,
+          "accesorii": 0,
+          "contestate": 0,
+          "principale": 0,
+          "necontestate": 0
+        },
+        "data_datorie": "2016-05-03",
+        "bugetul_sanatate": {
+          "total": 0,
+          "accesorii": 0,
+          "contestate": 0,
+          "principale": 0,
+          "necontestate": 0
+        },
+        "data_datorie_reala": "2016-03-31",
+        "bugetul_asigurarilor_somaj": {
+          "total": 0,
+          "accesorii": 0,
+          "contestate": 0,
+          "principale": 0,
+          "necontestate": 0
+        },
+        "bugetul_asigurarilor_sociale": {
+          "total": 0,
+          "accesorii": 217037,
+          "contestate": 217037,
+          "principale": 0,
+          "necontestate": 0
+        }
+      }
+    ]
+  },
+  "marja_profitului_net": {
+    "an_2018": 1.923487857531021,
+    "an_2019": 1.2652445050316043,
+    "an_2020": 1.1478407339568877,
+    "an_2021": 5.6727371704443375,
+    "an_2022": 8.02485149027013,
+    "an_2023": 5.039643868070328,
+    "an_2024": 5.059261845927238
+  },
+  "marja_profitului_brut": {
+    "an_2018": 2.3352611333078936,
+    "an_2019": 1.6609172334558382,
+    "an_2020": 1.5802472151700373,
+    "an_2021": 6.48053110885211,
+    "an_2022": 9.22670858076736,
+    "an_2023": 5.836742053683654,
+    "an_2024": 5.855766160582872
+  },
+  "bilanturi_mfinante_scurte": {
+    "moneda": "RON",
+    "an_2008": {
+      "an": 2008,
+      "id": 3083714,
+      "data": "2015-03-20",
+      "creante": {
+        "valoare": 72657318,
+        "tendinta": null
+      },
+      "datorii": {
+        "valoare": 98419333,
+        "tendinta": null
+      },
+      "stocuri": {
+        "valoare": 40507786,
+        "tendinta": null
+      },
+      "cod_caen": 4632,
+      "profit_net": {
+        "valoare": 12260244,
+        "tendinta": null
+      },
+      "tip_bilant": "BILANT COMPLET CONFORM ORDINULUI 1752/2005",
+      "profit_brut": {
+        "valoare": 14516804,
+        "tendinta": null
+      },
+      "provizioane": {
+        "valoare": 28362,
+        "tendinta": null
+      },
+      "capital_total": {
+        "valoare": 72809083,
+        "tendinta": null
+      },
+      "pierdere_neta": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "capital_social": {
+        "valoare": 1800000,
+        "tendinta": null
+      },
+      "pierdere_bruta": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "tip_activitate": "Comert cu ridicata al carnii si produselor din carne",
+      "venituri_total": {
+        "valoare": 460957376,
+        "tendinta": null
+      },
+      "data_actualizare": "2016-02-05",
+      "patrimoniu_regie": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_circulante": {
+        "valoare": 117680999,
+        "tendinta": null
+      },
+      "cheltuieli_totale": {
+        "valoare": 446440572,
+        "tendinta": null
+      },
+      "patrimoniu_public": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "venituri_in_avans": {
+        "valoare": 26853,
+        "tendinta": null
+      },
+      "active_imobilizate": {
+        "valoare": 53310740,
+        "tendinta": null
+      },
+      "cheltuieli_in_avans": {
+        "valoare": 291892,
+        "tendinta": null
+      },
+      "numar_mediu_angajati": {
+        "valoare": 390,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": null
+        }
+      },
+      "profit_pierdere_neta": {
+        "valoare": 12260244,
+        "tendinta": null
+      },
+      "cifra_de_afaceri_neta": {
+        "valoare": 449916187,
+        "tendinta": null
+      },
+      "profit_pierdere_bruta": {
+        "valoare": 14516804,
+        "tendinta": null
+      },
+      "casa_si_conturi_la_banci": {
+        "valoare": 3929370,
+        "tendinta": null
+      }
+    },
+    "an_2009": {
+      "an": 2009,
+      "id": 3083715,
+      "data": "2015-03-20",
+      "creante": {
+        "valoare": 79448218,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 9.346477666571728
+        }
+      },
+      "datorii": {
+        "valoare": 93641188,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -4.85488455809795
+        }
+      },
+      "stocuri": {
+        "valoare": 34693451,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -14.353623276275824
+        }
+      },
+      "cod_caen": 4632,
+      "profit_net": {
+        "valoare": 9542525,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -22.16692424718464
+        }
+      },
+      "tip_bilant": "BILANT COMPLET CONFORM ORDINULUI 1752/2005",
+      "profit_brut": {
+        "valoare": 11581144,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -20.2224952544651
+        }
+      },
+      "provizioane": {
+        "valoare": 21322,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -24.821944855792964
+        }
+      },
+      "capital_total": {
+        "valoare": 82351608,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 13.106228792910358
+        }
+      },
+      "pierdere_neta": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "capital_social": {
+        "valoare": 1800000,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "pierdere_bruta": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "tip_activitate": "Comert cu ridicata al carnii si produselor din carne",
+      "venituri_total": {
+        "valoare": 487174378,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 5.687511115995245
+        }
+      },
+      "data_actualizare": "2016-02-05",
+      "patrimoniu_regie": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_circulante": {
+        "valoare": 115168760,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -2.134787282014831
+        }
+      },
+      "cheltuieli_totale": {
+        "valoare": 475593234,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 6.5300207526837415
+        }
+      },
+      "patrimoniu_public": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "venituri_in_avans": {
+        "valoare": 115193,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 328.9762782556884
+        }
+      },
+      "active_imobilizate": {
+        "valoare": 60107502,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 12.749329684787718
+        }
+      },
+      "cheltuieli_in_avans": {
+        "valoare": 853049,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 192.24816027845915
+        }
+      },
+      "numar_mediu_angajati": {
+        "valoare": 382,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -2.051282051282051
+        }
+      },
+      "profit_pierdere_neta": {
+        "valoare": 9542525,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -22.16692424718464
+        }
+      },
+      "cifra_de_afaceri_neta": {
+        "valoare": 466397512,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 3.6631989415397497
+        }
+      },
+      "profit_pierdere_bruta": {
+        "valoare": 11581144,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -20.2224952544651
+        }
+      },
+      "casa_si_conturi_la_banci": {
+        "valoare": 822172,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -79.07623868457284
+        }
+      }
+    },
+    "an_2010": {
+      "an": 2010,
+      "id": 3083716,
+      "data": "2015-03-20",
+      "creante": {
+        "valoare": 78899444,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -0.6907316662533576
+        }
+      },
+      "datorii": {
+        "valoare": 98084156,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 4.744672824953908
+        }
+      },
+      "stocuri": {
+        "valoare": 33135469,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -4.490709211948964
+        }
+      },
+      "cod_caen": 4632,
+      "profit_net": {
+        "valoare": 2026491,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -78.76357672628576
+        }
+      },
+      "tip_bilant": "BILANT COMPLET CONFORM ORDINULUI 1752/2005",
+      "profit_brut": {
+        "valoare": 3106848,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -73.1732201931001
+        }
+      },
+      "provizioane": {
+        "valoare": 16130,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -24.350436169214895
+        }
+      },
+      "capital_total": {
+        "valoare": 75512325,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -8.304978088588143
+        }
+      },
+      "pierdere_neta": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "capital_social": {
+        "valoare": 1800000,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "pierdere_bruta": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "tip_activitate": "Comert cu ridicata al carnii si produselor din carne",
+      "venituri_total": {
+        "valoare": 437660850,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -10.163409702141601
+        }
+      },
+      "data_actualizare": "2016-02-05",
+      "patrimoniu_regie": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_circulante": {
+        "valoare": 113330097,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -1.5964945702289406
+        }
+      },
+      "cheltuieli_totale": {
+        "valoare": 434554002,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -8.629061362971367
+        }
+      },
+      "patrimoniu_public": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "venituri_in_avans": {
+        "valoare": 25145,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -78.17141666594324
+        }
+      },
+      "active_imobilizate": {
+        "valoare": 59631200,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -0.7924168933189072
+        }
+      },
+      "cheltuieli_in_avans": {
+        "valoare": 676459,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -20.70103827564419
+        }
+      },
+      "numar_mediu_angajati": {
+        "valoare": 403,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 5.49738219895288
+        }
+      },
+      "profit_pierdere_neta": {
+        "valoare": 2026491,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -78.76357672628576
+        }
+      },
+      "cifra_de_afaceri_neta": {
+        "valoare": 421488510,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -9.628911142218957
+        }
+      },
+      "profit_pierdere_bruta": {
+        "valoare": 3106848,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -73.1732201931001
+        }
+      },
+      "casa_si_conturi_la_banci": {
+        "valoare": 1072910,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 30.497024953416073
+        }
+      }
+    },
+    "an_2011": {
+      "an": 2011,
+      "id": 3083718,
+      "data": "2015-03-20",
+      "creante": {
+        "valoare": 77045286,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -2.3500266998079224
+        }
+      },
+      "datorii": {
+        "valoare": 118501910,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 20.816566948896416
+        }
+      },
+      "stocuri": {
+        "valoare": 47916407,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 44.60760160056886
+        }
+      },
+      "cod_caen": 4632,
+      "profit_net": {
+        "valoare": 4021904,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 98.46641312495343
+        }
+      },
+      "tip_bilant": null,
+      "profit_brut": {
+        "valoare": 5552423,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 78.71563076146629
+        }
+      },
+      "provizioane": {
+        "valoare": 11005,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -31.773093614383136
+        }
+      },
+      "capital_total": {
+        "valoare": 78363268,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 3.775467117454005
+        }
+      },
+      "pierdere_neta": {
+        "valoare": 0,
+        "tendinta": null
+      },
+      "capital_social": {
+        "valoare": 1800000,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "pierdere_bruta": {
+        "valoare": 0,
+        "tendinta": null
+      },
+      "tip_activitate": "Comert cu ridicata al carnii si produselor din carne",
+      "venituri_total": {
+        "valoare": 410212026,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -6.271711074911087
+        }
+      },
+      "data_actualizare": "2016-02-05",
+      "patrimoniu_regie": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_circulante": {
+        "valoare": 125843577,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 11.041621185588502
+        }
+      },
+      "cheltuieli_totale": {
+        "valoare": 404659603,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -6.879328889485178
+        }
+      },
+      "patrimoniu_public": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "venituri_in_avans": {
+        "valoare": 8296,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -67.0073573275005
+        }
+      },
+      "active_imobilizate": {
+        "valoare": 70261236,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 17.826298984424263
+        }
+      },
+      "cheltuieli_in_avans": {
+        "valoare": 779666,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 15.256948314679825
+        }
+      },
+      "numar_mediu_angajati": {
+        "valoare": 376,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -6.699751861042183
+        }
+      },
+      "profit_pierdere_neta": {
+        "valoare": 4021904,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 98.46641312495343
+        }
+      },
+      "cifra_de_afaceri_neta": {
+        "valoare": 394501573,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -6.402769318670158
+        }
+      },
+      "profit_pierdere_bruta": {
+        "valoare": 5552423,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 78.71563076146629
+        }
+      },
+      "casa_si_conturi_la_banci": {
+        "valoare": 642357,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -40.12946099859261
+        }
+      }
+    },
+    "an_2012": {
+      "an": 2012,
+      "id": 3083717,
+      "data": "2015-03-20",
+      "creante": {
+        "valoare": 104966190,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 36.23960069406453
+        }
+      },
+      "datorii": {
+        "valoare": 158607255,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 33.84362749933735
+        }
+      },
+      "stocuri": {
+        "valoare": 59364468,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 23.891735037645873
+        }
+      },
+      "cod_caen": 4632,
+      "profit_net": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -100
+        }
+      },
+      "tip_bilant": null,
+      "profit_brut": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -100
+        }
+      },
+      "provizioane": {
+        "valoare": 6422,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -41.644706951385736
+        }
+      },
+      "capital_total": {
+        "valoare": 83285355,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 6.281115024452528
+        }
+      },
+      "pierdere_neta": {
+        "valoare": 3947182,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": null
+        }
+      },
+      "capital_social": {
+        "valoare": 2033480,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 12.971111111111112
+        }
+      },
+      "pierdere_bruta": {
+        "valoare": 3946543,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": null
+        }
+      },
+      "tip_activitate": "Comert cu ridicata al carnii si produselor din carne",
+      "venituri_total": {
+        "valoare": 502711565,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 22.54920215332741
+        }
+      },
+      "data_actualizare": "2016-02-05",
+      "patrimoniu_regie": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_circulante": {
+        "valoare": 167731296,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 33.285543846230624
+        }
+      },
+      "cheltuieli_totale": {
+        "valoare": 506658108,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 25.20600135121469
+        }
+      },
+      "patrimoniu_public": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "venituri_in_avans": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_imobilizate": {
+        "valoare": 73291721,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 4.313167789988778
+        }
+      },
+      "cheltuieli_in_avans": {
+        "valoare": 876015,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 12.357727539741376
+        }
+      },
+      "numar_mediu_angajati": {
+        "valoare": 394,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 4.787234042553192
+        }
+      },
+      "profit_pierdere_neta": {
+        "valoare": -3947182,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -198.14212373045206
+        }
+      },
+      "cifra_de_afaceri_neta": {
+        "valoare": 484213728,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 22.740633026576045
+        }
+      },
+      "profit_pierdere_bruta": {
+        "valoare": -3946543,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -171.07785195760482
+        }
+      },
+      "casa_si_conturi_la_banci": {
+        "valoare": 3169166,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 393.36521591576025
+        }
+      }
+    },
+    "an_2013": {
+      "an": 2013,
+      "id": 3083719,
+      "data": "2015-03-20",
+      "creante": {
+        "valoare": 110256227,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 5.039753276745588
+        }
+      },
+      "datorii": {
+        "valoare": 187189004,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 18.0204549911667
+        }
+      },
+      "stocuri": {
+        "valoare": 43046573,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -27.487646313953324
+        }
+      },
+      "cod_caen": 4632,
+      "profit_net": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "tip_bilant": null,
+      "profit_brut": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "provizioane": {
+        "valoare": 3873,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -39.69168483338524
+        }
+      },
+      "capital_total": {
+        "valoare": 82371015,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -1.0978400704421563
+        }
+      },
+      "pierdere_neta": {
+        "valoare": 1519761,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -61.49756965855641
+        }
+      },
+      "capital_social": {
+        "valoare": 2033480,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "pierdere_bruta": {
+        "valoare": 909488,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -76.95481843223297
+        }
+      },
+      "tip_activitate": "Comert cu ridicata al carnii si produselor din carne",
+      "venituri_total": {
+        "valoare": 479795177,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -4.558555958425186
+        }
+      },
+      "data_actualizare": "2016-02-05",
+      "patrimoniu_regie": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_circulante": {
+        "valoare": 154885868,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -7.658337058338833
+        }
+      },
+      "cheltuieli_totale": {
+        "valoare": 480704665,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -5.122476595203328
+        }
+      },
+      "patrimoniu_public": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "venituri_in_avans": {
+        "valoare": 25726,
+        "tendinta": null
+      },
+      "active_imobilizate": {
+        "valoare": 114028306,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 55.581427812290016
+        }
+      },
+      "cheltuieli_in_avans": {
+        "valoare": 675444,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -22.895840824643415
+        }
+      },
+      "numar_mediu_angajati": {
+        "valoare": 396,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 0.5076142131979695
+        }
+      },
+      "profit_pierdere_neta": {
+        "valoare": -1519761,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 61.49756965855641
+        }
+      },
+      "cifra_de_afaceri_neta": {
+        "valoare": 452946634,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -6.45729193369751
+        }
+      },
+      "profit_pierdere_bruta": {
+        "valoare": -909488,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 76.95481843223297
+        }
+      },
+      "casa_si_conturi_la_banci": {
+        "valoare": 1409439,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -55.5265012940313
+        }
+      }
+    },
+    "an_2014": {
+      "an": 2014,
+      "id": 3909967,
+      "data": "2015-07-18",
+      "creante": {
+        "valoare": 111046175,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 0.7164656559488473
+        }
+      },
+      "datorii": {
+        "valoare": 222080353,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 18.639636011952923
+        }
+      },
+      "stocuri": {
+        "valoare": 55253265,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 28.356942607254705
+        }
+      },
+      "cod_caen": 4632,
+      "profit_net": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "tip_bilant": null,
+      "profit_brut": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "provizioane": {
+        "valoare": 1697,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -56.18383681900335
+        }
+      },
+      "capital_total": {
+        "valoare": 82862595,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 0.5967875957337663
+        }
+      },
+      "pierdere_neta": {
+        "valoare": 4444057,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 192.41814995910542
+        }
+      },
+      "capital_social": {
+        "valoare": 2033480,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "pierdere_bruta": {
+        "valoare": 4444057,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 388.6328351775944
+        }
+      },
+      "tip_activitate": "Comert cu ridicata al carnii si produselor din carne",
+      "venituri_total": {
+        "valoare": 534719434,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 11.447438330544118
+        }
+      },
+      "data_actualizare": "2016-02-05",
+      "patrimoniu_regie": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_circulante": {
+        "valoare": 167773293,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 8.32059449090604
+        }
+      },
+      "cheltuieli_totale": {
+        "valoare": 539163491,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 12.161069000651366
+        }
+      },
+      "patrimoniu_public": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "venituri_in_avans": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_imobilizate": {
+        "valoare": 135710212,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 19.014494523842178
+        }
+      },
+      "cheltuieli_in_avans": {
+        "valoare": 1461140,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 116.32289279348103
+        }
+      },
+      "numar_mediu_angajati": {
+        "valoare": 351,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -11.363636363636363
+        }
+      },
+      "profit_pierdere_neta": {
+        "valoare": -4444057,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -192.41814995910542
+        }
+      },
+      "cifra_de_afaceri_neta": {
+        "valoare": 520314650,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 14.873278868432877
+        }
+      },
+      "profit_pierdere_bruta": {
+        "valoare": -4444057,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -388.6328351775944
+        }
+      },
+      "casa_si_conturi_la_banci": {
+        "valoare": 1278215,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -9.310371005768962
+        }
+      }
+    },
+    "an_2015": {
+      "an": 2015,
+      "id": 4861923,
+      "data": "2016-06-18",
+      "creante": {
+        "valoare": 91744088,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -17.382036796855
+        }
+      },
+      "datorii": {
+        "valoare": 228443434,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 2.865215636612393
+        }
+      },
+      "stocuri": {
+        "valoare": 79474312,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 43.836408581465726
+        }
+      },
+      "cod_caen": 4632,
+      "profit_net": {
+        "valoare": 1072622,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": null
+        }
+      },
+      "tip_bilant": null,
+      "profit_brut": {
+        "valoare": 1600708,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": null
+        }
+      },
+      "provizioane": {
+        "valoare": 2596175,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 152886.1520329994
+        }
+      },
+      "capital_total": {
+        "valoare": 72219206,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -12.844624284334808
+        }
+      },
+      "pierdere_neta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -100
+        }
+      },
+      "capital_social": {
+        "valoare": 2033480,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "pierdere_bruta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -100
+        }
+      },
+      "tip_activitate": "Comert cu ridicata al carnii si produselor din carne",
+      "venituri_total": {
+        "valoare": 646281458,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 20.863656135602508
+        }
+      },
+      "data_actualizare": "2016-06-18",
+      "patrimoniu_regie": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_circulante": {
+        "valoare": 174118354,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 3.781925529708712
+        }
+      },
+      "cheltuieli_totale": {
+        "valoare": 644680750,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 19.570549705488126
+        }
+      },
+      "patrimoniu_public": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "venituri_in_avans": {
+        "valoare": 552,
+        "tendinta": null
+      },
+      "active_imobilizate": {
+        "valoare": 127152911,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -6.3055689574783065
+        }
+      },
+      "cheltuieli_in_avans": {
+        "valoare": 1988102,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 36.0651272294236
+        }
+      },
+      "numar_mediu_angajati": {
+        "valoare": 333,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -5.128205128205129
+        }
+      },
+      "profit_pierdere_neta": {
+        "valoare": 1072622,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 124.13609906443594
+        }
+      },
+      "cifra_de_afaceri_neta": {
+        "valoare": 633478665,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 21.749150249757527
+        }
+      },
+      "profit_pierdere_bruta": {
+        "valoare": 1600708,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 136.01906996242397
+        }
+      },
+      "casa_si_conturi_la_banci": {
+        "valoare": 2738510,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 114.244864909268
+        }
+      }
+    },
+    "an_2016": {
+      "an": 2016,
+      "id": 5493753,
+      "data": "2017-05-25",
+      "creante": {
+        "valoare": 99069320,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 7.984418570927426
+        }
+      },
+      "datorii": {
+        "valoare": 204768413,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -10.363625071403892
+        }
+      },
+      "stocuri": {
+        "valoare": 66804485,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -15.942040492278814
+        }
+      },
+      "cod_caen": 4632,
+      "profit_net": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -100
+        }
+      },
+      "tip_bilant": null,
+      "profit_brut": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -100
+        }
+      },
+      "provizioane": {
+        "valoare": 3534875,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 36.15703872042524
+        }
+      },
+      "capital_total": {
+        "valoare": 72925451,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 0.9779185331946186
+        }
+      },
+      "pierdere_neta": {
+        "valoare": 5415422,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": null
+        }
+      },
+      "capital_social": {
+        "valoare": 2417130,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 18.86667191218994
+        }
+      },
+      "pierdere_bruta": {
+        "valoare": 2477556,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": null
+        }
+      },
+      "tip_activitate": "Comert cu ridicata al carnii si produselor din carne",
+      "venituri_total": {
+        "valoare": 729027459,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 12.80340012477969
+        }
+      },
+      "data_actualizare": "2017-05-25",
+      "patrimoniu_regie": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_circulante": {
+        "valoare": 174317444,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 0.11434176548671027
+        }
+      },
+      "cheltuieli_totale": {
+        "valoare": 731505015,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 13.467792391815639
+        }
+      },
+      "patrimoniu_public": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "venituri_in_avans": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_imobilizate": {
+        "valoare": 104966115,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -17.44890921136678
+        }
+      },
+      "cheltuieli_in_avans": {
+        "valoare": 1945180,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -2.158943555209944
+        }
+      },
+      "numar_mediu_angajati": {
+        "valoare": 345,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 3.6036036036036037
+        }
+      },
+      "profit_pierdere_neta": {
+        "valoare": -5415422,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -604.8770209822286
+        }
+      },
+      "cifra_de_afaceri_neta": {
+        "valoare": 711900215,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 12.379509260978821
+        }
+      },
+      "profit_pierdere_bruta": {
+        "valoare": -2477556,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -254.77876039852364
+        }
+      },
+      "casa_si_conturi_la_banci": {
+        "valoare": 8281490,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 202.40860906113178
+        }
+      }
+    },
+    "an_2017": {
+      "an": 2017,
+      "id": 6176713,
+      "data": "2018-05-18",
+      "creante": {
+        "valoare": 93972019,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -5.145186219103957
+        }
+      },
+      "datorii": {
+        "valoare": 123753425,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -39.56420173066439
+        }
+      },
+      "stocuri": {
+        "valoare": 44664854,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -33.140935073446045
+        }
+      },
+      "cod_caen": 4632,
+      "profit_net": {
+        "valoare": 15912254,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": null
+        }
+      },
+      "tip_bilant": null,
+      "profit_brut": {
+        "valoare": 20101595,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": null
+        }
+      },
+      "provizioane": {
+        "valoare": 5218953,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 47.64179780048799
+        }
+      },
+      "capital_total": {
+        "valoare": 75340155,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 3.311195154624412
+        }
+      },
+      "pierdere_neta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -100
+        }
+      },
+      "capital_social": {
+        "valoare": 2417130,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "pierdere_bruta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -100
+        }
+      },
+      "tip_activitate": "Comert cu ridicata al carnii si produselor din carne",
+      "venituri_total": {
+        "valoare": 790482270,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 8.429697707723792
+        }
+      },
+      "data_actualizare": "2018-05-18",
+      "patrimoniu_regie": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_circulante": {
+        "valoare": 139767827,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -19.819942403469387
+        }
+      },
+      "cheltuieli_totale": {
+        "valoare": 770380675,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 5.314476210392078
+        }
+      },
+      "patrimoniu_public": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "venituri_in_avans": {
+        "valoare": 202117,
+        "tendinta": null
+      },
+      "active_imobilizate": {
+        "valoare": 62141844,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -40.798186157504254
+        }
+      },
+      "cheltuieli_in_avans": {
+        "valoare": 2604979,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 33.919688666344506
+        }
+      },
+      "numar_mediu_angajati": {
+        "valoare": 390,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 13.043478260869565
+        }
+      },
+      "profit_pierdere_neta": {
+        "valoare": 15912254,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 393.8322073515231
+        }
+      },
+      "cifra_de_afaceri_neta": {
+        "valoare": 722680669,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 1.5143209361160257
+        }
+      },
+      "profit_pierdere_bruta": {
+        "valoare": 20101595,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 911.3477556107713
+        }
+      },
+      "casa_si_conturi_la_banci": {
+        "valoare": 885138,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -89.31185088673656
+        }
+      }
+    },
+    "an_2018": {
+      "an": 2018,
+      "id": 6988564,
+      "data": "2019-04-24",
+      "creante": {
+        "valoare": 87545591,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -6.838661197648632
+        }
+      },
+      "datorii": {
+        "valoare": 177290998,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 43.2614879143749
+        }
+      },
+      "stocuri": {
+        "valoare": 81109068,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 81.59483516950486
+        }
+      },
+      "cod_caen": 4632,
+      "profit_net": {
+        "valoare": 14667089,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -7.825195600824371
+        }
+      },
+      "tip_bilant": null,
+      "profit_brut": {
+        "valoare": 17806966,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -11.415158846847726
+        }
+      },
+      "provizioane": {
+        "valoare": 4438904,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -14.946465315935974
+        }
+      },
+      "capital_total": {
+        "valoare": 60925196,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -19.133168759740407
+        }
+      },
+      "pierdere_neta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "capital_social": {
+        "valoare": 2843680,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 17.64696147910952
+        }
+      },
+      "pierdere_bruta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "tip_activitate": "Comert cu ridicata al carnii si produselor din carne",
+      "venituri_total": {
+        "valoare": 771740768,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -2.3708946691492523
+        }
+      },
+      "data_actualizare": "2019-04-24",
+      "patrimoniu_regie": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_circulante": {
+        "valoare": 169714128,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 21.425746999701154
+        }
+      },
+      "cheltuieli_totale": {
+        "valoare": 753933802,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -2.134902072926479
+        }
+      },
+      "patrimoniu_public": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "venituri_in_avans": {
+        "valoare": 79685,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -60.574815577116226
+        }
+      },
+      "active_imobilizate": {
+        "valoare": 68873680,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 10.833016155748451
+        }
+      },
+      "cheltuieli_in_avans": {
+        "valoare": 4146975,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 59.19418160376725
+        }
+      },
+      "numar_mediu_angajati": {
+        "valoare": 447,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 14.615384615384615
+        }
+      },
+      "profit_pierdere_neta": {
+        "valoare": 14667089,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -7.825195600824371
+        }
+      },
+      "cifra_de_afaceri_neta": {
+        "valoare": 762525687,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 5.513502672644479
+        }
+      },
+      "profit_pierdere_bruta": {
+        "valoare": 17806966,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -11.415158846847726
+        }
+      },
+      "casa_si_conturi_la_banci": {
+        "valoare": 784239,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -11.399239440629596
+        }
+      }
+    },
+    "an_2019": {
+      "an": 2019,
+      "id": 7803256,
+      "data": "2020-04-17",
+      "creante": {
+        "valoare": 72850640,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -16.785483805803537
+        }
+      },
+      "datorii": {
+        "valoare": 153960252,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -13.15957734075139
+        }
+      },
+      "stocuri": {
+        "valoare": 75250952,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -7.222516722791094
+        }
+      },
+      "cod_caen": 4632,
+      "profit_net": {
+        "valoare": 9196931,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -37.29545787851973
+        }
+      },
+      "tip_bilant": null,
+      "profit_brut": {
+        "valoare": 12073035,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -32.20049389660204
+        }
+      },
+      "provizioane": {
+        "valoare": 4744916,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 6.8938638907261796
+        }
+      },
+      "capital_total": {
+        "valoare": 60657028,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -0.4401594374846164
+        }
+      },
+      "pierdere_neta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "capital_social": {
+        "valoare": 2843680,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "pierdere_bruta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "tip_activitate": "Comert cu ridicata al carnii si produselor din carne",
+      "venituri_total": {
+        "valoare": 734722445,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -4.796730266814154
+        }
+      },
+      "data_actualizare": "2020-04-17",
+      "patrimoniu_regie": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_circulante": {
+        "valoare": 149030265,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -12.18747268936856
+        }
+      },
+      "cheltuieli_totale": {
+        "valoare": 722649410,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -4.149487914855421
+        }
+      },
+      "patrimoniu_public": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "venituri_in_avans": {
+        "valoare": 269120,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 237.7298111313296
+        }
+      },
+      "active_imobilizate": {
+        "valoare": 67188122,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -2.4473180466035793
+        }
+      },
+      "cheltuieli_in_avans": {
+        "valoare": 3412929,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -17.7007577812743
+        }
+      },
+      "numar_mediu_angajati": {
+        "valoare": 475,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 6.263982102908278
+        }
+      },
+      "profit_pierdere_neta": {
+        "valoare": 9196931,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -37.29545787851973
+        }
+      },
+      "cifra_de_afaceri_neta": {
+        "valoare": 726889622,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -4.673424857358281
+        }
+      },
+      "profit_pierdere_bruta": {
+        "valoare": 12073035,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -32.20049389660204
+        }
+      },
+      "casa_si_conturi_la_banci": {
+        "valoare": 754915,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -3.7391662490643798
+        }
+      }
+    },
+    "an_2020": {
+      "an": 2020,
+      "id": 8639957,
+      "data": "2021-04-14",
+      "creante": {
+        "valoare": 58865213,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -19.19739757948592
+        }
+      },
+      "datorii": {
+        "valoare": 126029793,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -18.141344039888946
+        }
+      },
+      "stocuri": {
+        "valoare": 50801663,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -32.49033846110013
+        }
+      },
+      "cod_caen": 4632,
+      "profit_net": {
+        "valoare": 6807512,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -25.980612445608216
+        }
+      },
+      "tip_bilant": null,
+      "profit_brut": {
+        "valoare": 9371990,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -22.372543440816663
+        }
+      },
+      "provizioane": {
+        "valoare": 4569510,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -3.6967145466853366
+        }
+      },
+      "capital_total": {
+        "valoare": 50281298,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -17.105569366174684
+        }
+      },
+      "pierdere_neta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "capital_social": {
+        "valoare": 2843680,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "pierdere_bruta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "tip_activitate": "Comert cu ridicata al carnii si produselor din carne",
+      "venituri_total": {
+        "valoare": 599463150,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -18.409577102275676
+        }
+      },
+      "data_actualizare": "2021-04-14",
+      "patrimoniu_regie": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_circulante": {
+        "valoare": 116418168,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -21.882868556933722
+        }
+      },
+      "cheltuieli_totale": {
+        "valoare": 590091160,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -18.343369297153373
+        }
+      },
+      "patrimoniu_public": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "venituri_in_avans": {
+        "valoare": 146205,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -45.672934007134366
+        }
+      },
+      "active_imobilizate": {
+        "valoare": 59015501,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -12.163788414862973
+        }
+      },
+      "cheltuieli_in_avans": {
+        "valoare": 5593137,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 63.88084838565349
+        }
+      },
+      "numar_mediu_angajati": {
+        "valoare": 443,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -6.7368421052631575
+        }
+      },
+      "profit_pierdere_neta": {
+        "valoare": 6807512,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -25.980612445608216
+        }
+      },
+      "cifra_de_afaceri_neta": {
+        "valoare": 593071129,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -18.409740481891212
+        }
+      },
+      "profit_pierdere_bruta": {
+        "valoare": 9371990,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -22.372543440816663
+        }
+      },
+      "casa_si_conturi_la_banci": {
+        "valoare": 6642085,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 779.8454130597485
+        }
+      }
+    },
+    "an_2021": {
+      "an": 2021,
+      "id": 10500012,
+      "data": "2022-04-30",
+      "creante": {
+        "valoare": 94226840,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 60.07219747934999
+        }
+      },
+      "datorii": {
+        "valoare": 140183725,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 11.23062385732872
+        }
+      },
+      "stocuri": {
+        "valoare": 70678727,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 39.12679787667581
+        }
+      },
+      "cod_caen": 4632,
+      "profit_net": {
+        "valoare": 35929995,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 427.799216512582
+        }
+      },
+      "tip_bilant": null,
+      "profit_brut": {
+        "valoare": 41046402,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 337.9689052165015
+        }
+      },
+      "provizioane": {
+        "valoare": 5463778,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 19.570325921160038
+        }
+      },
+      "capital_total": {
+        "valoare": 79403781,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 57.919115373672334
+        }
+      },
+      "pierdere_neta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "capital_social": {
+        "valoare": 2843680,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "pierdere_bruta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "tip_activitate": "Comert cu ridicata al carnii si produselor din carne",
+      "venituri_total": {
+        "valoare": 655924599,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 9.418668853957078
+        }
+      },
+      "data_actualizare": "2022-04-30",
+      "patrimoniu_regie": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_circulante": {
+        "valoare": 166835656,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 43.30723362697135
+        }
+      },
+      "cheltuieli_totale": {
+        "valoare": 614878197,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 4.200543692266124
+        }
+      },
+      "patrimoniu_public": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "venituri_in_avans": {
+        "valoare": 259821,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 77.71006463527239
+        }
+      },
+      "active_imobilizate": {
+        "valoare": 53921465,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -8.631691527959747
+        }
+      },
+      "cheltuieli_in_avans": {
+        "valoare": 4553984,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -18.579072888792105
+        }
+      },
+      "numar_mediu_angajati": {
+        "valoare": 414,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -6.54627539503386
+        }
+      },
+      "profit_pierdere_neta": {
+        "valoare": 35929995,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 427.799216512582
+        }
+      },
+      "cifra_de_afaceri_neta": {
+        "valoare": 633380217,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 6.7966700837329075
+        }
+      },
+      "profit_pierdere_bruta": {
+        "valoare": 41046402,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 337.9689052165015
+        }
+      },
+      "casa_si_conturi_la_banci": {
+        "valoare": 1885337,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -71.61528345391545
+        }
+      }
+    },
+    "an_2022": {
+      "an": 2022,
+      "id": 11512208,
+      "data": "2023-04-04",
+      "creante": {
+        "valoare": 90976615,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -3.4493621987111105
+        }
+      },
+      "datorii": {
+        "valoare": 129335823,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -7.738346230990794
+        }
+      },
+      "stocuri": {
+        "valoare": 84588451,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 19.680212972709597
+        }
+      },
+      "cod_caen": 4632,
+      "profit_net": {
+        "valoare": 58989939,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 64.18020375455104
+        }
+      },
+      "tip_bilant": null,
+      "profit_brut": {
+        "valoare": 67824679,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 65.23903605485323
+        }
+      },
+      "provizioane": {
+        "valoare": 5593017,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 2.3653779491040816
+        }
+      },
+      "capital_total": {
+        "valoare": 102463726,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 29.041368949420683
+        }
+      },
+      "pierdere_neta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "capital_social": {
+        "valoare": 2843680,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "pierdere_bruta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "tip_activitate": "Comert cu ridicata al carnii si produselor din carne",
+      "venituri_total": {
+        "valoare": 747965673,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 14.032264400561077
+        }
+      },
+      "data_actualizare": "2023-04-04",
+      "patrimoniu_regie": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_circulante": {
+        "valoare": 178960266,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 7.267397324226663
+        }
+      },
+      "cheltuieli_totale": {
+        "valoare": 680140994,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 10.613939040027468
+        }
+      },
+      "patrimoniu_public": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "venituri_in_avans": {
+        "valoare": 154804,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -40.41898075983081
+        }
+      },
+      "active_imobilizate": {
+        "valoare": 53447042,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -0.87984070907569
+        }
+      },
+      "cheltuieli_in_avans": {
+        "valoare": 5140062,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 12.869566515824387
+        }
+      },
+      "numar_mediu_angajati": {
+        "valoare": 404,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -2.4154589371980677
+        }
+      },
+      "profit_pierdere_neta": {
+        "valoare": 58989939,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 64.18020375455104
+        }
+      },
+      "cifra_de_afaceri_neta": {
+        "valoare": 735090725,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 16.058365144675808
+        }
+      },
+      "profit_pierdere_bruta": {
+        "valoare": 67824679,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 65.23903605485323
+        }
+      },
+      "casa_si_conturi_la_banci": {
+        "valoare": 3242685,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 71.99498020778248
+        }
+      }
+    },
+    "an_2023": {
+      "an": 2023,
+      "id": 18325059,
+      "data": "2024-05-21",
+      "creante": {
+        "valoare": 146064931,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 60.55217156628657
+        }
+      },
+      "datorii": {
+        "valoare": 186946872,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 44.54376804792899
+        }
+      },
+      "stocuri": {
+        "valoare": 67485308,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -20.21924127680267
+        }
+      },
+      "cod_caen": 4632,
+      "profit_net": {
+        "valoare": 39102149,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -33.71386771564554
+        }
+      },
+      "tip_bilant": null,
+      "profit_brut": {
+        "valoare": 45286763,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -33.22966851048422
+        }
+      },
+      "provizioane": {
+        "valoare": 4870625,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -12.915962887293208
+        }
+      },
+      "capital_total": {
+        "valoare": 87538761,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -14.566096298313415
+        }
+      },
+      "pierdere_neta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "capital_social": {
+        "valoare": 2843680,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "pierdere_bruta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "tip_activitate": "Comert cu ridicata al carnii si produselor din carne",
+      "venituri_total": {
+        "valoare": 786375599,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 5.135252510445088
+        }
+      },
+      "data_actualizare": "2024-05-21",
+      "patrimoniu_regie": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_circulante": {
+        "valoare": 214388322,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 19.79660445967375
+        }
+      },
+      "cheltuieli_totale": {
+        "valoare": 741088836,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 8.961059918114566
+        }
+      },
+      "patrimoniu_public": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "venituri_in_avans": {
+        "valoare": 605643,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 291.23213870442623
+        }
+      },
+      "active_imobilizate": {
+        "valoare": 61045571,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 14.216930845302908
+        }
+      },
+      "cheltuieli_in_avans": {
+        "valoare": 4528008,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -11.907521738064638
+        }
+      },
+      "numar_mediu_angajati": {
+        "valoare": 395,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -2.227722772277228
+        }
+      },
+      "profit_pierdere_neta": {
+        "valoare": 39102149,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -33.71386771564554
+        }
+      },
+      "cifra_de_afaceri_neta": {
+        "valoare": 775891115,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 5.550388355124465
+        }
+      },
+      "profit_pierdere_bruta": {
+        "valoare": 45286763,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -33.22966851048422
+        }
+      },
+      "casa_si_conturi_la_banci": {
+        "valoare": 791625,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -75.58736047442166
+        }
+      }
+    },
+    "an_2024": {
+      "an": 2024,
+      "id": 20823904,
+      "data": "2025-03-27",
+      "creante": {
+        "valoare": 112724480,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -22.825773970344738
+        }
+      },
+      "datorii": {
+        "valoare": 198041772,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 5.934787718726848
+        }
+      },
+      "stocuri": {
+        "valoare": 86447275,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 28.09791873514158
+        }
+      },
+      "cod_caen": 4632,
+      "profit_net": {
+        "valoare": 45230966,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 15.673862324037485
+        }
+      },
+      "tip_bilant": null,
+      "profit_brut": {
+        "valoare": 52351898,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 15.600883198474573
+        }
+      },
+      "provizioane": {
+        "valoare": 4593361,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -5.692575388168869
+        }
+      },
+      "capital_total": {
+        "valoare": 96388106,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 10.109059003016961
+        }
+      },
+      "pierdere_neta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "capital_social": {
+        "valoare": 2843680,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "pierdere_bruta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "tip_activitate": "Comert cu ridicata al carnii si produselor din carne",
+      "venituri_total": {
+        "valoare": 900881305,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 14.561197746421936
+        }
+      },
+      "data_actualizare": "2025-03-27",
+      "patrimoniu_regie": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_circulante": {
+        "valoare": 200320391,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -6.5618923963591635
+        }
+      },
+      "cheltuieli_totale": {
+        "valoare": 848529407,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 14.497664217950788
+        }
+      },
+      "patrimoniu_public": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "venituri_in_avans": {
+        "valoare": 128013,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -78.86329075049163
+        }
+      },
+      "active_imobilizate": {
+        "valoare": 92499298,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 51.52499433578891
+        }
+      },
+      "cheltuieli_in_avans": {
+        "valoare": 6331563,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 39.83109128782458
+        }
+      },
+      "numar_mediu_angajati": {
+        "valoare": 400,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 1.2658227848101267
+        }
+      },
+      "profit_pierdere_neta": {
+        "valoare": 45230966,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 15.673862324037485
+        }
+      },
+      "cifra_de_afaceri_neta": {
+        "valoare": 894023029,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 15.225321145738343
+        }
+      },
+      "profit_pierdere_bruta": {
+        "valoare": 52351898,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 15.600883198474573
+        }
+      },
+      "casa_si_conturi_la_banci": {
+        "valoare": 965422,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 21.95446076109269
+        }
+      }
+    },
+    "an_2025": null,
+    "ultimul_raportat": {
+      "cifra_de_afaceri_neta": {
+        "valoare": 894023029,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 15.225321145738343
+        }
+      }
+    }
+  },
+  "productivitatea_angajatilor": {
+    "an_2018": 1705874.0201342283,
+    "an_2019": 1530293.9410526315,
+    "an_2020": 1338761.0135440181,
+    "an_2021": 1529903.9057971016,
+    "an_2022": 1819531.4975247525,
+    "an_2023": 1964281.3037974683,
+    "an_2024": 2235057.5725
+  },
+  "profitabilitatea_angajatilor": {
+    "an_2018": 32812.279642058165,
+    "an_2019": 19361.96,
+    "an_2020": 15366.844243792326,
+    "an_2021": 86787.42753623189,
+    "an_2022": 146014.7004950495,
+    "an_2023": 98992.78227848101,
+    "an_2024": 113077.415
+  }
+}

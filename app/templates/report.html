@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm 16mm 18mm 16mm;
+        }
+
+        body {
+            font-family: Inter, Arial, sans-serif;
+            color: #111827;
+            font-size: 12px;
+            line-height: 1.45;
+            margin: 0;
+            padding: 0;
+            background: #ffffff;
+        }
+
+        .page {
+            width: 100%;
+        }
+
+        .header {
+            margin-bottom: 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+
+        .logo-image {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+            display: block;
+            flex-shrink: 0;
+        }
+
+        .logo-box {
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            min-height: 44px;
+            background: #0f4c81;
+            border-radius: 6px;
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 44px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .header-text {
+            display: block;
+            padding-top: 1px;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #111827;
+            line-height: 1.1;
+            margin: 0 0 4px 0;
+        }
+
+        .subtitle {
+            font-size: 11px;
+            color: #6b7280;
+            line-height: 1.35;
+            margin: 0;
+            max-width: 320px;
+        }
+
+        .company-card {
+            background: #e8f2fb;
+            border-radius: 10px;
+            padding: 14px 16px;
+            margin-bottom: 20px;
+        }
+
+        .company-row {
+            margin-bottom: 6px;
+        }
+
+        .company-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .label {
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .kpi-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #111827;
+        }
+
+        .kpi {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+
+        .kpi-box {
+            background: #0f4c81;
+            color: #ffffff;
+            border-radius: 8px;
+            padding: 8px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .table {
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 7px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .row.header {
+            padding-top: 0;
+            padding-bottom: 9px;
+            font-weight: 700;
+            color: #6b7280;
+            border-bottom: 2px solid #d1d5db;
+        }
+
+        .indicator {
+            flex: 1;
+            padding-right: 16px;
+        }
+
+        .value {
+            width: 140px;
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .note {
+            font-size: 10px;
+            color: #6b7280;
+            margin-top: 8px;
+            line-height: 1.4;
+        }
+
+        .section {
+            margin-top: 28px;
+        }
+
+        h2 {
+            margin-top: 24px;
+            margin-bottom: 8px;
+            font-size: 17px;
+            font-weight: 700;
+            color: #111827;
+            line-height: 1.2;
+        }
+
+        p {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 12px;
+            line-height: 1.6;
+            color: #111827;
+        }
+
+        .footer {
+            margin-top: 28px;
+            padding-top: 10px;
+            border-top: 1px solid #e5e7eb;
+            font-size: 10px;
+            color: #9ca3af;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+
+        <div class="header">
+            <div class="brand">
+                <img src="{{ logo_path }}" class="logo-image" alt="TPC Logo">
+
+                <div class="header-text">
+                    <div class="title">TPC Company Analyzer</div>
+                    <div class="subtitle">Consultancy diagnostic based on public company data</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="company-card">
+            <div class="company-row"><span class="label">Denumire companie:</span> {{ company_name }}</div>
+            <div class="company-row"><span class="label">CUI:</span> {{ cui }}</div>
+            <div class="company-row"><span class="label">CAEN:</span> {{ caen }}</div>
+            <div class="company-row"><span class="label">Denumire CAEN:</span> {{ caen_label }}</div>
+            <div class="company-row"><span class="label">Ani analizați:</span> {{ years }}</div>
+        </div>
+
+        <div class="kpi-title">KPI highlight</div>
+
+        <div class="kpi">
+            <div class="kpi-box">{{ kpi_cagr }}</div>
+            <div class="kpi-box">{{ kpi_profit }}</div>
+            <div class="kpi-box">{{ kpi_roe }}</div>
+            <div class="kpi-box">{{ kpi_debt }}</div>
+            <div class="kpi-box">{{ kpi_stoc }}</div>
+        </div>
+
+        <div class="table">
+            <div class="row header">
+                <div class="indicator">Indicator</div>
+                <div class="value">Valoare</div>
+            </div>
+
+            {{ table_rows | safe }}
+
+            <div class="note">
+                * Fondul salarial a fost calculat estimativ, folosind salariul mediu brut din România corespunzător anului analizat (2024 sau 2025, după caz).
+            </div>
+        </div>
+
+        <div class="section">
+            {{ interpretation | safe }}
+        </div>
+
+        <div class="footer">
+            Generated by TPC Company Analyzer
+        </div>
+
+    </div>
+</body>
+</html>
