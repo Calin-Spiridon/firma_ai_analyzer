@@ -95,30 +95,33 @@
             font-weight: 600;
             color: #374151;
         }
+.kpi {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 22px;
+}
 
-        .kpi-title {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: #111827;
-        }
+.kpi-box {
+    background: #0f4c81;
+    color: #ffffff;
+    border-radius: 8px;
+    padding: 10px 6px;
+    text-align: center;
+    line-height: 1.2;
+}
 
-        .kpi {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 22px;
-        }
+.kpi-label {
+    font-size: 10px;
+    font-weight: 500;
+    opacity: 0.85;
+}
 
-        .kpi-box {
-            background: #0f4c81;
-            color: #ffffff;
-            border-radius: 8px;
-            padding: 8px 14px;
-            font-size: 12px;
-            font-weight: 600;
-            text-align: center;
-            white-space: nowrap;
-        }
+.kpi-value {
+    font-size: 13px;
+    font-weight: 700;
+    margin-top: 2px;
+}
 
         .table {
             margin-top: 8px;
@@ -212,15 +215,34 @@
             <div class="company-row"><span class="label">Ani analizați:</span> {{ years }}</div>
         </div>
 
-        <div class="kpi-title">KPI highlight</div>
+     <div class="kpi-title">KPI highlight</div>
 
-        <div class="kpi">
-            <div class="kpi-box">{{ kpi_cagr }}</div>
-            <div class="kpi-box">{{ kpi_profit }}</div>
-            <div class="kpi-box">{{ kpi_roe }}</div>
-            <div class="kpi-box">{{ kpi_debt }}</div>
-            <div class="kpi-box">{{ kpi_stoc }}</div>
-        </div>
+<div class="kpi">
+    <div class="kpi-box">
+        <div class="kpi-label">CAGR CA</div>
+        <div class="kpi-value">{{ kpi_cagr }}</div>
+    </div>
+
+    <div class="kpi-box">
+        <div class="kpi-label">Profit</div>
+        <div class="kpi-value">{{ kpi_profit }}</div>
+    </div>
+
+    <div class="kpi-box">
+        <div class="kpi-label">ROE</div>
+        <div class="kpi-value">{{ kpi_roe }}</div>
+    </div>
+
+    <div class="kpi-box">
+        <div class="kpi-label">Debt ratio</div>
+        <div class="kpi-value">{{ kpi_debt }}</div>
+    </div>
+
+    <div class="kpi-box">
+        <div class="kpi-label">Zile stoc</div>
+        <div class="kpi-value">{{ kpi_stoc }}</div>
+    </div>
+</div>
 
         <div class="table">
             <div class="row header">
