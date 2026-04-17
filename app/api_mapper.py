@@ -1,24 +1,33 @@
-def extract_last_5_years_from_api(response_data: dict) -> dict:
+def extract_available_years_from_api(response_data: dict) -> dict:
     bilanturi = response_data.get("bilanturi_mfinante_scurte", {})
 
-    valid_years = []
+    result = {}
 
     for key, value in bilanturi.items():
-        if key.startswith("an_") and isinstance(value, dict) and value:
-            try:
-                year = int(key.replace("an_", ""))
-                valid_years.append(year)
-            except ValueError:
-                pass
+        if not key.startswith("an_"):
+            continue
 
-    valid_years = sorted(valid_years, reverse=True)[:5]
-    valid_years = sorted(valid_years)
+        if not isinstance(value, dict) or not value:
+            continue
 
-    result = {}
-    for year in valid_years:
-        result[year] = bilanturi[f"an_{year}"]
+        try:
+            year = int(key.replace("an_", ""))
+        except ValueError:
+            continue
 
-    return result
+        result[year] = value
+
+    return dict(sorted(result.items()))
+
+
+def extract_last_5_years_from_api(response_data: dict) -> dict:
+    """
+    Compatibilitate backward.
+    În noua logică nu mai tăiem aici ultimii 5 ani brut.
+    Returnăm toți anii disponibili, iar selecția finală se face ulterior
+    în analysis_service.py pe baza anului oficial eligibil.
+    """
+    return extract_available_years_from_api(response_data)
 
 
 def extract_company_info(response_data: dict) -> dict:
