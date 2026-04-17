@@ -1,0 +1,230 @@
+[
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2013.creante.valoare",
+    "year": "2013",
+    "raw_value": 1384,
+    "numeric_value": 1384.0
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2013.creante.tendinta",
+    "year": "2013",
+    "raw_value": null,
+    "numeric_value": null
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2014.creante.valoare",
+    "year": "2014",
+    "raw_value": 2142,
+    "numeric_value": 2142.0
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2014.creante.tendinta.label",
+    "year": "2014",
+    "raw_value": "Creștere",
+    "numeric_value": null
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2014.creante.tendinta.valoare",
+    "year": "2014",
+    "raw_value": 54.76878612716763,
+    "numeric_value": 54.76878612716763
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2015.creante.valoare",
+    "year": "2015",
+    "raw_value": 13950,
+    "numeric_value": 13950.0
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2015.creante.tendinta.label",
+    "year": "2015",
+    "raw_value": "Creștere",
+    "numeric_value": null
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2015.creante.tendinta.valoare",
+    "year": "2015",
+    "raw_value": 551.2605042016806,
+    "numeric_value": 551.2605042016806
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2016.creante.valoare",
+    "year": "2016",
+    "raw_value": 11936,
+    "numeric_value": 11936.0
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2016.creante.tendinta.label",
+    "year": "2016",
+    "raw_value": "Scădere",
+    "numeric_value": null
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2016.creante.tendinta.valoare",
+    "year": "2016",
+    "raw_value": -14.437275985663083,
+    "numeric_value": -14.437275985663083
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2017.creante.valoare",
+    "year": "2017",
+    "raw_value": 39865,
+    "numeric_value": 39865.0
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2017.creante.tendinta.label",
+    "year": "2017",
+    "raw_value": "Creștere",
+    "numeric_value": null
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2017.creante.tendinta.valoare",
+    "year": "2017",
+    "raw_value": 233.9896112600536,
+    "numeric_value": 233.9896112600536
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2018.creante.valoare",
+    "year": "2018",
+    "raw_value": 4388,
+    "numeric_value": 4388.0
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2018.creante.tendinta.label",
+    "year": "2018",
+    "raw_value": "Scădere",
+    "numeric_value": null
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2018.creante.tendinta.valoare",
+    "year": "2018",
+    "raw_value": -88.99285087169196,
+    "numeric_value": -88.99285087169196
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2019.creante.valoare",
+    "year": "2019",
+    "raw_value": 38783,
+    "numeric_value": 38783.0
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2019.creante.tendinta.label",
+    "year": "2019",
+    "raw_value": "Creștere",
+    "numeric_value": null
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2019.creante.tendinta.valoare",
+    "year": "2019",
+    "raw_value": 783.8422971741112,
+    "numeric_value": 783.8422971741112
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2020.creante.valoare",
+    "year": "2020",
+    "raw_value": 4506,
+    "numeric_value": 4506.0
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2020.creante.tendinta.label",
+    "year": "2020",
+    "raw_value": "Scădere",
+    "numeric_value": null
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2020.creante.tendinta.valoare",
+    "year": "2020",
+    "raw_value": -88.38150736147281,
+    "numeric_value": -88.38150736147281
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2021.creante.valoare",
+    "year": "2021",
+    "raw_value": 8844,
+    "numeric_value": 8844.0
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2021.creante.tendinta.label",
+    "year": "2021",
+    "raw_value": "Creștere",
+    "numeric_value": null
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2021.creante.tendinta.valoare",
+    "year": "2021",
+    "raw_value": 96.271637816245,
+    "numeric_value": 96.271637816245
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2022.creante.valoare",
+    "year": "2022",
+    "raw_value": 27876,
+    "numeric_value": 27876.0
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2022.creante.tendinta.label",
+    "year": "2022",
+    "raw_value": "Creștere",
+    "numeric_value": null
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2022.creante.tendinta.valoare",
+    "year": "2022",
+    "raw_value": 215.19674355495252,
+    "numeric_value": 215.19674355495252
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2023.creante.valoare",
+    "year": "2023",
+    "raw_value": 22206,
+    "numeric_value": 22206.0
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2023.creante.tendinta.label",
+    "year": "2023",
+    "raw_value": "Scădere",
+    "numeric_value": null
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2023.creante.tendinta.valoare",
+    "year": "2023",
+    "raw_value": -20.34007748600947,
+    "numeric_value": -20.34007748600947
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2024.creante.valoare",
+    "year": "2024",
+    "raw_value": 80509,
+    "numeric_value": 80509.0
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2024.creante.tendinta.label",
+    "year": "2024",
+    "raw_value": "Creștere",
+    "numeric_value": null
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2024.creante.tendinta.valoare",
+    "year": "2024",
+    "raw_value": 262.5551652706476,
+    "numeric_value": 262.5551652706476
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2025.creante.valoare",
+    "year": "2025",
+    "raw_value": 375663,
+    "numeric_value": 375663.0
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2025.creante.tendinta.label",
+    "year": "2025",
+    "raw_value": "Creștere",
+    "numeric_value": null
+  },
+  {
+    "path": "root.bilanturi_mfinante_scurte.an_2025.creante.tendinta.valoare",
+    "year": "2025",
+    "raw_value": 366.60994422983765,
+    "numeric_value": 366.60994422983765
+  }
+]

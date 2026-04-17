@@ -1,0 +1,2087 @@
+{
+  "firma": {
+    "cui": 27758121,
+    "nume_mfinante": "TPC CONCEPT SRL"
+  },
+  "cod_caen": {
+    "principal_recom": {
+      "cod": "7020",
+      "label": "Activitati de consultanta in afaceri si management",
+      "versiune": 3
+    },
+    "principal_mfinante": {
+      "cod": "7022",
+      "label": "Activitati de consultanta pentru afaceri si management"
+    }
+  },
+  "statut_tva": {
+    "curent": {
+      "cod": 2,
+      "label": "Plătitor TVA",
+      "data_interogare": "2026-04-17",
+      "data_anulare_tva": null,
+      "data_inceput_tva": "2013-11-20",
+      "data_operare_anulare_tva": null
+    }
+  },
+  "datorii_anaf": {
+    "curent": {
+      "activa": false,
+      "observatii": "",
+      "bugetul_stat": {
+        "total": 0,
+        "accesorii": 0,
+        "contestate": 0,
+        "principale": 0,
+        "necontestate": 0
+      },
+      "data_datorie": "2026-04-17",
+      "bugetul_sanatate": {
+        "total": 0,
+        "accesorii": 0,
+        "contestate": 0,
+        "principale": 0,
+        "necontestate": 0
+      },
+      "data_datorie_reala": "2026-04-17",
+      "bugetul_asigurarilor_somaj": {
+        "total": 0,
+        "accesorii": 0,
+        "contestate": 0,
+        "principale": 0,
+        "necontestate": 0
+      },
+      "bugetul_asigurarilor_sociale": {
+        "total": 0,
+        "accesorii": 0,
+        "contestate": 0,
+        "principale": 0,
+        "necontestate": 0
+      }
+    },
+    "istoric": []
+  },
+  "marja_profitului_net": {
+    "an_2018": 32.491459430429785,
+    "an_2019": 45.456838372856126,
+    "an_2020": 16.565713430580992,
+    "an_2021": 61.21312010026473,
+    "an_2022": 47.88162043124891,
+    "an_2023": 30.636851245906243,
+    "an_2024": 34.731726895388476
+  },
+  "marja_profitului_brut": {
+    "an_2018": 33.49395074067996,
+    "an_2019": 46.45862106118931,
+    "an_2020": 17.49317674892574,
+    "an_2021": 62.28019132147379,
+    "an_2022": 48.761704082764304,
+    "an_2023": 36.866165204430594,
+    "an_2024": 42.38428007498742
+  },
+  "bilanturi_mfinante_scurte": {
+    "moneda": "RON",
+    "an_2008": null,
+    "an_2009": null,
+    "an_2010": null,
+    "an_2011": null,
+    "an_2012": null,
+    "an_2013": {
+      "an": 2013,
+      "id": 2673457,
+      "data": "2015-03-15",
+      "creante": {
+        "valoare": 1384,
+        "tendinta": null
+      },
+      "datorii": {
+        "valoare": 29341,
+        "tendinta": null
+      },
+      "stocuri": {
+        "valoare": 0,
+        "tendinta": null
+      },
+      "cod_caen": 7022,
+      "profit_net": {
+        "valoare": 0,
+        "tendinta": null
+      },
+      "tip_bilant": null,
+      "profit_brut": {
+        "valoare": 0,
+        "tendinta": null
+      },
+      "provizioane": {
+        "valoare": 0,
+        "tendinta": null
+      },
+      "capital_total": {
+        "valoare": -8283,
+        "tendinta": null
+      },
+      "pierdere_neta": {
+        "valoare": 8483,
+        "tendinta": null
+      },
+      "capital_social": {
+        "valoare": 200,
+        "tendinta": null
+      },
+      "pierdere_bruta": {
+        "valoare": 7417,
+        "tendinta": null
+      },
+      "tip_activitate": "Activitati de consultanta pentru afaceri si management",
+      "venituri_total": {
+        "valoare": 152557,
+        "tendinta": null
+      },
+      "data_actualizare": "2016-08-05",
+      "patrimoniu_regie": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_circulante": {
+        "valoare": 10791,
+        "tendinta": null
+      },
+      "cheltuieli_totale": {
+        "valoare": 159974,
+        "tendinta": null
+      },
+      "patrimoniu_public": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "venituri_in_avans": {
+        "valoare": 0,
+        "tendinta": null
+      },
+      "active_imobilizate": {
+        "valoare": 10267,
+        "tendinta": null
+      },
+      "cheltuieli_in_avans": {
+        "valoare": 0,
+        "tendinta": null
+      },
+      "numar_mediu_angajati": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "profit_pierdere_neta": {
+        "valoare": -8483,
+        "tendinta": null
+      },
+      "cifra_de_afaceri_neta": {
+        "valoare": 152549,
+        "tendinta": null
+      },
+      "profit_pierdere_bruta": {
+        "valoare": -7417,
+        "tendinta": null
+      },
+      "casa_si_conturi_la_banci": {
+        "valoare": 9407,
+        "tendinta": null
+      }
+    },
+    "an_2014": {
+      "an": 2014,
+      "id": 3780654,
+      "data": "2015-07-08",
+      "creante": {
+        "valoare": 2142,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 54.76878612716763
+        }
+      },
+      "datorii": {
+        "valoare": 37159,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 26.645308612521728
+        }
+      },
+      "stocuri": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "cod_caen": 7022,
+      "profit_net": {
+        "valoare": 27413,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": null
+        }
+      },
+      "tip_bilant": null,
+      "profit_brut": {
+        "valoare": 39674,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": null
+        }
+      },
+      "provizioane": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "capital_total": {
+        "valoare": 19130,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 330.95496800676085
+        }
+      },
+      "pierdere_neta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -100
+        }
+      },
+      "capital_social": {
+        "valoare": 200,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "pierdere_bruta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -100
+        }
+      },
+      "tip_activitate": "Activitati de consultanta pentru afaceri si management",
+      "venituri_total": {
+        "valoare": 306022,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 100.59518737258861
+        }
+      },
+      "data_actualizare": "2016-02-05",
+      "patrimoniu_regie": {
+        "valoare": 0,
+        "tendinta": null
+      },
+      "active_circulante": {
+        "valoare": 35869,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 232.3973681771847
+        }
+      },
+      "cheltuieli_totale": {
+        "valoare": 266348,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 66.49455536524685
+        }
+      },
+      "patrimoniu_public": {
+        "valoare": 0,
+        "tendinta": null
+      },
+      "venituri_in_avans": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "active_imobilizate": {
+        "valoare": 17507,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 70.5171910002922
+        }
+      },
+      "cheltuieli_in_avans": {
+        "valoare": 2913,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": null
+        }
+      },
+      "numar_mediu_angajati": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "profit_pierdere_neta": {
+        "valoare": 27413,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 423.15218672639395
+        }
+      },
+      "cifra_de_afaceri_neta": {
+        "valoare": 306021,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 100.60505149165186
+        }
+      },
+      "profit_pierdere_bruta": {
+        "valoare": 39674,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 634.9062963462317
+        }
+      },
+      "casa_si_conturi_la_banci": {
+        "valoare": 33727,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 258.5308812586372
+        }
+      }
+    },
+    "an_2015": {
+      "an": 2015,
+      "id": 5140287,
+      "data": "2016-08-05",
+      "creante": {
+        "valoare": 13950,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 551.2605042016806
+        }
+      },
+      "datorii": {
+        "valoare": 22461,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -39.55434753357195
+        }
+      },
+      "stocuri": {
+        "valoare": 1613,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": null
+        }
+      },
+      "cod_caen": 7022,
+      "profit_net": {
+        "valoare": 80896,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 195.10086455331412
+        }
+      },
+      "tip_bilant": null,
+      "profit_brut": {
+        "valoare": 100775,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 154.00766244895902
+        }
+      },
+      "provizioane": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "capital_total": {
+        "valoare": 100026,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 422.8750653423941
+        }
+      },
+      "pierdere_neta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "capital_social": {
+        "valoare": 200,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "pierdere_bruta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "tip_activitate": "Activitati de consultanta pentru afaceri si management",
+      "venituri_total": {
+        "valoare": 405746,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 32.58719961309971
+        }
+      },
+      "data_actualizare": "2016-08-05",
+      "patrimoniu_regie": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_circulante": {
+        "valoare": 53768,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 49.90102874348323
+        }
+      },
+      "cheltuieli_totale": {
+        "valoare": 304971,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 14.500953639599322
+        }
+      },
+      "patrimoniu_public": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "venituri_in_avans": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_imobilizate": {
+        "valoare": 65839,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 276.0724281715885
+        }
+      },
+      "cheltuieli_in_avans": {
+        "valoare": 2880,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -1.132852729145211
+        }
+      },
+      "numar_mediu_angajati": {
+        "valoare": 2,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": null
+        }
+      },
+      "profit_pierdere_neta": {
+        "valoare": 80896,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 195.10086455331412
+        }
+      },
+      "cifra_de_afaceri_neta": {
+        "valoare": 405746,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 32.58763287486806
+        }
+      },
+      "profit_pierdere_bruta": {
+        "valoare": 100775,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 154.00766244895902
+        }
+      },
+      "casa_si_conturi_la_banci": {
+        "valoare": 38205,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 13.277196311560472
+        }
+      }
+    },
+    "an_2016": {
+      "an": 2016,
+      "id": 5652517,
+      "data": "2017-07-09",
+      "creante": {
+        "valoare": 11936,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -14.437275985663083
+        }
+      },
+      "datorii": {
+        "valoare": 146905,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 554.0447887449357
+        }
+      },
+      "stocuri": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "cod_caen": 7022,
+      "profit_net": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -100
+        }
+      },
+      "tip_bilant": null,
+      "profit_brut": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -100
+        }
+      },
+      "provizioane": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "capital_total": {
+        "valoare": -54771,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -154.7567632415572
+        }
+      },
+      "pierdere_neta": {
+        "valoare": 55011,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": null
+        }
+      },
+      "capital_social": {
+        "valoare": 200,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "pierdere_bruta": {
+        "valoare": 55011,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": null
+        }
+      },
+      "tip_activitate": "Activitati de consultanta pentru afaceri si management",
+      "venituri_total": {
+        "valoare": 291282,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -28.210752539766258
+        }
+      },
+      "data_actualizare": "2017-07-09",
+      "patrimoniu_regie": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_circulante": {
+        "valoare": 14440,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -73.14387739919655
+        }
+      },
+      "cheltuieli_totale": {
+        "valoare": 346293,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 13.549485033003139
+        }
+      },
+      "patrimoniu_public": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "venituri_in_avans": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_imobilizate": {
+        "valoare": 77694,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 18.006045049286897
+        }
+      },
+      "cheltuieli_in_avans": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "numar_mediu_angajati": {
+        "valoare": 2,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "profit_pierdere_neta": {
+        "valoare": -55011,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -168.00212618670886
+        }
+      },
+      "cifra_de_afaceri_neta": {
+        "valoare": 265464,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -34.573846692265604
+        }
+      },
+      "profit_pierdere_bruta": {
+        "valoare": -55011,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -154.58794343835277
+        }
+      },
+      "casa_si_conturi_la_banci": {
+        "valoare": 2504,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -93.44588404659076
+        }
+      }
+    },
+    "an_2017": {
+      "an": 2017,
+      "id": 6634285,
+      "data": "2018-07-30",
+      "creante": {
+        "valoare": 39865,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 233.9896112600536
+        }
+      },
+      "datorii": {
+        "valoare": 85844,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -41.564956944964436
+        }
+      },
+      "stocuri": {
+        "valoare": 2568,
+        "tendinta": null
+      },
+      "cod_caen": 7022,
+      "profit_net": {
+        "valoare": 81914,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": null
+        }
+      },
+      "tip_bilant": null,
+      "profit_brut": {
+        "valoare": 93531,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": null
+        }
+      },
+      "provizioane": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "capital_total": {
+        "valoare": 27143,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 149.55724744846725
+        }
+      },
+      "pierdere_neta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -100
+        }
+      },
+      "capital_social": {
+        "valoare": 200,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "pierdere_bruta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -100
+        }
+      },
+      "tip_activitate": "Activitati de consultanta pentru afaceri si management",
+      "venituri_total": {
+        "valoare": 271726,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -6.71376878763535
+        }
+      },
+      "data_actualizare": "2018-07-30",
+      "patrimoniu_regie": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_circulante": {
+        "valoare": 46350,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 220.98337950138503
+        }
+      },
+      "cheltuieli_totale": {
+        "valoare": 178195,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -48.54213050798024
+        }
+      },
+      "patrimoniu_public": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "venituri_in_avans": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_imobilizate": {
+        "valoare": 62895,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -19.047802919144335
+        }
+      },
+      "cheltuieli_in_avans": {
+        "valoare": 3742,
+        "tendinta": null
+      },
+      "numar_mediu_angajati": {
+        "valoare": 2,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "profit_pierdere_neta": {
+        "valoare": 81914,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 248.90476450164513
+        }
+      },
+      "cifra_de_afaceri_neta": {
+        "valoare": 271708,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 2.3521080071120752
+        }
+      },
+      "profit_pierdere_bruta": {
+        "valoare": 93531,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 270.0223591645307
+        }
+      },
+      "casa_si_conturi_la_banci": {
+        "valoare": 3917,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 56.4297124600639
+        }
+      }
+    },
+    "an_2018": {
+      "an": 2018,
+      "id": 7045371,
+      "data": "2019-05-21",
+      "creante": {
+        "valoare": 4388,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -88.99285087169196
+        }
+      },
+      "datorii": {
+        "valoare": 102483,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 19.382833977913425
+        }
+      },
+      "stocuri": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "cod_caen": 7022,
+      "profit_net": {
+        "valoare": 108900,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 32.9443074443929
+        }
+      },
+      "tip_bilant": null,
+      "profit_brut": {
+        "valoare": 112260,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 20.02437694454245
+        }
+      },
+      "provizioane": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "capital_total": {
+        "valoare": 114200,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 320.73462771248575
+        }
+      },
+      "pierdere_neta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "capital_social": {
+        "valoare": 200,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "pierdere_bruta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "tip_activitate": "Activitati de consultanta pentru afaceri si management",
+      "venituri_total": {
+        "valoare": 335848,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 23.598036257111943
+        }
+      },
+      "data_actualizare": "2019-05-21",
+      "patrimoniu_regie": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_circulante": {
+        "valoare": 98258,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 111.99137001078749
+        }
+      },
+      "cheltuieli_totale": {
+        "valoare": 223588,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 25.473778725553466
+        }
+      },
+      "patrimoniu_public": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "venituri_in_avans": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_imobilizate": {
+        "valoare": 112337,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 78.61038238333731
+        }
+      },
+      "cheltuieli_in_avans": {
+        "valoare": 6088,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 62.69374665954035
+        }
+      },
+      "numar_mediu_angajati": {
+        "valoare": 1,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -50
+        }
+      },
+      "profit_pierdere_neta": {
+        "valoare": 108900,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 32.9443074443929
+        }
+      },
+      "cifra_de_afaceri_neta": {
+        "valoare": 335165,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 23.354851531791482
+        }
+      },
+      "profit_pierdere_bruta": {
+        "valoare": 112260,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 20.02437694454245
+        }
+      },
+      "casa_si_conturi_la_banci": {
+        "valoare": 93870,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 2296.4768955833547
+        }
+      }
+    },
+    "an_2019": {
+      "an": 2019,
+      "id": 7895106,
+      "data": "2020-05-08",
+      "creante": {
+        "valoare": 38783,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 783.8422971741112
+        }
+      },
+      "datorii": {
+        "valoare": 63165,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -38.36538743011036
+        }
+      },
+      "stocuri": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "cod_caen": 7022,
+      "profit_net": {
+        "valoare": 185633,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 70.46189164370982
+        }
+      },
+      "tip_bilant": null,
+      "profit_brut": {
+        "valoare": 189724,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 69.00409763050062
+        }
+      },
+      "provizioane": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "capital_total": {
+        "valoare": 185873,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 62.76094570928196
+        }
+      },
+      "pierdere_neta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "capital_social": {
+        "valoare": 200,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "pierdere_bruta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "tip_activitate": "Activitati de consultanta pentru afaceri si management",
+      "venituri_total": {
+        "valoare": 408778,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 21.715180676972917
+        }
+      },
+      "data_actualizare": "2020-05-08",
+      "patrimoniu_regie": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_circulante": {
+        "valoare": 117596,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 19.680840236927274
+        }
+      },
+      "cheltuieli_totale": {
+        "valoare": 219054,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -2.027836914324561
+        }
+      },
+      "patrimoniu_public": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "venituri_in_avans": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_imobilizate": {
+        "valoare": 125671,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 11.869642237197006
+        }
+      },
+      "cheltuieli_in_avans": {
+        "valoare": 5771,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -5.206964520367937
+        }
+      },
+      "numar_mediu_angajati": {
+        "valoare": 1,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "profit_pierdere_neta": {
+        "valoare": 185633,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 70.46189164370982
+        }
+      },
+      "cifra_de_afaceri_neta": {
+        "valoare": 408372,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 21.842077782584695
+        }
+      },
+      "profit_pierdere_bruta": {
+        "valoare": 189724,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 69.00409763050062
+        }
+      },
+      "casa_si_conturi_la_banci": {
+        "valoare": 78813,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -16.040268456375838
+        }
+      }
+    },
+    "an_2020": {
+      "an": 2020,
+      "id": 8889776,
+      "data": "2021-06-07",
+      "creante": {
+        "valoare": 4506,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -88.38150736147281
+        }
+      },
+      "datorii": {
+        "valoare": 44794,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -29.084144700387874
+        }
+      },
+      "stocuri": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "cod_caen": 7022,
+      "profit_net": {
+        "valoare": 46493,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -74.95434540194901
+        }
+      },
+      "tip_bilant": null,
+      "profit_brut": {
+        "valoare": 49096,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -74.12240939469967
+        }
+      },
+      "provizioane": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "capital_total": {
+        "valoare": 105535,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -43.22198490367079
+        }
+      },
+      "pierdere_neta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "capital_social": {
+        "valoare": 200,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "pierdere_bruta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "tip_activitate": "Activitati de consultanta pentru afaceri si management",
+      "venituri_total": {
+        "valoare": 280764,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -31.31626457392521
+        }
+      },
+      "data_actualizare": "2021-06-07",
+      "patrimoniu_regie": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_circulante": {
+        "valoare": 37292,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -68.2880370080615
+        }
+      },
+      "cheltuieli_totale": {
+        "valoare": 231668,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 5.758397472769271
+        }
+      },
+      "patrimoniu_public": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "venituri_in_avans": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_imobilizate": {
+        "valoare": 109719,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -12.693461498675113
+        }
+      },
+      "cheltuieli_in_avans": {
+        "valoare": 3318,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -42.5056316063074
+        }
+      },
+      "numar_mediu_angajati": {
+        "valoare": 1,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "profit_pierdere_neta": {
+        "valoare": 46493,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -74.95434540194901
+        }
+      },
+      "cifra_de_afaceri_neta": {
+        "valoare": 280658,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -31.273936508869365
+        }
+      },
+      "profit_pierdere_bruta": {
+        "valoare": 49096,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -74.12240939469967
+        }
+      },
+      "casa_si_conturi_la_banci": {
+        "valoare": 32786,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -58.40026391585145
+        }
+      }
+    },
+    "an_2021": {
+      "an": 2021,
+      "id": 10480546,
+      "data": "2022-04-28",
+      "creante": {
+        "valoare": 8844,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 96.271637816245
+        }
+      },
+      "datorii": {
+        "valoare": 311359,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 595.090860383087
+        }
+      },
+      "stocuri": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "cod_caen": 7022,
+      "profit_net": {
+        "valoare": 382915,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 723.5971006388058
+        }
+      },
+      "tip_bilant": null,
+      "profit_brut": {
+        "valoare": 389590,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 693.5269675737331
+        }
+      },
+      "provizioane": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "capital_total": {
+        "valoare": 383155,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 263.0596484578576
+        }
+      },
+      "pierdere_neta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "capital_social": {
+        "valoare": 200,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "pierdere_bruta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "tip_activitate": "Activitati de consultanta pentru afaceri si management",
+      "venituri_total": {
+        "valoare": 681217,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 142.62975310224957
+        }
+      },
+      "data_actualizare": "2022-04-28",
+      "patrimoniu_regie": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_circulante": {
+        "valoare": 212518,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 469.8755765311595
+        }
+      },
+      "cheltuieli_totale": {
+        "valoare": 291627,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 25.881433775920716
+        }
+      },
+      "patrimoniu_public": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "venituri_in_avans": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_imobilizate": {
+        "valoare": 473044,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 331.1413702275814
+        }
+      },
+      "cheltuieli_in_avans": {
+        "valoare": 8952,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 169.8010849909584
+        }
+      },
+      "numar_mediu_angajati": {
+        "valoare": 1,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "profit_pierdere_neta": {
+        "valoare": 382915,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 723.5971006388058
+        }
+      },
+      "cifra_de_afaceri_neta": {
+        "valoare": 625544,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 122.88479216697903
+        }
+      },
+      "profit_pierdere_bruta": {
+        "valoare": 389590,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 693.5269675737331
+        }
+      },
+      "casa_si_conturi_la_banci": {
+        "valoare": 203674,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 521.2224730067712
+        }
+      }
+    },
+    "an_2022": {
+      "an": 2022,
+      "id": 12793106,
+      "data": "2023-05-22",
+      "creante": {
+        "valoare": 27876,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 215.19674355495252
+        }
+      },
+      "datorii": {
+        "valoare": 242580,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -22.089934769831608
+        }
+      },
+      "stocuri": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "cod_caen": 7022,
+      "profit_net": {
+        "valoare": 302224,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -21.072822950263113
+        }
+      },
+      "tip_bilant": null,
+      "profit_brut": {
+        "valoare": 307779,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -20.999255627711182
+        }
+      },
+      "provizioane": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "capital_total": {
+        "valoare": 303325,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -20.834910153854185
+        }
+      },
+      "pierdere_neta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "capital_social": {
+        "valoare": 200,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "pierdere_bruta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "tip_activitate": "Activitati de consultanta pentru afaceri si management",
+      "venituri_total": {
+        "valoare": 633425,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -7.015679291620732
+        }
+      },
+      "data_actualizare": "2023-05-22",
+      "patrimoniu_regie": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_circulante": {
+        "valoare": 156034,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -26.578454530910324
+        }
+      },
+      "cheltuieli_totale": {
+        "valoare": 325646,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 11.665243615988917
+        }
+      },
+      "patrimoniu_public": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "venituri_in_avans": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_imobilizate": {
+        "valoare": 381571,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -19.337101834078858
+        }
+      },
+      "cheltuieli_in_avans": {
+        "valoare": 8300,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -7.283288650580876
+        }
+      },
+      "numar_mediu_angajati": {
+        "valoare": 1,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "profit_pierdere_neta": {
+        "valoare": 302224,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -21.072822950263113
+        }
+      },
+      "cifra_de_afaceri_neta": {
+        "valoare": 631190,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 0.902574399242899
+        }
+      },
+      "profit_pierdere_bruta": {
+        "valoare": 307779,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -20.999255627711182
+        }
+      },
+      "casa_si_conturi_la_banci": {
+        "valoare": 128158,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -37.07689739485649
+        }
+      }
+    },
+    "an_2023": {
+      "an": 2023,
+      "id": 16653103,
+      "data": "2024-03-13",
+      "creante": {
+        "valoare": 22206,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -20.34007748600947
+        }
+      },
+      "datorii": {
+        "valoare": 198251,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -18.273971473328388
+        }
+      },
+      "stocuri": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "cod_caen": 7022,
+      "profit_net": {
+        "valoare": 211511,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -30.015154322621633
+        }
+      },
+      "tip_bilant": null,
+      "profit_brut": {
+        "valoare": 254517,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -17.305274238983166
+        }
+      },
+      "provizioane": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "capital_total": {
+        "valoare": 251031,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -17.240253853127832
+        }
+      },
+      "pierdere_neta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "capital_social": {
+        "valoare": 200,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "pierdere_bruta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "tip_activitate": "Activitati de consultanta pentru afaceri si management",
+      "venituri_total": {
+        "valoare": 693719,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 9.518727552591072
+        }
+      },
+      "data_actualizare": "2024-03-13",
+      "patrimoniu_regie": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_circulante": {
+        "valoare": 102035,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -34.60720099465501
+        }
+      },
+      "cheltuieli_totale": {
+        "valoare": 439202,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 34.870994884015154
+        }
+      },
+      "patrimoniu_public": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "venituri_in_avans": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_imobilizate": {
+        "valoare": 337892,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -11.447148761305236
+        }
+      },
+      "cheltuieli_in_avans": {
+        "valoare": 9355,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 12.710843373493976
+        }
+      },
+      "numar_mediu_angajati": {
+        "valoare": 2,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 100
+        }
+      },
+      "profit_pierdere_neta": {
+        "valoare": 211511,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -30.015154322621633
+        }
+      },
+      "cifra_de_afaceri_neta": {
+        "valoare": 690381,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 9.377683423374895
+        }
+      },
+      "profit_pierdere_bruta": {
+        "valoare": 254517,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -17.305274238983166
+        }
+      },
+      "casa_si_conturi_la_banci": {
+        "valoare": 79829,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -37.71048237332043
+        }
+      }
+    },
+    "an_2024": {
+      "an": 2024,
+      "id": 20893726,
+      "data": "2025-04-25",
+      "creante": {
+        "valoare": 80509,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 262.5551652706476
+        }
+      },
+      "datorii": {
+        "valoare": 143194,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -27.77136054799219
+        }
+      },
+      "stocuri": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "cod_caen": 7022,
+      "profit_net": {
+        "valoare": 273454,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 29.28594730297715
+        }
+      },
+      "tip_bilant": null,
+      "profit_brut": {
+        "valoare": 333705,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 31.113049423024787
+        }
+      },
+      "provizioane": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "capital_total": {
+        "valoare": 273702,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 9.031155514657552
+        }
+      },
+      "pierdere_neta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "capital_social": {
+        "valoare": 200,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "pierdere_bruta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "tip_activitate": "Activitati de consultanta pentru afaceri si management",
+      "venituri_total": {
+        "valoare": 799946,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 15.31268424246705
+        }
+      },
+      "data_actualizare": "2025-04-25",
+      "patrimoniu_regie": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_circulante": {
+        "valoare": 161867,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 58.63870240603715
+        }
+      },
+      "cheltuieli_totale": {
+        "valoare": 466241,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 6.156392730452047
+        }
+      },
+      "patrimoniu_public": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "venituri_in_avans": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_imobilizate": {
+        "valoare": 247731,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -26.683378120819672
+        }
+      },
+      "cheltuieli_in_avans": {
+        "valoare": 7298,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -21.988241582041688
+        }
+      },
+      "numar_mediu_angajati": {
+        "valoare": 2,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "profit_pierdere_neta": {
+        "valoare": 273454,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 29.28594730297715
+        }
+      },
+      "cifra_de_afaceri_neta": {
+        "valoare": 787332,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 14.043115323278016
+        }
+      },
+      "profit_pierdere_bruta": {
+        "valoare": 333705,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 31.113049423024787
+        }
+      },
+      "casa_si_conturi_la_banci": {
+        "valoare": 81358,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 1.9153440479023913
+        }
+      }
+    },
+    "an_2025": {
+      "an": 2025,
+      "id": 21685643,
+      "data": "2026-03-23",
+      "creante": {
+        "valoare": 375663,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 366.60994422983765
+        }
+      },
+      "datorii": {
+        "valoare": 187055,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 30.63047334385519
+        }
+      },
+      "stocuri": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "cod_caen": 7022,
+      "profit_net": {
+        "valoare": 408941,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 49.5465416486868
+        }
+      },
+      "tip_bilant": null,
+      "profit_brut": {
+        "valoare": 429950,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 28.841341903777288
+        }
+      },
+      "provizioane": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "capital_total": {
+        "valoare": 409189,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 49.501647777509845
+        }
+      },
+      "pierdere_neta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "capital_social": {
+        "valoare": 200,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "pierdere_bruta": {
+        "valoare": 0,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "tip_activitate": "Activităţi de consultanţă în afaceri şi management",
+      "venituri_total": {
+        "valoare": 857422,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 7.184984986486588
+        }
+      },
+      "data_actualizare": "2026-03-23",
+      "patrimoniu_regie": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_circulante": {
+        "valoare": 433106,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 167.56905360573805
+        }
+      },
+      "cheltuieli_totale": {
+        "valoare": 427472,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -8.315227532542183
+        }
+      },
+      "patrimoniu_public": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "venituri_in_avans": {
+        "valoare": null,
+        "tendinta": null
+      },
+      "active_imobilizate": {
+        "valoare": 155607,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -37.18711021228671
+        }
+      },
+      "cheltuieli_in_avans": {
+        "valoare": 7531,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 3.192655522060839
+        }
+      },
+      "numar_mediu_angajati": {
+        "valoare": 2,
+        "tendinta": {
+          "label": "Neschimbată",
+          "valoare": 0
+        }
+      },
+      "profit_pierdere_neta": {
+        "valoare": 408941,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 49.5465416486868
+        }
+      },
+      "cifra_de_afaceri_neta": {
+        "valoare": 856618,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 8.800099576798607
+        }
+      },
+      "profit_pierdere_bruta": {
+        "valoare": 429950,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 28.841341903777288
+        }
+      },
+      "casa_si_conturi_la_banci": {
+        "valoare": 57443,
+        "tendinta": {
+          "label": "Scădere",
+          "valoare": -29.394773716168046
+        }
+      }
+    },
+    "ultimul_raportat": {
+      "cifra_de_afaceri_neta": {
+        "valoare": 856618,
+        "tendinta": {
+          "label": "Creștere",
+          "valoare": 8.800099576798607
+        }
+      }
+    }
+  },
+  "productivitatea_angajatilor": {
+    "an_2018": 335165,
+    "an_2019": 408372,
+    "an_2020": 280658,
+    "an_2021": 625544,
+    "an_2022": 631190,
+    "an_2023": 345190.5,
+    "an_2024": 393666
+  },
+  "profitabilitatea_angajatilor": {
+    "an_2018": 108900,
+    "an_2019": 185633,
+    "an_2020": 46493,
+    "an_2021": 382915,
+    "an_2022": 302224,
+    "an_2023": 105755.5,
+    "an_2024": 136727
+  }
+}

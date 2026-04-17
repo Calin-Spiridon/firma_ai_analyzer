@@ -12,6 +12,10 @@ def format_number(value):
     return f"{value:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
 
+def format_integer_number(value):
+    return f"{value:,.0f}".replace(",", "X").replace(".", ",").replace("X", ".")
+
+
 def format_percent(value):
     return f"{value * 100:.1f}%".replace(".", ",")
 
@@ -104,49 +108,49 @@ if st.session_state.result:
     st.subheader(f"Indicatori {latest_year}")
 
     table_data = {
-        "Indicator": [
-            "Marja profit",
-            "Sales on assets",
-            "Equity multiplier",
-            "Zile stoc",
-            "Zile creanțe",
-            "Capital blocat",
-            "Capital blocat / CA",
-            "Salariu mediu lunar",
-            "Salariu anual",
-            "Fond salarial",
-            "Pondere fond salarial",
-            "Productivitate",
-            "Randament",
-            "Debt ratio",
-            "Debt to equity",
-            "Datorii vs cash block",
-            "Datorii / CA",
-            "ROE DuPont",
-            f"CAGR CA ({years_sorted[0]}-{years_sorted[-1]})",
-        ],
-        "Valoare": [
-            format_percent(indicators["profit_margin"]),
-            format_number(indicators["sales_on_assets"]),
-            format_number(indicators["equity_multiplier"]),
-            format_number(indicators["zile_stoc"]),
-            format_number(indicators["zile_creante"]),
-            format_number(indicators["capital_blocat"]),
-            format_percent(indicators["capital_blocat_ratio"]),
-            format_number(indicators["salariu_mediu_lunar"]),
-            format_number(indicators["salariu_anual"]),
-            format_number(indicators["fond_salarial"]),
-            format_percent(indicators["pondere_fond_salarial"]),
-            format_number(indicators["productivitate"]),
-            format_number(indicators["randament"]),
-            format_percent(indicators["debt_ratio"]),
-            format_number(indicators["debt_to_equity"]),
-            format_number(indicators["datorii_vs_cash_block"]),
-            format_percent(indicators["datorii_ratio_ca"]),
-            format_percent(indicators["roe_dupont"]),
-            format_percent(cagr_ca) if cagr_ca is not None else "N/A",
-        ]
-    }
+    "Indicator": [
+        "Marja profit",
+        "Sales on assets",
+        "Equity multiplier",
+        "Zile stoc",
+        "Zile creanțe",
+        "Capital blocat",
+        "Capital blocat / CA",
+        "Salariu mediu lunar",
+        "Salariu anual",
+        "Fond salarial",
+        "Pondere fond salarial",
+        "Productivitate",
+        "Randament",
+        "Debt ratio",
+        "Debt to equity",
+        "Datorii vs cash block",
+        "Datorii / CA",
+        "ROE DuPont",
+        f"CAGR CA ({years_sorted[0]}-{years_sorted[-1]})",
+    ],
+    "Valoare": [
+        format_percent(indicators["profit_margin"]),
+        format_number(indicators["sales_on_assets"]),
+        format_number(indicators["equity_multiplier"]),
+        format_number(indicators["zile_stoc"]),
+        format_number(indicators["zile_creante"]),
+        format_integer_number(indicators["capital_blocat"]),
+        format_percent(indicators["capital_blocat_ratio"]),
+        format_number(indicators["salariu_mediu_lunar"]),
+        format_integer_number(indicators["salariu_anual"]),
+        format_integer_number(indicators["fond_salarial"]),
+        format_percent(indicators["pondere_fond_salarial"]),
+        format_integer_number(indicators["productivitate"]),
+        format_number(indicators["randament"]),
+        format_percent(indicators["debt_ratio"]),
+        format_number(indicators["debt_to_equity"]),
+        format_number(indicators["datorii_vs_cash_block"]),
+        format_percent(indicators["datorii_ratio_ca"]),
+        format_percent(indicators["roe_dupont"]),
+        format_percent(cagr_ca) if cagr_ca is not None else "N/A",
+    ]
+}
 
     df = pd.DataFrame(table_data)
     st.dataframe(df, use_container_width=True, hide_index=True)
