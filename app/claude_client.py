@@ -17,7 +17,7 @@ def generate_tpc_analysis(
     prompt = f"""
 Ești consultant senior TPC, specializat în diagnostic de business, structură financiară și eficiență operațională.
 
-Analizează compania de mai jos și scrie în limba română un text clar, convingător și business-oriented.
+Analizează compania de mai jos și scrie în limba română un text clar, convingător și business-oriented. Titlu: TPC Snapshot
 
 Structura este OBLIGATORIE și trebuie să conțină EXACT aceste 6 secțiuni, în această ordine:
 
@@ -33,7 +33,7 @@ Pentru fiecare secțiune:
 - apoi 1 sau 2 paragrafe scurte
 - fără bullet points
 - fără markdown (#, ##, **)
-- Titlu obligatoriu inainte de sectiunea 1: TPC Snapshot
+
 
 Reguli:
 - maximum 650 de cuvinte în total
