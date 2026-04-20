@@ -17,31 +17,55 @@ def generate_tpc_analysis(
     prompt = f"""
 Ești consultant senior TPC, specializat în diagnostic de business, structură financiară și eficiență operațională.
 
-Analizează compania de mai jos și scrie în limba română un text scurt, clar și convingător, format din 2 secțiuni:
+Analizează compania de mai jos folosind o logică pe 5 dimensiuni fundamentale:
+1. Creștere (cifra de afaceri & CAGR)
+2. Profitabilitate (% profit net)
+3. Cash Flow (capital blocat, ciclul de numerar, datorii)
+4. Eficiența activelor (sales on assets)
+5. Capital uman (productivitate, fond salarial, randament)
 
-Scrie două secțiuni CLARE:
+Scrie în limba română un text, clar și convingător, format din 5 secțiuni:
 
-Interpretare:
+1. Creștere. modelul are tracțiune?
 (text)
 
-Concluzie:
+2. Profitabilitate. Ce înseamnă pentru companie?
+(text)
+
+3. Cash Flow. Cum se manifestă în practică?
+(text)
+
+4. Eficiența activelor. Ce implică pentru eficiență?
+(text)
+
+5. Capital uman. Care este impactul asupra performanței?
+(text)
+
+Concluzie strategica:
 (text)
 
 Reguli:
-- maximum 220 de cuvinte în total
+- maximum 500 de cuvinte în total
 - ton profesionist, clar, business-oriented
 - fără bullet points
 - fără jargon inutil
-- nu repeta toate cifrele; folosește doar ce susține ideea
-- începe cu 1–2 idei despre ce este sănătos, bun sau valoros în business
-- imediat după aceea, treci spre tensiuni, riscuri și probleme reale
-- identifică problemele de fond ale modelului de business, nu doar ce se vede la suprafață
-- concluzia trebuie să fie puternică, scurtă și memorabilă
-- evită formulări generale și banale
-- scrie ca un consultant care vede atât ce merge bine, cât și unde se poate rupe modelul
-- nu scrie titlu principal de tip „Analiză TPC — nume companie”
-- nu folosi markdown de tip # sau ##
-- folosește exact aceste etichete simple:
+- nu enumera explicit cele 5 axe (integrează-le natural în text)
+- nu repeta toate cifrele; folosește doar ce susține insight-ul
+- începe cu 2 idei despre ce funcționează bine (creștere, eficiență, productivitate etc.)
+- apoi evidențiază dezechilibrele și tensiunile din model
+- accent puternic pe relația: creștere, profit si cash
+- identifică mecanismul din spate (de ex: creștere finanțată prin capital blocat sau datorii)
+- NU oferi soluții sau recomandări
+- NU spune „ar trebui”
+- exprimă implicații, nu acțiuni
+- evidențiază unde modelul este stabil și unde devine vulnerabil
+- concluzia trebuie să fie structurata, clară și memorabilă
+- evită formulări generale sau banale
+- scrie ca un consultant care înțelege modelul economic, nu doar cifrele
+- nu scrie titlu principal
+- nu folosi markdown (#, ##)
+- folosește exact aceste etichete:
+
 Interpretare:
 Concluzie:
 

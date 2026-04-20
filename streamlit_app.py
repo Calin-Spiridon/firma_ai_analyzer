@@ -28,7 +28,7 @@ def get_year_dict(data: dict, year: int):
     return {}
 
 
-st.set_page_config(page_title="TPC Company Analyzer", layout="wide")
+st.set_page_config(page_title="Company Analyser by TPC", layout="wide")
 
 if "result" not in st.session_state:
     st.session_state.result = None
@@ -36,11 +36,11 @@ if "result" not in st.session_state:
 if "analysis_text" not in st.session_state:
     st.session_state.analysis_text = None
 
-st.title("TPC Company Analyzer")
+st.title("Company Analyzer by TPC")
 st.write("Introdu CUI-ul unei companii și generează analiza financiară.")
 
-cui_input = st.text_input("CUI companie", value="5052558")
-use_cache = st.checkbox("Folosește cache dacă există", value=True)
+cui_input = st.text_input("CUI companie", value="")
+use_cache = st.checkbox("Folosește cache dacă există", value=False)
 
 col_action_1, col_action_2 = st.columns([1, 1])
 
