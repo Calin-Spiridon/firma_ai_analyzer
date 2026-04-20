@@ -33,7 +33,7 @@ Pentru fiecare secțiune:
 - apoi 1 sau 2 paragrafe scurte
 - fără bullet points
 - fără markdown (#, ##, **)
-- fără titlu principal înainte de secțiunea 1
+- Titlu obligatoriu inainte de sectiunea 1: TPC Snapshot
 
 Reguli:
 - maximum 650 de cuvinte în total
