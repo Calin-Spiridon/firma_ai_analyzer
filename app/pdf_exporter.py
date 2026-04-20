@@ -24,9 +24,6 @@ def build_table_rows(table_data: dict) -> str:
 
 
 def format_analysis_text(text: str) -> str:
-    text = text.replace("Interpretare:", "<h2>1. Interpretare TPC</h2>")
-    text = text.replace("Concluzie:", "<h2>2. Concluzie TPC</h2>")
-
     paragraphs = text.split("\n")
     formatted = ""
 
@@ -35,8 +32,8 @@ def format_analysis_text(text: str) -> str:
         if not cleaned:
             continue
 
-        if cleaned.startswith("<h2>"):
-            formatted += cleaned
+        if cleaned.startswith(("1.", "2.", "3.", "4.", "5.", "6.")):
+            formatted += f"<h2>{cleaned}</h2>"
         else:
             formatted += f"<p>{cleaned}</p>"
 
@@ -68,13 +65,16 @@ def generate_pdf_report(
         years=years_text,
         table_rows=table_rows,
         interpretation=formatted_analysis,
-        kpi_cagr=table_data["Valoare"][-1],
-        kpi_profit=table_data["Valoare"][0],
-        kpi_roe=table_data["Valoare"][17],
-        kpi_debt=table_data["Valoare"][13],
-        kpi_stoc=table_data["Valoare"][3],
+        kpi_cagr=table_data["Valoare"][-1],   # %CAGR
+        kpi_profit=table_data["Valoare"][0],  # %Profit Net
+        kpi_roe=table_data["Valoare"][16],    # ROE DuPont
+        kpi_debt=table_data["Valoare"][4],    # Zile creanțe
+        kpi_stoc=table_data["Valoare"][3],    # Zile stoc
     )
 
-    pdf_bytes = HTML(string=html_content, base_url=str((Path(__file__).parent / "templates").resolve())).write_pdf()
+    pdf_bytes = HTML(
+        string=html_content,
+        base_url=str((Path(__file__).parent / "templates").resolve())
+    ).write_pdf()
 
     return pdf_bytes
