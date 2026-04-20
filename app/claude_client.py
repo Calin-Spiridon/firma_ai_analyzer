@@ -24,7 +24,7 @@ Analizează compania de mai jos folosind o logică pe 5 dimensiuni fundamentale:
 4. Eficiența activelor (sales on assets)
 5. Capital uman (productivitate, fond salarial, randament)
 
-Scrie în limba română un text, clar și convingător, format din 5 secțiuni:
+Scrie în limba română un text, clar și convingător, format din 6 secțiuni:
 
 1. Creștere. modelul are tracțiune?
 (text)
@@ -41,11 +41,11 @@ Scrie în limba română un text, clar și convingător, format din 5 secțiuni:
 5. Capital uman. Care este impactul asupra performanței?
 (text)
 
-Concluzie strategica:
+6. Concluzie strategica:
 (text)
 
 Reguli:
-- maximum 500 de cuvinte în total
+- maximum 700 de cuvinte în total
 - ton profesionist, clar, business-oriented
 - fără bullet points
 - fără jargon inutil
