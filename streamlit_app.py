@@ -61,7 +61,7 @@ def build_table_data(indicators: dict, cagr_ca: float, years_sorted: list[int]) 
             format_integer_number(indicators["zile_creante"]),
             format_integer_number(indicators["capital_blocat"]),
             format_percent(indicators["capital_blocat_ratio"], digits=1),
-            format_number(indicators["salariu_mediu_lunar"]),
+            format_integer_number(indicators["salariu_mediu_lunar"]),
             format_integer_number(indicators["salariu_anual"]),
             format_integer_number(indicators["fond_salarial"]),
             format_percent(indicators["pondere_fond_salarial"], digits=1),
@@ -170,8 +170,9 @@ if st.session_state.result:
     st.dataframe(df, use_container_width=True, hide_index=True)
 
     st.caption(
-        "* Fondul salarial a fost calculat estimativ, folosind salariul mediu brut din România corespunzător anului analizat (2024 sau 2025, după caz)."
-    )
+    "* Fondul salarial a fost calculat estimativ, folosind salariul mediu brut din România corespunzător anului analizat (2024 sau 2025, după caz).\n"
+    "* Analiza se bazează pe date publice disponibile și nu implică validarea directă cu compania."
+)
 
     need_generate = st.session_state.analysis_text is None or refresh_claude_clicked
 
