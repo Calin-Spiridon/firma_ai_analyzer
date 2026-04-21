@@ -3,11 +3,13 @@ import streamlit as st
 
 from app.analysis_service import build_company_analysis
 from app.cache_manager import load_from_cache, save_to_cache
-from app.openai_client import generate_tpc_analysis_openai
 from app.company_enrichment_service import enrich_companies
 from app.excel_log import append_company_log
+from app.openai_client import generate_tpc_analysis_openai
 from app.pdf_exporter import generate_pdf_report
-from app.termene_client import TermeneClient
+from app.utils import calculate_cagr
+from app.openai_dynamic_client import generate_tpc_dynamic_insight_openai
+from app.openai_speech_client import generate_tpc_agent_speech_openai
 
 
 # =========================
@@ -81,6 +83,9 @@ def format_enrichment_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     return df_display
 
 
+# =========================
+# HELPERS
+# =========================
 def get_year_dict(data: dict, year: int):
     if year in data:
         return data[year]
@@ -89,13 +94,70 @@ def get_year_dict(data: dict, year: int):
     return {}
 
 
-def build_table_data(indicators: dict, cagr_ca: float, years_sorted: list[int]) -> dict:
-    start_year = years_sorted[0]
-    end_year = years_sorted[-1]
+def calculate_yoy_change(current_value, previous_value):
+    if current_value is None or previous_value in (None, 0):
+        return None
+    return (current_value - previous_value) / previous_value
+
+
+def build_table_data(
+    indicators_by_year: dict,
+    normalized_by_year: dict,
+    cagr_ca: float | None,
+    years_sorted: list[int],
+    latest_year: int,
+) -> dict:
+    indicators_current = get_year_dict(indicators_by_year, latest_year)
+
+    prev_year_1 = years_sorted[-2] if len(years_sorted) >= 2 else None
+    prev_year_2 = years_sorted[-3] if len(years_sorted) >= 3 else None
+
+    indicators_prev_1 = get_year_dict(indicators_by_year, prev_year_1) if prev_year_1 else {}
+    indicators_prev_2 = get_year_dict(indicators_by_year, prev_year_2) if prev_year_2 else {}
+
+    start_year_full = years_sorted[0]
+    end_year_full = years_sorted[-1]
+
+    # CAGR ultimii 3 ani analizați
+    cagr_3y = None
+    cagr_3y_label = "%CAGR ultimii 3 ani - creștere medie anuală"
+
+    if len(years_sorted) >= 3:
+        cagr_3y_start_year = years_sorted[-3]
+        cagr_3y_end_year = years_sorted[-1]
+        cagr_3y_label = f"%CAGR ({cagr_3y_start_year} - {cagr_3y_end_year}) - creștere medie anuală"
+
+        start_ca_3y = get_year_dict(normalized_by_year, cagr_3y_start_year).get("cifra_afaceri")
+        end_ca_3y = get_year_dict(normalized_by_year, cagr_3y_end_year).get("cifra_afaceri")
+
+        if (
+            start_ca_3y not in (None, 0)
+            and end_ca_3y is not None
+            and cagr_3y_end_year > cagr_3y_start_year
+        ):
+            cagr_3y = calculate_cagr(
+                start_ca_3y,
+                end_ca_3y,
+                cagr_3y_end_year - cagr_3y_start_year,
+            )
+
+    # Dinamica CA vs anul anterior
+    yoy_ca = None
+    yoy_ca_label = "%Dinamica CA vs anul anterior"
+
+    if prev_year_1 is not None:
+        yoy_ca_label = f"%Dinamica CA {latest_year} vs {prev_year_1}"
+
+        current_ca = get_year_dict(normalized_by_year, latest_year).get("cifra_afaceri")
+        previous_ca = get_year_dict(normalized_by_year, prev_year_1).get("cifra_afaceri")
+
+        yoy_ca = calculate_yoy_change(current_ca, previous_ca)
 
     return {
         "Indicator": [
-            "%Profit Net (Profit Net/CA)",
+            f"%Profit Net {latest_year} (Profit Net/CA)",
+            f"%Profit Net {prev_year_1} (Profit Net/CA)" if prev_year_1 else "%Profit Net an anterior",
+            f"%Profit Net {prev_year_2} (Profit Net/CA)" if prev_year_2 else "%Profit Net cu 2 ani în urmă",
             "Sales on asset (CA/Active totale)",
             "Equity multiplier (Active totale/Capital Propiu)",
             "Zile stoc (Stoc/CA medie zilnică)",
@@ -112,27 +174,33 @@ def build_table_data(indicators: dict, cagr_ca: float, years_sorted: list[int]) 
             "Debt to equity (Datorii totale/Capital Propiu)",
             "%Datorii (Datorii totale/CA)",
             "ROE DuPont (%Profit Net*Sales on asset*equity multiplier)",
-            f"%CAGR ({start_year} - {end_year}) - creștere medie anuală",
+            f"%CAGR ({start_year_full} - {end_year_full}) - creștere medie anuală",
+            cagr_3y_label,
+            yoy_ca_label,
         ],
         "Valoare": [
-            format_percent(indicators.get("profit_margin"), digits=2),
-            format_number(indicators.get("sales_on_assets")),
-            format_number(indicators.get("equity_multiplier")),
-            format_integer_number(indicators.get("zile_stoc")),
-            format_integer_number(indicators.get("zile_creante")),
-            format_integer_number(indicators.get("capital_blocat")),
-            format_percent(indicators.get("capital_blocat_ratio"), digits=1),
-            format_integer_number(indicators.get("salariu_mediu_lunar")),
-            format_integer_number(indicators.get("salariu_anual")),
-            format_integer_number(indicators.get("fond_salarial")),
-            format_percent(indicators.get("pondere_fond_salarial"), digits=1),
-            format_integer_number(indicators.get("productivitate")),
-            format_number(indicators.get("randament")),
-            format_percent(indicators.get("debt_ratio"), digits=1),
-            format_number(indicators.get("debt_to_equity")),
-            format_percent(indicators.get("datorii_ratio_ca"), digits=1),
-            format_percent(indicators.get("roe_dupont"), digits=1),
+            format_percent(indicators_current.get("profit_margin"), digits=2),
+            format_percent(indicators_prev_1.get("profit_margin"), digits=2) if prev_year_1 else "N/A",
+            format_percent(indicators_prev_2.get("profit_margin"), digits=2) if prev_year_2 else "N/A",
+            format_number(indicators_current.get("sales_on_assets")),
+            format_number(indicators_current.get("equity_multiplier")),
+            format_integer_number(indicators_current.get("zile_stoc")),
+            format_integer_number(indicators_current.get("zile_creante")),
+            format_integer_number(indicators_current.get("capital_blocat")),
+            format_percent(indicators_current.get("capital_blocat_ratio"), digits=1),
+            format_integer_number(indicators_current.get("salariu_mediu_lunar")),
+            format_integer_number(indicators_current.get("salariu_anual")),
+            format_integer_number(indicators_current.get("fond_salarial")),
+            format_percent(indicators_current.get("pondere_fond_salarial"), digits=1),
+            format_integer_number(indicators_current.get("productivitate")),
+            format_number(indicators_current.get("randament")),
+            format_percent(indicators_current.get("debt_ratio"), digits=1),
+            format_number(indicators_current.get("debt_to_equity")),
+            format_percent(indicators_current.get("datorii_ratio_ca"), digits=1),
+            format_percent(indicators_current.get("roe_dupont"), digits=1),
             format_percent(cagr_ca, digits=1) if cagr_ca is not None else "N/A",
+            format_percent(cagr_3y, digits=1) if cagr_3y is not None else "N/A",
+            format_percent(yoy_ca, digits=1) if yoy_ca is not None else "N/A",
         ],
     }
 
@@ -154,6 +222,10 @@ def run_company_analysis(cui: str, use_cache: bool):
 
     st.session_state.result = result
     st.session_state.analysis_text = None
+    st.session_state.dynamic_text = None
+    st.session_state.speech_text = None
+    st.session_state.active_ai_mode = None
+    st.session_state.active_ai_text = None
 
     company_info_for_log = result["company_info"]
     latest_year_for_log = result["latest_year"]
@@ -196,9 +268,11 @@ def render_company_analysis_result():
 
     st.subheader(f"Indicatori {latest_year}")
     table_data = build_table_data(
-        indicators=indicators,
+        indicators_by_year=result["indicators_by_year"],
+        normalized_by_year=result["normalized_by_year"],
         cagr_ca=cagr_ca,
         years_sorted=years_sorted,
+        latest_year=latest_year,
     )
 
     df = pd.DataFrame(table_data)
@@ -209,37 +283,147 @@ def render_company_analysis_result():
         "* Analiza se bazează pe date publice disponibile și nu implică validarea directă cu compania."
     )
 
-    refresh_ai_clicked = st.button("Regenerează interpretarea AI")
-    need_generate = st.session_state.analysis_text is None or refresh_ai_clicked
+    st.subheader("Instrumente TPC")
 
-    if need_generate:
+    col_ai_1, col_ai_2, col_ai_3 = st.columns(3)
+
+    with col_ai_1:
+        concluzie_clicked = st.button("Concluzie TPC", key="btn_concluzie_tpc")
+
+    with col_ai_2:
+        dinamica_clicked = st.button("Dinamica Companie", key="btn_dinamica_companie")
+
+    with col_ai_3:
+        speech_clicked = st.button("Speech Agent", key="btn_speech_agent")
+
+    # =========================
+    # Date pentru Dinamica Companie
+    # =========================
+    years_last_3 = years_sorted[-3:] if len(years_sorted) >= 3 else years_sorted
+
+    profit_margin_last_3y = []
+    for year in years_last_3:
+        indicators_year = get_year_dict(result["indicators_by_year"], year)
+        profit_margin_last_3y.append(indicators_year.get("profit_margin"))
+
+    cagr_3y = None
+    revenue_growth_last_year = None
+
+    if len(years_last_3) >= 3:
+        start_year_3y = years_last_3[0]
+        end_year_3y = years_last_3[-1]
+
+        start_ca_3y = get_year_dict(result["normalized_by_year"], start_year_3y).get("cifra_afaceri")
+        end_ca_3y = get_year_dict(result["normalized_by_year"], end_year_3y).get("cifra_afaceri")
+
+        if (
+            start_ca_3y not in (None, 0)
+            and end_ca_3y is not None
+            and end_year_3y > start_year_3y
+        ):
+            cagr_3y = calculate_cagr(
+                start_ca_3y,
+                end_ca_3y,
+                end_year_3y - start_year_3y,
+            )
+
+    if len(years_sorted) >= 2:
+        previous_year = years_sorted[-2]
+        current_ca = get_year_dict(result["normalized_by_year"], latest_year).get("cifra_afaceri")
+        previous_ca = get_year_dict(result["normalized_by_year"], previous_year).get("cifra_afaceri")
+        revenue_growth_last_year = calculate_yoy_change(current_ca, previous_ca)
+
+    # =========================
+    # Buton 1 — Concluzie TPC
+    # =========================
+    if concluzie_clicked:
         try:
-            with st.spinner("Se generează analiza cu AI..."):
-                st.session_state.analysis_text = generate_tpc_analysis_openai(
+            with st.spinner("Se generează Concluzia TPC..."):
+                text = generate_tpc_analysis_openai(
                     company_info=company_info,
                     years_sorted=years_sorted,
                     latest_year=latest_year,
                     indicators=indicators,
                     cagr_ca=cagr_ca,
                 )
+                st.session_state.analysis_text = text
+                st.session_state.active_ai_mode = "conclusion"
+                st.session_state.active_ai_text = text
         except Exception as e:
-            st.error(f"A apărut o eroare la generarea analizei: {str(e)}")
+            st.error(f"A apărut o eroare la generarea concluziei: {str(e)}")
+
+    # =========================
+    # Buton 2 — Dinamica Companie
+    # =========================
+    if dinamica_clicked:
+        try:
+            with st.spinner("Se generează Dinamica Companiei..."):
+                text = generate_tpc_dynamic_insight_openai(
+                    company_info=company_info,
+                    profit_margin_last_3y=profit_margin_last_3y,
+                    cagr_3y=cagr_3y,
+                    revenue_growth_last_year=revenue_growth_last_year,
+                    years_last_3=years_last_3,
+                )
+                st.session_state.dynamic_text = text
+                st.session_state.active_ai_mode = "dynamic"
+                st.session_state.active_ai_text = text
+        except Exception as e:
+            st.error(f"A apărut o eroare la generarea dinamicii: {str(e)}")
+
+    # =========================
+    # Buton 3 — Speech Agent
+    # =========================
+    if speech_clicked:
+        try:
+            with st.spinner("Se generează Speech Agent..."):
+                text = generate_tpc_agent_speech_openai(
+                    company_info=company_info,
+                    years_sorted=years_sorted,
+                    latest_year=latest_year,
+                    indicators=indicators,
+                    cagr_ca=cagr_ca,
+                )
+                st.session_state.speech_text = text
+                st.session_state.active_ai_mode = "speech"
+                st.session_state.active_ai_text = text
+        except Exception as e:
+            st.error(f"A apărut o eroare la generarea speech-ului: {str(e)}")
 
     st.subheader("Interpretare TPC")
-    if st.session_state.analysis_text:
-        st.write(st.session_state.analysis_text)
+    if st.session_state.active_ai_mode == "conclusion" and st.session_state.active_ai_text:
+        st.subheader("Concluzie TPC")
+        st.write(st.session_state.active_ai_text)
 
+    elif st.session_state.active_ai_mode == "dynamic" and st.session_state.active_ai_text:
+        st.subheader("Dinamica Companie")
+        st.write(st.session_state.active_ai_text)
+
+    elif st.session_state.active_ai_mode == "speech" and st.session_state.active_ai_text:
+        st.subheader("Speech Agent")
+        st.write(st.session_state.active_ai_text)
+
+    if st.session_state.active_ai_text:
         pdf_bytes = generate_pdf_report(
             company_info=company_info,
             years_sorted=years_sorted,
             table_data=table_data,
-            analysis_text=st.session_state.analysis_text,
+            analysis_text=st.session_state.active_ai_text,
         )
 
+        pdf_label = "Descarcă PDF"
+        if st.session_state.active_ai_mode == "conclusion":
+            pdf_label = "Descarcă PDF - Concluzie TPC"
+        elif st.session_state.active_ai_mode == "dynamic":
+            pdf_label = "Descarcă PDF - Dinamica Companie"
+        elif st.session_state.active_ai_mode == "speech":
+            pdf_label = "Descarcă PDF - Speech Agent"
+
+        safe_name = company_info.get("company_name", company_info.get("cui", "company"))
         st.download_button(
-            label="Descarcă PDF",
+            label=pdf_label,
             data=pdf_bytes,
-            file_name=f"TPC Analysis {company_info.get('company_name', company_info.get('cui', 'company'))}.pdf",
+            file_name=f"TPC Analysis {safe_name}.pdf",
             mime="application/pdf",
         )
 
@@ -256,26 +440,32 @@ def render_search_tab():
     if "enriched_results" not in st.session_state:
         st.session_state.enriched_results = []
 
-    # ════════════════════════════════════════════════════════════════════
-    # PASUL 1 — Filtrare din baza de date locală
-    # ════════════════════════════════════════════════════════════════════
     st.subheader("Pasul 1 — Filtrare companii din baza de date locală")
 
     col1, col2, col3 = st.columns(3)
     with col1:
         min_turnover = st.number_input(
-            "CA minimă (RON)", min_value=0.0, value=0.0, step=1000000.0,
-            key="p1_ca_min"
+            "CA minimă (RON)",
+            min_value=0.0,
+            value=0.0,
+            step=1000000.0,
+            key="p1_ca_min",
         )
     with col2:
         max_turnover = st.number_input(
-            "CA maximă (RON)", min_value=0.0, value=0.0, step=1000000.0,
-            key="p1_ca_max"
+            "CA maximă (RON)",
+            min_value=0.0,
+            value=0.0,
+            step=1000000.0,
+            key="p1_ca_max",
         )
     with col3:
         min_employees = st.number_input(
-            "Nr. minim angajați", min_value=0, value=0, step=10,
-            key="p1_emp"
+            "Nr. minim angajați",
+            min_value=0,
+            value=0,
+            step=10,
+            key="p1_emp",
         )
 
     col4, col5 = st.columns(2)
@@ -283,12 +473,16 @@ def render_search_tab():
         county_filter = st.selectbox(
             "Județ",
             options=["Toate", "Municipiul Bucuresti", "Ilfov"],
-            key="p1_judet"
+            key="p1_judet",
         )
     with col5:
         max_results = st.number_input(
-            "Număr maxim rezultate", min_value=10, max_value=500, value=100, step=10,
-            key="p1_max"
+            "Număr maxim rezultate",
+            min_value=10,
+            max_value=500,
+            value=100,
+            step=10,
+            key="p1_max",
         )
 
     search_clicked = st.button("Filtrează", key="btn_search_local")
@@ -296,6 +490,7 @@ def render_search_tab():
     if search_clicked:
         try:
             from app.local_db_service import search_local_db
+
             results = search_local_db(
                 min_turnover=float(min_turnover) if min_turnover > 0 else None,
                 max_turnover=float(max_turnover) if max_turnover > 0 else None,
@@ -303,22 +498,25 @@ def render_search_tab():
                 county=None if county_filter == "Toate" else county_filter,
                 max_results=int(max_results),
             )
+
             st.session_state.local_results = results
             st.session_state.enriched_results = []
             st.success(f"✅ {len(results)} companii găsite.")
 
-            # Download CSV rezultate filtrate
             df_csv = pd.DataFrame(results)
-            df_csv = df_csv.rename(columns={
-                "cui": "CUI",
-                "denumire": "Denumire",
-                "judet": "Județ",
-                "localitate": "Localitate",
-                "caen": "CAEN",
-                "cifra_afaceri": "Cifră de afaceri",
-                "angajati": "Angajați",
-                "profit_net": "Profit net",
-            })
+            df_csv = df_csv.rename(
+                columns={
+                    "cui": "CUI",
+                    "denumire": "Denumire",
+                    "judet": "Județ",
+                    "localitate": "Localitate",
+                    "caen": "CAEN",
+                    "cifra_afaceri": "Cifră de afaceri",
+                    "angajati": "Angajați",
+                    "profit_net": "Profit net",
+                }
+            )
+
             csv_filtrat = df_csv.to_csv(index=False).encode("utf-8-sig")
             st.download_button(
                 "⬇️ Descarcă CSV rezultate filtrate",
@@ -330,9 +528,7 @@ def render_search_tab():
 
         except Exception as e:
             st.error(f"Eroare: {str(e)}")
-            
 
-    # ── Tabel Pasul 1 cu selecție ───────────────────────────────────────
     local_results = st.session_state.local_results
 
     if local_results:
@@ -344,7 +540,8 @@ def render_search_tab():
             with col_chk:
                 checked = st.checkbox("", key=f"chk_{item['cui']}", value=False)
             with col_info:
-                ca_fmt = f"{item['cifra_afaceri']:,.0f}" if item['cifra_afaceri'] else "-"
+                cifra_afaceri = item.get("cifra_afaceri")
+                ca_fmt = f"{cifra_afaceri:,.0f}".replace(",", ".") if cifra_afaceri else "-"
                 st.write(
                     f"**{item['denumire']}** · CUI: {item['cui']} · "
                     f"CAEN: {item['caen']} · CA: {ca_fmt} RON · "
@@ -355,9 +552,6 @@ def render_search_tab():
 
         st.markdown(f"*{len(selected_cuis)} companii selectate*")
 
-        # ════════════════════════════════════════════════════════════════
-        # PASUL 2 — Enrichment Termene
-        # ════════════════════════════════════════════════════════════════
         st.divider()
         st.subheader("Pasul 2 — Enrichment Termene pentru companiile selectate")
         st.caption(f"⚠️ Fiecare companie consumă 1 request din limita de 500.")
@@ -372,21 +566,21 @@ def render_search_tab():
             try:
                 with st.spinner(f"Se procesează {len(selected_cuis)} companii..."):
                     enriched_rows = enrich_companies(selected_cuis)
+
                 df = pd.DataFrame(enriched_rows)
+
                 if "turnover" in df.columns:
                     df = df.sort_values(
                         by="turnover",
                         key=lambda x: pd.to_numeric(x, errors="coerce"),
                         ascending=False,
                     )
+
                 st.session_state.enriched_results = df.to_dict("records")
                 st.success(f"✅ {len(df)} companii procesate.")
             except Exception as e:
                 st.error(f"Eroare enrichment: {str(e)}")
 
-        # ════════════════════════════════════════════════════════════════
-        # PASUL 3 — Tabel final cu buton Analizează
-        # ════════════════════════════════════════════════════════════════
         enriched_results = st.session_state.enriched_results
 
         if enriched_results:
@@ -409,6 +603,7 @@ def render_search_tab():
             for row in enriched_results:
                 cui = row.get("cui")
                 nume = row.get("company_name") or str(cui)
+
                 col_info, col_btn = st.columns([8, 2])
                 with col_info:
                     st.write(f"**{nume}** · CUI: {cui}")
@@ -418,13 +613,13 @@ def render_search_tab():
                             with st.spinner(f"Se analizează {nume}..."):
                                 result = build_company_analysis(int(cui))
                                 save_to_cache(str(cui), result)
+
                             st.session_state.result = result
                             st.session_state.analysis_text = None
                             st.success("✅ Gata! Vezi tab-ul 'Analiză companie'.")
                         except Exception as e:
                             st.error(f"Eroare: {str(e)}")
 
-  
 
 # =========================
 # PAGE CONFIG
@@ -436,6 +631,18 @@ if "result" not in st.session_state:
 
 if "analysis_text" not in st.session_state:
     st.session_state.analysis_text = None
+
+if "dynamic_text" not in st.session_state:
+    st.session_state.dynamic_text = None
+
+if "speech_text" not in st.session_state:
+    st.session_state.speech_text = None
+
+if "active_ai_mode" not in st.session_state:
+    st.session_state.active_ai_mode = None
+
+if "active_ai_text" not in st.session_state:
+    st.session_state.active_ai_text = None
 
 
 # =========================

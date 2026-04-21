@@ -77,7 +77,7 @@ STIL OBLIGATORIU:
 
 OBIECTIV:
 Textul trebuie să răspundă la întrebarea:
-„Ce spune această structură financiară despre calitatea și sustenabilitatea business-ului?”
+„Ce spune această structură financiară despre calitatea și sustenabilitatea business-ului?"
 
 STRUCTURA OBLIGATORIE:
 Scrie exact în acest format:
@@ -126,13 +126,13 @@ REGULI DE INTERPRETARE:
 - Concluzia trebuie să spună clar unde este punctul forte și unde este riscul structural.
 
 CE SĂ EVIȚI:
-- Nu spune „indicatorul sugerează că”.
-- Nu spune „pe baza datelor oferite”.
+- Nu spune „indicatorul sugerează că".
+- Nu spune „pe baza datelor oferite".
 - Nu suna ca un profesor.
 - Nu repeta în fiecare secțiune aceleași idei.
 - Nu transforma textul într-un comentariu contabil.
 - Nu scrie prea general.
-- Nu folosi formulări goale precum „în contextul actual al pieței” dacă nu ai date despre piață.
+- Nu folosi formulări goale precum „în contextul actual al pieței" dacă nu ai date despre piață.
 
 EXEMPLU DE NIVEL DORIT:
 Un text care explică limpede:
@@ -146,7 +146,7 @@ Un text care explică limpede:
 IMPORTANT:
 Textul trebuie să sune natural, clar și puternic.
 Nu trebuie să fie nici prea scurt, nici prea lung.
-Trebuie să fie mai degrabă „diagnostic executiv” decât „descriere de indicatori”.
+Trebuie să fie mai degrabă „diagnostic executiv" decât „descriere de indicatori".
 """
 
     user_prompt = f"""
@@ -193,12 +193,12 @@ INSTRUCȚIUNI FINALE
 - Dacă ROE este influențat de levier, explică clar.
 """
 
-    response = client.responses.create(
+    response = client.chat.completions.create(
         model=OPENAI_MODEL,
-        input=[
+        messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt},
         ],
     )
 
-    return response.output_text.strip()
+    return response.choices[0].message.content.strip()

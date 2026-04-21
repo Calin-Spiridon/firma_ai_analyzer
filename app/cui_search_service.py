@@ -1,5 +1,6 @@
 import requests
 import pandas as pd
+import unicodedata
 from io import StringIO
 
 
@@ -7,6 +8,13 @@ ONRC_CSV_URL = (
     "https://data.gov.ro/dataset/f7374920-a656-4e34-85dd-a61c6e6e5603"
     "/resource/488a8d00-90df-4f37-b5f4-6c9111e6f1e7/download/od_firme.csv"
 )
+
+
+def _normalize(s: str) -> str:
+    if not isinstance(s, str):
+        return ""
+    s = unicodedata.normalize("NFKD", s.upper())
+    return "".join(c for c in s if not unicodedata.combining(c))
 
 
 def search_companies_local_full(
@@ -19,7 +27,6 @@ def search_companies_local_full(
         response = requests.get(ONRC_CSV_URL, timeout=120)
         response.raise_for_status()
 
-        # Forțăm encoding utf-8 corect
         response.encoding = "utf-8"
         text = response.text
 
@@ -35,33 +42,13 @@ def search_companies_local_full(
     except Exception as e:
         raise Exception(f"Nu am putut descărca lista de firme: {str(e)}")
 
-    # Curățăm numele coloanelor
-    df.columns = [c.strip().upper().replace("\ufeff", "") for c in df.columns]
+    df.columns = [c.strip().upper().replace("﻿", "") for c in df.columns]
 
-    # Filtrare după județ — folosim CUI ca să găsim București indiferent de diacritice
     if county:
-        county_norm = county.strip().upper()
-
-        # Normalizăm și coloana din CSV pentru comparație
-        def normalize(s):
-            if not isinstance(s, str):
-                return ""
-            return (s.upper()
-                .replace("Ș", "S").replace("Ț", "T")
-                .replace("Ă", "A").replace("Â", "A").replace("Î", "I")
-                .replace("ș", "S").replace("ț", "T")
-                .replace("ă", "A").replace("â", "A").replace("î", "I")
-                # encoding stricat
-                .replace("Å¢", "T").replace("Å£", "T")
-                .replace("Ã¢", "A").replace("Ã®", "I")
-                .replace("È™", "S").replace("Èš", "T")
-                .encode("ascii", "ignore").decode()
-            )
-
-        county_ascii = normalize(county_norm)
+        county_ascii = _normalize(county.strip())
 
         if "ADR_JUDET" in df.columns:
-            df = df[df["ADR_JUDET"].apply(lambda x: county_ascii in normalize(x))]
+            df = df[df["ADR_JUDET"].apply(lambda x: county_ascii in _normalize(x))]
 
     df = df.head(max_results)
 
