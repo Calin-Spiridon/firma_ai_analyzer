@@ -4,7 +4,7 @@ import traceback
 import os
 
 app = Flask(__name__)
-CORS(app, origins=["https://analiza.tpcconcept.ro", "http://localhost"])
+CORS(app)
 
 
 def _validate_cui(cui_str: str) -> bool:
