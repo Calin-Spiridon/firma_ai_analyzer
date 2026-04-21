@@ -1,5 +1,12 @@
 from dotenv import load_dotenv
 import os
+import streamlit as st
+
+def get_env(key: str):
+    return os.getenv(key) or st.secrets.get(key)
+
+OPENAI_API_KEY = get_env("OPENAI_API_KEY")
+OPENAI_MODEL = get_env("OPENAI_MODEL")
 
 load_dotenv()
 
