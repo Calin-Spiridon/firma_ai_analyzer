@@ -3,7 +3,7 @@ import streamlit as st
 
 from app.analysis_service import build_company_analysis
 from app.cache_manager import load_from_cache, save_to_cache
-from app.claude_client import generate_tpc_analysis
+from app.openai_client import generate_tpc_analysis_openai
 from app.company_enrichment_service import enrich_companies
 from app.excel_log import append_company_log
 from app.pdf_exporter import generate_pdf_report
@@ -170,12 +170,12 @@ def run_company_analysis(cui: str, use_cache: bool):
 
 def render_company_analysis_result():
     result = st.session_state.result
-    if not result:
+    if result is None:
         return
 
     company_info = result["company_info"]
-    latest_year = result["latest_year"]
     years_sorted = result["years_sorted"]
+    latest_year = result["latest_year"]
     indicators = get_year_dict(result["indicators_by_year"], latest_year)
     cagr_ca = result["cagr_ca"]
 
@@ -209,13 +209,13 @@ def render_company_analysis_result():
         "* Analiza se bazează pe date publice disponibile și nu implică validarea directă cu compania."
     )
 
-    refresh_claude_clicked = st.button("Regenerează interpretarea Claude")
-    need_generate = st.session_state.analysis_text is None or refresh_claude_clicked
+    refresh_ai_clicked = st.button("Regenerează interpretarea AI")
+    need_generate = st.session_state.analysis_text is None or refresh_ai_clicked
 
     if need_generate:
         try:
-            with st.spinner("Se generează analiza cu Claude..."):
-                st.session_state.analysis_text = generate_tpc_analysis(
+            with st.spinner("Se generează analiza cu AI..."):
+                st.session_state.analysis_text = generate_tpc_analysis_openai(
                     company_info=company_info,
                     years_sorted=years_sorted,
                     latest_year=latest_year,
@@ -223,7 +223,7 @@ def render_company_analysis_result():
                     cagr_ca=cagr_ca,
                 )
         except Exception as e:
-            st.error(f"A apărut o eroare la Claude: {str(e)}")
+            st.error(f"A apărut o eroare la generarea analizei: {str(e)}")
 
     st.subheader("Interpretare TPC")
     if st.session_state.analysis_text:
@@ -251,138 +251,180 @@ def render_company_analysis_result():
 # SEARCH TAB HELPERS
 # =========================
 def render_search_tab():
-    st.subheader("Căutare companii")
-    st.write(
-        "Aici pregătim modulul de screening companii după criterii. "
-        "Momentan poți testa enrichment-ul manual pe listă de CUI-uri. "
-        "Search-ul real din Termene îl legăm când avem payload-ul de filtrare."
-    )
+    if "local_results" not in st.session_state:
+        st.session_state.local_results = []
+    if "enriched_results" not in st.session_state:
+        st.session_state.enriched_results = []
 
-    county = st.text_input("Județ", value="")
-    min_turnover = st.number_input(
-        "Cifra de afaceri minimă (RON)",
-        min_value=0.0,
-        value=0.0,
-        step=100000.0,
-    )
-    min_employees = st.number_input(
-        "Număr minim angajați",
-        min_value=0,
-        value=0,
-        step=1,
-    )
+    # ════════════════════════════════════════════════════════════════════
+    # PASUL 1 — Filtrare din baza de date locală
+    # ════════════════════════════════════════════════════════════════════
+    st.subheader("Pasul 1 — Filtrare companii din baza de date locală")
 
-    batch_size = st.number_input(
-        "Batch viitor pentru enrichment",
-        min_value=1,
-        max_value=100,
-        value=20,
-        step=1,
-    )
-
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
     with col1:
-        search_clicked = st.button("Caută companii")
+        min_turnover = st.number_input(
+            "CA minimă (RON)", min_value=0.0, value=0.0, step=1000000.0,
+            key="p1_ca_min"
+        )
     with col2:
-        st.button("Procesează următoarele N", disabled=True)
+        max_turnover = st.number_input(
+            "CA maximă (RON)", min_value=0.0, value=0.0, step=1000000.0,
+            key="p1_ca_max"
+        )
+    with col3:
+        min_employees = st.number_input(
+            "Nr. minim angajați", min_value=0, value=0, step=10,
+            key="p1_emp"
+        )
+
+    col4, col5 = st.columns(2)
+    with col4:
+        county_filter = st.selectbox(
+            "Județ",
+            options=["Toate", "Municipiul Bucuresti", "Ilfov"],
+            key="p1_judet"
+        )
+    with col5:
+        max_results = st.number_input(
+            "Număr maxim rezultate", min_value=10, max_value=500, value=100, step=10,
+            key="p1_max"
+        )
+
+    search_clicked = st.button("Filtrează", key="btn_search_local")
 
     if search_clicked:
-        filters = {
-            "county": county.strip() or None,
-            "min_turnover": float(min_turnover) if min_turnover > 0 else None,
-            "min_employees": int(min_employees) if min_employees > 0 else None,
-            "batch_size": int(batch_size),
-        }
-
         try:
-            client = TermeneClient()
-            _ = client.search_companies(filters)
-            st.success("Search-ul este conectat.")
-        except NotImplementedError as e:
-            st.warning(str(e))
-            st.info(
-                "Momentan endpointul real de search nu este încă legat. "
-                "Până atunci poți folosi enrichment-ul manual de mai jos."
+            from app.local_db_service import search_local_db
+            results = search_local_db(
+                min_turnover=float(min_turnover) if min_turnover > 0 else None,
+                max_turnover=float(max_turnover) if max_turnover > 0 else None,
+                min_employees=int(min_employees) if min_employees > 0 else None,
+                county=None if county_filter == "Toate" else county_filter,
+                max_results=int(max_results),
             )
-        except Exception as e:
-            st.error(f"A apărut o eroare la search: {str(e)}")
+            st.session_state.local_results = results
+            st.session_state.enriched_results = []
+            st.success(f"✅ {len(results)} companii găsite.")
 
-    st.divider()
-    st.markdown("### Structura pregătită pentru etapa următoare")
-
-    preview_df = pd.DataFrame(
-        [
-            {
-                "Poziție": 1,
-                "Denumire": "Exemplu SRL",
-                "CUI": "12345678",
-                "Județ": county or "București",
-                "Cifra Afaceri": "15.000.000",
-                "Nr. Angajați": "45",
-                "Profit %": "-",
-                "CAGR %": "-",
-                "Telefon": "-",
-                "Email": "-",
-                "Acționari": "-",
-                "Status": "pending",
-            }
-        ]
-    )
-
-    st.dataframe(preview_df, use_container_width=True, hide_index=True)
-
-    csv_data = preview_df.to_csv(index=False).encode("utf-8-sig")
-    st.download_button(
-        "Descarcă CSV exemplu",
-        data=csv_data,
-        file_name="search_results_preview.csv",
-        mime="text/csv",
-    )
-
-    st.divider()
-    st.markdown("### Test enrichment manual după CUI-uri")
-
-    manual_cui_input = st.text_area(
-        "Introdu CUI-uri separate prin virgulă",
-        value="27758121",
-        height=120,
-    )
-
-    run_manual_enrichment = st.button("Rulează enrichment manual")
-
-    if run_manual_enrichment:
-        try:
-            cui_list = [
-                int(x.strip())
-                for x in manual_cui_input.split(",")
-                if x.strip()
-            ]
-
-            with st.spinner("Se rulează enrichment-ul..."):
-                enriched_rows = enrich_companies(cui_list)
-
-            df_enriched = pd.DataFrame(enriched_rows)
-            df_enriched_display = format_enrichment_dataframe(df_enriched)
-
-            if "Cifră de afaceri" in df_enriched_display.columns:
-                df_enriched_display = df_enriched_display.sort_values(
-                    by="Cifră de afaceri",
-                    ascending=False,
-                )
-
-            st.dataframe(df_enriched_display, use_container_width=True, hide_index=True)
-
-            csv_enriched = df_enriched_display.to_csv(index=False).encode("utf-8-sig")
+            # Download CSV rezultate filtrate
+            df_csv = pd.DataFrame(results)
+            df_csv = df_csv.rename(columns={
+                "cui": "CUI",
+                "denumire": "Denumire",
+                "judet": "Județ",
+                "localitate": "Localitate",
+                "caen": "CAEN",
+                "cifra_afaceri": "Cifră de afaceri",
+                "angajati": "Angajați",
+                "profit_net": "Profit net",
+            })
+            csv_filtrat = df_csv.to_csv(index=False).encode("utf-8-sig")
             st.download_button(
-                "Descarcă CSV enrichment manual",
-                data=csv_enriched,
-                file_name="manual_enrichment_results.csv",
+                "⬇️ Descarcă CSV rezultate filtrate",
+                data=csv_filtrat,
+                file_name="rezultate_filtrate.csv",
                 mime="text/csv",
+                key="btn_dl_filtrat",
             )
 
         except Exception as e:
-            st.error(f"Eroare la enrichment manual: {str(e)}")
+            st.error(f"Eroare: {str(e)}")
+            
 
+    # ── Tabel Pasul 1 cu selecție ───────────────────────────────────────
+    local_results = st.session_state.local_results
+
+    if local_results:
+        st.markdown(f"**{len(local_results)} companii — selectează pentru enrichment Termene:**")
+
+        selected_cuis = []
+        for item in local_results:
+            col_chk, col_info = st.columns([1, 10])
+            with col_chk:
+                checked = st.checkbox("", key=f"chk_{item['cui']}", value=False)
+            with col_info:
+                ca_fmt = f"{item['cifra_afaceri']:,.0f}" if item['cifra_afaceri'] else "-"
+                st.write(
+                    f"**{item['denumire']}** · CUI: {item['cui']} · "
+                    f"CAEN: {item['caen']} · CA: {ca_fmt} RON · "
+                    f"Angajați: {item['angajati']} · {item['judet']}"
+                )
+            if checked:
+                selected_cuis.append(item["cui"])
+
+        st.markdown(f"*{len(selected_cuis)} companii selectate*")
+
+        # ════════════════════════════════════════════════════════════════
+        # PASUL 2 — Enrichment Termene
+        # ════════════════════════════════════════════════════════════════
+        st.divider()
+        st.subheader("Pasul 2 — Enrichment Termene pentru companiile selectate")
+        st.caption(f"⚠️ Fiecare companie consumă 1 request din limita de 500.")
+
+        enrich_clicked = st.button(
+            f"Enrichment Termene ({len(selected_cuis)} selectate)",
+            disabled=(len(selected_cuis) == 0),
+            key="btn_enrich",
+        )
+
+        if enrich_clicked and selected_cuis:
+            try:
+                with st.spinner(f"Se procesează {len(selected_cuis)} companii..."):
+                    enriched_rows = enrich_companies(selected_cuis)
+                df = pd.DataFrame(enriched_rows)
+                if "turnover" in df.columns:
+                    df = df.sort_values(
+                        by="turnover",
+                        key=lambda x: pd.to_numeric(x, errors="coerce"),
+                        ascending=False,
+                    )
+                st.session_state.enriched_results = df.to_dict("records")
+                st.success(f"✅ {len(df)} companii procesate.")
+            except Exception as e:
+                st.error(f"Eroare enrichment: {str(e)}")
+
+        # ════════════════════════════════════════════════════════════════
+        # PASUL 3 — Tabel final cu buton Analizează
+        # ════════════════════════════════════════════════════════════════
+        enriched_results = st.session_state.enriched_results
+
+        if enriched_results:
+            st.divider()
+            st.subheader("Pasul 3 — Rezultate finale")
+
+            df_display = format_enrichment_dataframe(pd.DataFrame(enriched_results))
+            st.dataframe(df_display, use_container_width=True, hide_index=True)
+
+            csv_data = df_display.to_csv(index=False).encode("utf-8-sig")
+            st.download_button(
+                "Descarcă CSV",
+                data=csv_data,
+                file_name="rezultate_enrichment.csv",
+                mime="text/csv",
+                key="btn_dl_enrichment",
+            )
+
+            st.markdown("**Analizează o companie:**")
+            for row in enriched_results:
+                cui = row.get("cui")
+                nume = row.get("company_name") or str(cui)
+                col_info, col_btn = st.columns([8, 2])
+                with col_info:
+                    st.write(f"**{nume}** · CUI: {cui}")
+                with col_btn:
+                    if st.button("Analizează", key=f"btn_analyze_{cui}"):
+                        try:
+                            with st.spinner(f"Se analizează {nume}..."):
+                                result = build_company_analysis(int(cui))
+                                save_to_cache(str(cui), result)
+                            st.session_state.result = result
+                            st.session_state.analysis_text = None
+                            st.success("✅ Gata! Vezi tab-ul 'Analiză companie'.")
+                        except Exception as e:
+                            st.error(f"Eroare: {str(e)}")
+
+  
 
 # =========================
 # PAGE CONFIG
@@ -411,7 +453,7 @@ with tab_analysis:
     cui_input = st.text_input("CUI companie", value="")
     use_cache = st.checkbox("Folosește cache dacă există", value=False)
 
-    analyze_clicked = st.button("Analizează compania")
+    analyze_clicked = st.button("Analizează compania", key="btn_analyze_main")
 
     if analyze_clicked:
         if not cui_input.strip().isdigit():

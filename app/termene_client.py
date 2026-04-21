@@ -51,3 +51,5 @@ class TermeneClient:
         Îl folosim ca tester până descoperim payload-ul exact de search.
         """
         return self._post(payload)
+    
+    
