@@ -31,7 +31,7 @@ def generate_tpc_analysis_openai(
     if not OPENAI_API_KEY:
         raise ValueError("Lipsește OPENAI_API_KEY din .env")
 
-    client = OpenAI(api_key=OPENAI_API_KEY)
+    client = OpenAI(api_key=OPENAI_API_KEY, timeout=60.0)
 
     # =========================
     # FORMATARE PENTRU PROMPT

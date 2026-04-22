@@ -25,7 +25,7 @@ def generate_tpc_agent_speech_openai(
     if not OPENAI_API_KEY:
         raise ValueError("Lipsește OPENAI_API_KEY din .env sau din Streamlit Secrets")
 
-    client = OpenAI(api_key=OPENAI_API_KEY)
+    client = OpenAI(api_key=OPENAI_API_KEY, timeout=60.0)
 
     profit_margin = _format_percent(indicators.get("profit_margin"), digits=2)
     zile_stoc = _format_integer(indicators.get("zile_stoc"))

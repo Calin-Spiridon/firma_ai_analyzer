@@ -19,7 +19,7 @@ def generate_tpc_dynamic_insight_openai(
     if not OPENAI_API_KEY:
         raise ValueError("Lipsește OPENAI_API_KEY din .env sau din Streamlit Secrets")
 
-    client = OpenAI(api_key=OPENAI_API_KEY)
+    client = OpenAI(api_key=OPENAI_API_KEY, timeout=60.0)
 
     profit_1 = _format_percent(profit_margin_last_3y[0], 2) if len(profit_margin_last_3y) > 0 else "N/A"
     profit_2 = _format_percent(profit_margin_last_3y[1], 2) if len(profit_margin_last_3y) > 1 else "N/A"

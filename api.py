@@ -1,10 +1,26 @@
 from flask import Flask, jsonify, request, Response
 from flask_cors import CORS
+from cachetools import TTLCache
+from threading import Lock
 import traceback
 import os
 
 app = Flask(__name__)
 CORS(app)
+
+_analysis_cache: TTLCache = TTLCache(maxsize=128, ttl=1800)
+_cache_lock = Lock()
+
+
+def _cached_build_analysis(cui: int) -> dict:
+    with _cache_lock:
+        if cui in _analysis_cache:
+            return _analysis_cache[cui]
+    from app.analysis_service import build_company_analysis
+    result = build_company_analysis(cui)
+    with _cache_lock:
+        _analysis_cache[cui] = result
+    return result
 
 
 def _validate_cui(cui_str: str) -> bool:
@@ -34,9 +50,7 @@ def _fmt_int(v):
 
 
 def _get_year_dict(data, year):
-    if year in data: return data[year]
-    if str(year) in data: return data[str(year)]
-    return {}
+    return data.get(str(year), {})
 
 
 def _calculate_yoy_change(current, previous):
@@ -44,9 +58,24 @@ def _calculate_yoy_change(current, previous):
     return (current - previous) / previous
 
 
-def _build_table_data(result):
-    from app.utils import calculate_cagr
 
+def _get_cagr_3y(result):
+    """Returns (cagr_value, start_year, end_year). cagr_value is None if insufficient data."""
+    from app.utils import calculate_cagr
+    years_sorted = result["years_sorted"]
+    normalized_by_year = result["normalized_by_year"]
+    if len(years_sorted) < 3:
+        return None, None, None
+    y3s = years_sorted[-3]
+    y3e = years_sorted[-1]
+    ca_s = _get_year_dict(normalized_by_year, y3s).get("cifra_afaceri")
+    ca_e = _get_year_dict(normalized_by_year, y3e).get("cifra_afaceri")
+    if ca_s not in (None, 0) and ca_e is not None and y3e > y3s:
+        return calculate_cagr(ca_s, ca_e, y3e - y3s), y3s, y3e
+    return None, y3s, y3e
+
+
+def _build_table_data(result):
     indicators_by_year = result["indicators_by_year"]
     normalized_by_year = result["normalized_by_year"]
     years_sorted       = result["years_sorted"]
@@ -62,17 +91,11 @@ def _build_table_data(result):
     start_year = years_sorted[0]
     end_year   = years_sorted[-1]
 
-    # CAGR 3 ani
-    cagr_3y = None
-    cagr_3y_label = "%CAGR ultimii 3 ani - creștere medie anuală"
-    if len(years_sorted) >= 3:
-        y3s = years_sorted[-3]
-        y3e = years_sorted[-1]
-        cagr_3y_label = f"%CAGR ({y3s} - {y3e}) - creștere medie anuală"
-        ca_s = _get_year_dict(normalized_by_year, y3s).get("cifra_afaceri")
-        ca_e = _get_year_dict(normalized_by_year, y3e).get("cifra_afaceri")
-        if ca_s not in (None, 0) and ca_e is not None and y3e > y3s:
-            cagr_3y = calculate_cagr(ca_s, ca_e, y3e - y3s)
+    cagr_3y, cagr_3y_s, cagr_3y_e = _get_cagr_3y(result)
+    cagr_3y_label = (
+        f"%CAGR ({cagr_3y_s} - {cagr_3y_e}) - creștere medie anuală"
+        if cagr_3y_s else "%CAGR ultimii 3 ani - creștere medie anuală"
+    )
 
     # YoY CA
     yoy_ca = None
@@ -119,8 +142,6 @@ def _build_table_data(result):
 
 def _get_dynamic_inputs(result):
     """Extrage datele necesare pentru generate_tpc_dynamic_insight_openai"""
-    from app.utils import calculate_cagr
-
     years_sorted       = result["years_sorted"]
     latest_year        = result["latest_year"]
     indicators_by_year = result["indicators_by_year"]
@@ -133,14 +154,7 @@ def _get_dynamic_inputs(result):
         ind = _get_year_dict(indicators_by_year, y)
         profit_margin_last_3y.append(ind.get("profit_margin"))
 
-    cagr_3y = None
-    if len(years_last_3) >= 3:
-        y3s = years_last_3[0]
-        y3e = years_last_3[-1]
-        ca_s = _get_year_dict(normalized_by_year, y3s).get("cifra_afaceri")
-        ca_e = _get_year_dict(normalized_by_year, y3e).get("cifra_afaceri")
-        if ca_s not in (None, 0) and ca_e is not None and y3e > y3s:
-            cagr_3y = calculate_cagr(ca_s, ca_e, y3e - y3s)
+    cagr_3y, _, _ = _get_cagr_3y(result)
 
     revenue_growth_last_year = None
     if len(years_sorted) >= 2:
@@ -185,9 +199,7 @@ def analyze():
     if err: return err, code
 
     try:
-        from app.analysis_service import build_company_analysis
-
-        result = build_company_analysis(cui)
+        result = _cached_build_analysis(cui)
         indicators_table, _ = _build_table_data(result)
 
         return jsonify({
@@ -218,10 +230,9 @@ def ai_concluzie():
     if err: return err, code
 
     try:
-        from app.analysis_service import build_company_analysis
         from app.openai_client import generate_tpc_analysis_openai
 
-        result   = build_company_analysis(cui)
+        result   = _cached_build_analysis(cui)
         i        = _get_year_dict(result["indicators_by_year"], result["latest_year"])
 
         text = generate_tpc_analysis_openai(
@@ -247,10 +258,9 @@ def ai_dinamica():
     if err: return err, code
 
     try:
-        from app.analysis_service import build_company_analysis
         from app.openai_dynamic_client import generate_tpc_dynamic_insight_openai
 
-        result  = build_company_analysis(cui)
+        result  = _cached_build_analysis(cui)
         dynamic = _get_dynamic_inputs(result)
 
         text = generate_tpc_dynamic_insight_openai(
@@ -276,10 +286,9 @@ def ai_speech():
     if err: return err, code
 
     try:
-        from app.analysis_service import build_company_analysis
         from app.openai_speech_client import generate_tpc_agent_speech_openai
 
-        result = build_company_analysis(cui)
+        result = _cached_build_analysis(cui)
         i      = _get_year_dict(result["indicators_by_year"], result["latest_year"])
 
         text = generate_tpc_agent_speech_openai(
@@ -306,10 +315,9 @@ def generate_pdf():
     if err: return err, code
 
     try:
-        from app.analysis_service import build_company_analysis
         from app.pdf_exporter import generate_pdf_report
 
-        result = build_company_analysis(cui)
+        result = _cached_build_analysis(cui)
         _, table_data = _build_table_data(result)
         i = _get_year_dict(result["indicators_by_year"], result["latest_year"])
 
