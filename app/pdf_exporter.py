@@ -83,6 +83,29 @@ def _get_kpi_highlights(table_data: dict) -> dict:
     }
 
 
+def sanitize_pdf_text(text: str) -> str:
+    if not text:
+        return ""
+
+    replacements = {
+        "👉": "-",
+        "🔷": "",
+        "–": "-",
+        "—": "-",
+        "„": '"',
+        "”": '"',
+        "’": "'",
+        "\u00a0": " ",   # non-breaking space
+        "\u200b": "",    # zero-width space
+    }
+
+    cleaned = text
+    for old, new in replacements.items():
+        cleaned = cleaned.replace(old, new)
+
+    return cleaned
+
+
 def build_table_rows(table_data: dict) -> str:
     rows = ""
 
@@ -114,11 +137,17 @@ def format_analysis_text(text: str) -> str:
 
         if cleaned.startswith(("1.", "2.", "3.", "4.", "5.", "6.")):
             formatted += f"<h2>{cleaned}</h2>"
-        elif cleaned.startswith("🔷"):
+        elif cleaned.startswith("HOOK:"):
             formatted += f"<h2>{cleaned}</h2>"
-        elif cleaned.startswith("👉"):
-            formatted += f"<p><strong>{cleaned}</strong></p>"
-        elif cleaned.startswith(("HOOK:", "INTERPRETARE:", "ÎNTREBĂRI:", "CUM POATE SPUNE AGENTUL:", "EVOLUȚIE:", "SEMNAL:")):
+        elif cleaned.startswith("INTERPRETARE:"):
+            formatted += f"<h2>{cleaned}</h2>"
+        elif cleaned.startswith("ÎNTREBĂRI:"):
+            formatted += f"<h2>{cleaned}</h2>"
+        elif cleaned.startswith("CUM POATE SPUNE AGENTUL:"):
+            formatted += f"<h2>{cleaned}</h2>"
+        elif cleaned.startswith("EVOLUȚIE:"):
+            formatted += f"<h2>{cleaned}</h2>"
+        elif cleaned.startswith("SEMNAL:"):
             formatted += f"<h2>{cleaned}</h2>"
         elif cleaned.startswith("- "):
             formatted += f"<p><strong>{cleaned}</strong></p>"
@@ -142,7 +171,10 @@ def generate_pdf_report(
 
     years_text = " · ".join(str(year) for year in years_sorted)
     table_rows = build_table_rows(table_data)
-    formatted_analysis = format_analysis_text(analysis_text)
+
+    clean_analysis_text = sanitize_pdf_text(analysis_text)
+    formatted_analysis = format_analysis_text(clean_analysis_text)
+
     kpis = _get_kpi_highlights(table_data)
 
     html_content = template.render(
