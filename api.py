@@ -8,14 +8,16 @@ import os
 app = Flask(__name__)
 CORS(app)
 
+# Cache thread-safe — 128 companii, TTL 30 minute
 _analysis_cache: TTLCache = TTLCache(maxsize=128, ttl=1800)
 _cache_lock = Lock()
 
 
-def _cached_build_analysis(cui: int) -> dict:
-    with _cache_lock:
-        if cui in _analysis_cache:
-            return _analysis_cache[cui]
+def _cached_build_analysis(cui: int, force: bool = False) -> dict:
+    if not force:
+        with _cache_lock:
+            if cui in _analysis_cache:
+                return _analysis_cache[cui]
     from app.analysis_service import build_company_analysis
     result = build_company_analysis(cui)
     with _cache_lock:
@@ -48,172 +50,200 @@ def _fmt_int(v):
     if v is None: return "N/A"
     return f"{int(v):,}".replace(",", ".")
 
-
 def _get_year_dict(data, year):
-    return data.get(str(year), {})
-
+    return data.get(str(year), data.get(year, {}))
 
 def _calculate_yoy_change(current, previous):
     if current is None or previous in (None, 0): return None
     return (current - previous) / previous
-
-
-
-def _get_cagr_3y(result):
-    """Returns (cagr_value, start_year, end_year). cagr_value is None if insufficient data."""
-    from app.utils import calculate_cagr
-    years_sorted = result["years_sorted"]
-    normalized_by_year = result["normalized_by_year"]
-    if len(years_sorted) < 3:
-        return None, None, None
-    y3s = years_sorted[-3]
-    y3e = years_sorted[-1]
-    ca_s = _get_year_dict(normalized_by_year, y3s).get("cifra_afaceri")
-    ca_e = _get_year_dict(normalized_by_year, y3e).get("cifra_afaceri")
-    if ca_s not in (None, 0) and ca_e is not None and y3e > y3s:
-        return calculate_cagr(ca_s, ca_e, y3e - y3s), y3s, y3e
-    return None, y3s, y3e
-
-
-def _build_table_data(result):
-    indicators_by_year = result["indicators_by_year"]
-    normalized_by_year = result["normalized_by_year"]
-    years_sorted       = result["years_sorted"]
-    latest_year        = result["latest_year"]
-    cagr_ca            = result["cagr_ca"]
-
-    i_cur  = _get_year_dict(indicators_by_year, latest_year)
-    prev1  = years_sorted[-2] if len(years_sorted) >= 2 else None
-    prev2  = years_sorted[-3] if len(years_sorted) >= 3 else None
-    i_p1   = _get_year_dict(indicators_by_year, prev1) if prev1 else {}
-    i_p2   = _get_year_dict(indicators_by_year, prev2) if prev2 else {}
-
-    start_year = years_sorted[0]
-    end_year   = years_sorted[-1]
-
-    cagr_3y, cagr_3y_s, cagr_3y_e = _get_cagr_3y(result)
-    cagr_3y_label = (
-        f"%CAGR ({cagr_3y_s} - {cagr_3y_e}) - creștere medie anuală"
-        if cagr_3y_s else "%CAGR ultimii 3 ani - creștere medie anuală"
-    )
-
-    # YoY CA
-    yoy_ca = None
-    yoy_ca_label = "%Dinamica CA vs anul anterior"
-    if prev1:
-        yoy_ca_label = f"%Dinamica CA {latest_year} vs {prev1}"
-        cur_ca  = _get_year_dict(normalized_by_year, latest_year).get("cifra_afaceri")
-        prev_ca = _get_year_dict(normalized_by_year, prev1).get("cifra_afaceri")
-        yoy_ca  = _calculate_yoy_change(cur_ca, prev_ca)
-
-    indicators = [
-        {"name": f"%Profit Net {latest_year} (Profit Net/CA)",                          "value": _fmt_pct(i_cur.get("profit_margin"), 2)},
-        {"name": f"%Profit Net {prev1} (Profit Net/CA)" if prev1 else "%Profit Net an anterior", "value": _fmt_pct(i_p1.get("profit_margin"), 2) if prev1 else "N/A"},
-        {"name": f"%Profit Net {prev2} (Profit Net/CA)" if prev2 else "%Profit Net cu 2 ani în urmă", "value": _fmt_pct(i_p2.get("profit_margin"), 2) if prev2 else "N/A"},
-        {"name": "Sales on asset (CA/Active totale)",                                    "value": _fmt_num(i_cur.get("sales_on_assets"))},
-        {"name": "Equity multiplier (Active totale/Capital Propriu)",                    "value": _fmt_num(i_cur.get("equity_multiplier"))},
-        {"name": "Zile stoc (Stoc/CA medie zilnică)",                                    "value": _fmt_int(i_cur.get("zile_stoc"))},
-        {"name": "Zile creanțe (Creanțe/CA medie zilnică)",                              "value": _fmt_int(i_cur.get("zile_creante"))},
-        {"name": "Capital Blocat (Creanțe + Stocuri)",                                   "value": _fmt_int(i_cur.get("capital_blocat"))},
-        {"name": "%Capital Blocat (Capital Blocat / CA)",                                "value": _fmt_pct(i_cur.get("capital_blocat_ratio"), 1)},
-        {"name": "Salariu brut mediu lunar (salariu brut mediu pe economie)",            "value": _fmt_int(i_cur.get("salariu_mediu_lunar")) + " lei"},
-        {"name": "Salariu brut anual (Salariu mediu brut lunar*12)",                     "value": _fmt_int(i_cur.get("salariu_anual"))},
-        {"name": "Fond salarial (Salariu brut anual*număr angajați)",                    "value": _fmt_int(i_cur.get("fond_salarial"))},
-        {"name": "%Fond Salarial (Fond salarial/CA)",                                    "value": _fmt_pct(i_cur.get("pondere_fond_salarial"), 1)},
-        {"name": "Productivitate (CA/Nr Angajați)",                                      "value": _fmt_int(i_cur.get("productivitate"))},
-        {"name": "Randament angajat (Productivitate/Salariu brut anual per angajat)",    "value": _fmt_num(i_cur.get("randament"))},
-        {"name": "Debt Ratio (Datorii totale/Active totale)",                            "value": _fmt_pct(i_cur.get("debt_ratio"), 1)},
-        {"name": "Debt to equity (Datorii totale/Capital Propriu)",                      "value": _fmt_num(i_cur.get("debt_to_equity"))},
-        {"name": "%Datorii (Datorii totale/CA)",                                         "value": _fmt_pct(i_cur.get("datorii_ratio_ca"), 1)},
-        {"name": "ROE DuPont (%Profit Net*Sales on asset*equity multiplier)",            "value": _fmt_pct(i_cur.get("roe_dupont"), 1)},
-        {"name": f"%CAGR ({start_year} - {end_year}) - creștere medie anuală",          "value": _fmt_pct(cagr_ca, 1) if cagr_ca else "N/A"},
-        {"name": cagr_3y_label,                                                          "value": _fmt_pct(cagr_3y, 1) if cagr_3y else "N/A"},
-        {"name": yoy_ca_label,                                                           "value": _fmt_pct(yoy_ca, 1) if yoy_ca else "N/A"},
-    ]
-
-    # Format dict pentru pdf_exporter
-    table_data = {
-        "Indicator": [r["name"] for r in indicators],
-        "Valoare":   [r["value"] for r in indicators],
-    }
-
-    return indicators, table_data
-
-
-def _get_dynamic_inputs(result):
-    """Extrage datele necesare pentru generate_tpc_dynamic_insight_openai"""
-    years_sorted       = result["years_sorted"]
-    latest_year        = result["latest_year"]
-    indicators_by_year = result["indicators_by_year"]
-    normalized_by_year = result["normalized_by_year"]
-
-    years_last_3 = years_sorted[-3:] if len(years_sorted) >= 3 else years_sorted
-
-    profit_margin_last_3y = []
-    for y in years_last_3:
-        ind = _get_year_dict(indicators_by_year, y)
-        profit_margin_last_3y.append(ind.get("profit_margin"))
-
-    cagr_3y, _, _ = _get_cagr_3y(result)
-
-    revenue_growth_last_year = None
-    if len(years_sorted) >= 2:
-        prev_y  = years_sorted[-2]
-        cur_ca  = _get_year_dict(normalized_by_year, latest_year).get("cifra_afaceri")
-        prev_ca = _get_year_dict(normalized_by_year, prev_y).get("cifra_afaceri")
-        revenue_growth_last_year = _calculate_yoy_change(cur_ca, prev_ca)
-
-    return {
-        "profit_margin_last_3y":   profit_margin_last_3y,
-        "cagr_3y":                 cagr_3y,
-        "revenue_growth_last_year": revenue_growth_last_year,
-        "years_last_3":            years_last_3,
-    }
-
 
 def _parse_cui(cui_param):
     cui_clean = "".join(filter(str.isdigit, cui_param.strip()))
     if not cui_clean or len(cui_clean) < 2 or len(cui_clean) > 10:
         return None, jsonify({"error": "CUI invalid"}), 400
     if not _validate_cui(cui_clean):
-        return None, jsonify({"error": "CUI invalid — cifra de control nu este corectă"}), 400
+        return None, jsonify({"error": "CUI invalid — cifra de control nu este corecta"}), 400
     return int(cui_clean), None, None
 
 
-# ─────────────────────────────────────────────
+def _get_cagr_3y(result):
+    from app.utils import calculate_cagr
+    yrs = result["years_sorted"]
+    nby = result["normalized_by_year"]
+    if len(yrs) < 3:
+        return None, None, None
+    y3s, y3e = yrs[-3], yrs[-1]
+    ca_s = _get_year_dict(nby, y3s).get("cifra_afaceri")
+    ca_e = _get_year_dict(nby, y3e).get("cifra_afaceri")
+    if ca_s not in (None, 0) and ca_e is not None and y3e > y3s:
+        return calculate_cagr(ca_s, ca_e, y3e - y3s), y3s, y3e
+    return None, y3s, y3e
+
+
+def _build_table_data(result):
+    iby  = result["indicators_by_year"]
+    nby  = result["normalized_by_year"]
+    yrs  = result["years_sorted"]
+    last = result["latest_year"]
+    cagr = result["cagr_ca"]
+
+    i_cur = _get_year_dict(iby, last)
+    prev1 = yrs[-2] if len(yrs) >= 2 else None
+    prev2 = yrs[-3] if len(yrs) >= 3 else None
+    i_p1  = _get_year_dict(iby, prev1) if prev1 else {}
+    i_p2  = _get_year_dict(iby, prev2) if prev2 else {}
+
+    sy = yrs[0]; ey = yrs[-1]
+
+    cagr_3y, c3s, c3e = _get_cagr_3y(result)
+    cagr_3y_label = (
+        f"%CAGR ({c3s} - {c3e}) - crestere medie anuala"
+        if c3s else "%CAGR ultimii 3 ani"
+    )
+
+    yoy = None
+    yoy_label = "%Dinamica CA vs anul anterior"
+    if prev1:
+        yoy_label = f"%Dinamica CA {last} vs {prev1}"
+        yoy = _calculate_yoy_change(
+            _get_year_dict(nby, last).get("cifra_afaceri"),
+            _get_year_dict(nby, prev1).get("cifra_afaceri"),
+        )
+
+    rows = [
+        {"name": f"%Profit Net {last} (Profit Net/CA)",                              "value": _fmt_pct(i_cur.get("profit_margin"), 2)},
+        {"name": f"%Profit Net {prev1} (Profit Net/CA)" if prev1 else "%Profit Net an anterior", "value": _fmt_pct(i_p1.get("profit_margin"), 2) if prev1 else "N/A"},
+        {"name": f"%Profit Net {prev2} (Profit Net/CA)" if prev2 else "%Profit Net cu 2 ani in urma", "value": _fmt_pct(i_p2.get("profit_margin"), 2) if prev2 else "N/A"},
+        {"name": "Sales on asset (CA/Active totale)",                                "value": _fmt_num(i_cur.get("sales_on_assets"))},
+        {"name": "Equity multiplier (Active totale/Capital Propriu)",                "value": _fmt_num(i_cur.get("equity_multiplier"))},
+        {"name": "Zile stoc (Stoc/CA medie zilnica)",                                "value": _fmt_int(i_cur.get("zile_stoc"))},
+        {"name": "Zile creante (Creante/CA medie zilnica)",                          "value": _fmt_int(i_cur.get("zile_creante"))},
+        {"name": "Capital Blocat (Creante + Stocuri)",                               "value": _fmt_int(i_cur.get("capital_blocat"))},
+        {"name": "%Capital Blocat (Capital Blocat / CA)",                            "value": _fmt_pct(i_cur.get("capital_blocat_ratio"), 1)},
+        {"name": "Salariu brut mediu lunar (salariu brut mediu pe economie)",        "value": _fmt_int(i_cur.get("salariu_mediu_lunar")) + " lei"},
+        {"name": "Salariu brut anual (Salariu mediu brut lunar*12)",                 "value": _fmt_int(i_cur.get("salariu_anual"))},
+        {"name": "Fond salarial (Salariu brut anual*numar angajati)",                "value": _fmt_int(i_cur.get("fond_salarial"))},
+        {"name": "%Fond Salarial (Fond salarial/CA)",                                "value": _fmt_pct(i_cur.get("pondere_fond_salarial"), 1)},
+        {"name": "Productivitate (CA/Nr Angajati)",                                  "value": _fmt_int(i_cur.get("productivitate"))},
+        {"name": "Randament angajat (Productivitate/Salariu brut anual per angajat)","value": _fmt_num(i_cur.get("randament"))},
+        {"name": "Debt Ratio (Datorii totale/Active totale)",                        "value": _fmt_pct(i_cur.get("debt_ratio"), 1)},
+        {"name": "Debt to equity (Datorii totale/Capital Propriu)",                  "value": _fmt_num(i_cur.get("debt_to_equity"))},
+        {"name": "%Datorii (Datorii totale/CA)",                                     "value": _fmt_pct(i_cur.get("datorii_ratio_ca"), 1)},
+        {"name": "ROE DuPont (%Profit Net*Sales on asset*equity multiplier)",        "value": _fmt_pct(i_cur.get("roe_dupont"), 1)},
+        {"name": f"%CAGR ({sy} - {ey}) - crestere medie anuala",                    "value": _fmt_pct(cagr, 1) if cagr else "N/A"},
+        {"name": cagr_3y_label,                                                      "value": _fmt_pct(cagr_3y, 1) if cagr_3y else "N/A"},
+        {"name": yoy_label,                                                           "value": _fmt_pct(yoy, 1) if yoy else "N/A"},
+    ]
+
+    table_data = {
+        "Indicator": [r["name"] for r in rows],
+        "Valoare":   [r["value"] for r in rows],
+    }
+    return rows, table_data
+
+
+def _get_dynamic_inputs(result):
+    yrs  = result["years_sorted"]
+    last = result["latest_year"]
+    iby  = result["indicators_by_year"]
+    nby  = result["normalized_by_year"]
+
+    years_last_3 = yrs[-3:] if len(yrs) >= 3 else yrs
+    profit_margin_last_3y = [
+        _get_year_dict(iby, y).get("profit_margin") for y in years_last_3
+    ]
+
+    cagr_3y, _, _ = _get_cagr_3y(result)
+
+    revenue_growth = None
+    if len(yrs) >= 2:
+        revenue_growth = _calculate_yoy_change(
+            _get_year_dict(nby, last).get("cifra_afaceri"),
+            _get_year_dict(nby, yrs[-2]).get("cifra_afaceri"),
+        )
+
+    return {
+        "profit_margin_last_3y":    profit_margin_last_3y,
+        "cagr_3y":                  cagr_3y,
+        "revenue_growth_last_year": revenue_growth,
+        "years_last_3":             years_last_3,
+    }
+
+
+def _generate_ai_text(result, mode):
+    """Genereaza textul AI pentru modul ales."""
+    i = _get_year_dict(result["indicators_by_year"], result["latest_year"])
+
+    if mode == "dinamica":
+        from app.openai_dynamic_client import generate_tpc_dynamic_insight_openai
+        dynamic = _get_dynamic_inputs(result)
+        return generate_tpc_dynamic_insight_openai(
+            company_info=result["company_info"],
+            profit_margin_last_3y=dynamic["profit_margin_last_3y"],
+            cagr_3y=dynamic["cagr_3y"],
+            revenue_growth_last_year=dynamic["revenue_growth_last_year"],
+            years_last_3=dynamic["years_last_3"],
+        )
+    elif mode == "speech":
+        from app.openai_speech_client import generate_tpc_agent_speech_openai
+        return generate_tpc_agent_speech_openai(
+            company_info=result["company_info"],
+            years_sorted=result["years_sorted"],
+            latest_year=result["latest_year"],
+            indicators=i,
+            cagr_ca=result["cagr_ca"],
+        )
+    else:  # concluzie (default)
+        from app.openai_client import generate_tpc_analysis_openai
+        return generate_tpc_analysis_openai(
+            company_info=result["company_info"],
+            years_sorted=result["years_sorted"],
+            latest_year=result["latest_year"],
+            indicators=i,
+            cagr_ca=result["cagr_ca"],
+        )
+
+
+# ═══════════════════════════════════════════════════════════════
+# ENDPOINTS
+# ═══════════════════════════════════════════════════════════════
+
 @app.route("/health")
 def health():
-    return jsonify({"status": "ok", "service": "TPC Analyzer API v2"})
+    with _cache_lock:
+        cache_size = len(_analysis_cache)
+    return jsonify({
+        "status":     "ok",
+        "service":    "TPC Analyzer API",
+        "cache_size": cache_size,
+    })
 
 
-# ─────────────────────────────────────────────
 @app.route("/analyze")
 def analyze():
-    """
-    GET /analyze?cui=...
-    Returnează datele companiei + tabel indicatori FĂRĂ interpretare AI.
-    Interpretarea se cere separat cu /ai/concluzie, /ai/dinamica, /ai/speech
-    """
+    """Date companie + tabel indicatori. Fara AI — rapid."""
     cui_param = request.args.get("cui", "")
     cui, err, code = _parse_cui(cui_param)
     if err: return err, code
 
+    force = request.args.get("refresh", "0") == "1"
+
     try:
-        result = _cached_build_analysis(cui)
-        indicators_table, _ = _build_table_data(result)
+        result = _cached_build_analysis(cui, force=force)
+        rows, _ = _build_table_data(result)
 
         return jsonify({
-            "success":        True,
+            "success":          True,
             "company": {
                 "name":      result["company_info"].get("company_name"),
                 "cui":       str(cui),
                 "caen":      result["company_info"].get("caen_code"),
                 "caen_desc": result["company_info"].get("caen_label"),
             },
-            "years":          result["years_sorted"],
-            "latest_year":    result["latest_year"],
-            "indicators_table": indicators_table,
-            "cagr_ca":        _fmt_pct(result["cagr_ca"], 1) if result["cagr_ca"] else "N/A",
+            "years":            result["years_sorted"],
+            "latest_year":      result["latest_year"],
+            "indicators_table": rows,
+            "cagr_ca":          _fmt_pct(result["cagr_ca"], 1) if result["cagr_ca"] else "N/A",
         })
 
     except Exception as e:
@@ -221,148 +251,74 @@ def analyze():
         return jsonify({"error": str(e)}), 500
 
 
-# ─────────────────────────────────────────────
 @app.route("/ai/concluzie")
 def ai_concluzie():
-    """GET /ai/concluzie?cui=... → Interpretare TPC completă"""
     cui_param = request.args.get("cui", "")
     cui, err, code = _parse_cui(cui_param)
     if err: return err, code
-
     try:
-        from app.openai_client import generate_tpc_analysis_openai
-
-        result   = _cached_build_analysis(cui)
-        i        = _get_year_dict(result["indicators_by_year"], result["latest_year"])
-
-        text = generate_tpc_analysis_openai(
-            company_info=result["company_info"],
-            years_sorted=result["years_sorted"],
-            latest_year=result["latest_year"],
-            indicators=i,
-            cagr_ca=result["cagr_ca"],
-        )
+        result = _cached_build_analysis(cui)  # din cache — instant
+        text   = _generate_ai_text(result, "concluzie")
         return jsonify({"success": True, "mode": "concluzie", "text": text})
-
     except Exception as e:
         traceback.print_exc()
         return jsonify({"error": str(e)}), 500
 
 
-# ─────────────────────────────────────────────
 @app.route("/ai/dinamica")
 def ai_dinamica():
-    """GET /ai/dinamica?cui=... → Dinamica Companie"""
     cui_param = request.args.get("cui", "")
     cui, err, code = _parse_cui(cui_param)
     if err: return err, code
-
     try:
-        from app.openai_dynamic_client import generate_tpc_dynamic_insight_openai
-
-        result  = _cached_build_analysis(cui)
-        dynamic = _get_dynamic_inputs(result)
-
-        text = generate_tpc_dynamic_insight_openai(
-            company_info=result["company_info"],
-            profit_margin_last_3y=dynamic["profit_margin_last_3y"],
-            cagr_3y=dynamic["cagr_3y"],
-            revenue_growth_last_year=dynamic["revenue_growth_last_year"],
-            years_last_3=dynamic["years_last_3"],
-        )
+        result = _cached_build_analysis(cui)  # din cache — instant
+        text   = _generate_ai_text(result, "dinamica")
         return jsonify({"success": True, "mode": "dinamica", "text": text})
-
     except Exception as e:
         traceback.print_exc()
         return jsonify({"error": str(e)}), 500
 
 
-# ─────────────────────────────────────────────
 @app.route("/ai/speech")
 def ai_speech():
-    """GET /ai/speech?cui=... → Speech Agent"""
     cui_param = request.args.get("cui", "")
     cui, err, code = _parse_cui(cui_param)
     if err: return err, code
-
     try:
-        from app.openai_speech_client import generate_tpc_agent_speech_openai
-
-        result = _cached_build_analysis(cui)
-        i      = _get_year_dict(result["indicators_by_year"], result["latest_year"])
-
-        text = generate_tpc_agent_speech_openai(
-            company_info=result["company_info"],
-            years_sorted=result["years_sorted"],
-            latest_year=result["latest_year"],
-            indicators=i,
-            cagr_ca=result["cagr_ca"],
-        )
+        result = _cached_build_analysis(cui)  # din cache — instant
+        text   = _generate_ai_text(result, "speech")
         return jsonify({"success": True, "mode": "speech", "text": text})
-
     except Exception as e:
         traceback.print_exc()
         return jsonify({"error": str(e)}), 500
 
 
-# ─────────────────────────────────────────────
 @app.route("/pdf")
-def generate_pdf():
-    """GET /pdf?cui=...&mode=concluzie|dinamica|speech"""
+def pdf_data():
+    """
+    Returneaza JSON cu datele pentru PDF.
+    pdf.php din PHP primeste aceste date si genereaza PDF-ul in browser.
+    Nu foloseste WeasyPrint — compatibil cu orice hosting.
+    """
     cui_param = request.args.get("cui", "")
     mode      = request.args.get("mode", "concluzie")
     cui, err, code = _parse_cui(cui_param)
     if err: return err, code
 
     try:
-        from app.pdf_exporter import generate_pdf_report
+        result     = _cached_build_analysis(cui)  # din cache — instant
+        _, td      = _build_table_data(result)
+        text       = _generate_ai_text(result, mode)
 
-        result = _cached_build_analysis(cui)
-        _, table_data = _build_table_data(result)
-        i = _get_year_dict(result["indicators_by_year"], result["latest_year"])
-
-        if mode == "dinamica":
-            from app.openai_dynamic_client import generate_tpc_dynamic_insight_openai
-            dynamic = _get_dynamic_inputs(result)
-            text = generate_tpc_dynamic_insight_openai(
-                company_info=result["company_info"],
-                profit_margin_last_3y=dynamic["profit_margin_last_3y"],
-                cagr_3y=dynamic["cagr_3y"],
-                revenue_growth_last_year=dynamic["revenue_growth_last_year"],
-                years_last_3=dynamic["years_last_3"],
-            )
-        elif mode == "speech":
-            from app.openai_speech_client import generate_tpc_agent_speech_openai
-            text = generate_tpc_agent_speech_openai(
-                company_info=result["company_info"],
-                years_sorted=result["years_sorted"],
-                latest_year=result["latest_year"],
-                indicators=i,
-                cagr_ca=result["cagr_ca"],
-            )
-        else:
-            from app.openai_client import generate_tpc_analysis_openai
-            text = generate_tpc_analysis_openai(
-                company_info=result["company_info"],
-                years_sorted=result["years_sorted"],
-                latest_year=result["latest_year"],
-                indicators=i,
-                cagr_ca=result["cagr_ca"],
-            )
-
-        pdf_bytes = generate_pdf_report(
-            company_info=result["company_info"],
-            years_sorted=result["years_sorted"],
-            table_data=table_data,
-            analysis_text=text,
-        )
-
-        safe_name = result["company_info"].get("company_name", str(cui)).replace(" ", "_")
-        return Response(
-            pdf_bytes,
-            mimetype="application/pdf",
-            headers={"Content-Disposition": f"attachment; filename=TPC_{safe_name}_{mode}.pdf"},
-        )
+        return jsonify({
+            "success":    True,
+            "mode":       mode,
+            "company":    result["company_info"],
+            "years":      result["years_sorted"],
+            "latest_year": result["latest_year"],
+            "table_data": td,
+            "ai_text":    text,
+        })
 
     except Exception as e:
         traceback.print_exc()
