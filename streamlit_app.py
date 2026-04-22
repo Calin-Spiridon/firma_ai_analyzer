@@ -6,10 +6,10 @@ from app.cache_manager import load_from_cache, save_to_cache
 from app.company_enrichment_service import enrich_companies
 from app.excel_log import append_company_log
 from app.openai_client import generate_tpc_analysis_openai
-from app.pdf_exporter import generate_pdf_report
-from app.utils import calculate_cagr
 from app.openai_dynamic_client import generate_tpc_dynamic_insight_openai
 from app.openai_speech_client import generate_tpc_agent_speech_openai
+from app.pdf_exporter import generate_pdf_report
+from app.utils import calculate_cagr
 
 
 # =========================
@@ -31,6 +31,15 @@ def format_percent(value, digits=1):
     if value is None:
         return "-"
     return f"{value * 100:.{digits}f}%".replace(".", ",")
+
+
+def format_absolute_number(value):
+    if value is None:
+        return "-"
+    try:
+        return f"{int(round(value)):,}".replace(",", ".")
+    except Exception:
+        return "-"
 
 
 def format_enrichment_dataframe(df: pd.DataFrame) -> pd.DataFrame:
@@ -118,7 +127,41 @@ def build_table_data(
     start_year_full = years_sorted[0]
     end_year_full = years_sorted[-1]
 
+    years_last_3_desc = list(reversed(years_sorted[-3:] if len(years_sorted) >= 3 else years_sorted))
+
+    absolute_indicators = []
+    absolute_values = []
+
+    # =========================
+    # CIFRA DE AFACERI
+    # =========================
+    for year in years_last_3_desc:
+        year_data = get_year_dict(normalized_by_year, year)
+        absolute_indicators.append(f"Cifra Afacere - {year}")
+        absolute_values.append(format_absolute_number(year_data.get("cifra_afaceri")))
+
+    # =========================
+    # PROFIT NET
+    # =========================
+    for year in years_last_3_desc:
+        year_data = get_year_dict(normalized_by_year, year)
+        absolute_indicators.append(f"Profit Net - {year}")
+        absolute_values.append(format_absolute_number(year_data.get("profit_net")))
+
+    # =========================
+    # NUMĂR SALARIAȚI
+    # =========================
+    for year in years_last_3_desc:
+        year_data = get_year_dict(normalized_by_year, year)
+        employees_value = year_data.get("numar_angajati")
+        if employees_value is None:
+            employees_value = year_data.get("numar_mediu_angajati")
+        absolute_indicators.append(f"Număr Salariați - {year}")
+        absolute_values.append(format_absolute_number(employees_value))
+
+    # =========================
     # CAGR ultimii 3 ani analizați
+    # =========================
     cagr_3y = None
     cagr_3y_label = "%CAGR ultimii 3 ani - creștere medie anuală"
 
@@ -141,7 +184,9 @@ def build_table_data(
                 cagr_3y_end_year - cagr_3y_start_year,
             )
 
+    # =========================
     # Dinamica CA vs anul anterior
+    # =========================
     yoy_ca = None
     yoy_ca_label = "%Dinamica CA vs anul anterior"
 
@@ -153,55 +198,61 @@ def build_table_data(
 
         yoy_ca = calculate_yoy_change(current_ca, previous_ca)
 
+    indicators_list = [
+        *absolute_indicators,
+        f"%Profit Net {latest_year} (Profit Net/CA)",
+        f"%Profit Net {prev_year_1} (Profit Net/CA)" if prev_year_1 else "%Profit Net an anterior",
+        f"%Profit Net {prev_year_2} (Profit Net/CA)" if prev_year_2 else "%Profit Net cu 2 ani în urmă",
+        "Sales on asset (CA/Active totale)",
+        "Equity multiplier (Active totale/Capital Propiu)",
+        "Zile stoc (Stoc/CA medie zilnică)",
+        "Zile creanțe (Creanțe/CA medie zilnică)",
+        "Capital Blocat (Creanțe + Stocuri)",
+        "%Capital Blocat (Capital Blocat / CA)",
+        "Salariu brut mediu lunar (salariu brut mediu pe economie)",
+        "Salariu brut anual (Salariu mediu brut lunar*12)",
+        "Fond salarial (Salariu brut anual*număr angajați)",
+        "%Fond Salarial (Fond salarial/CA)",
+        "Productivitate (CA/Nr Angajați)",
+        "Randament angajat (Productivitate/Salariu brut anual per angajat)",
+        "Debt Ratio (Datorii totale/Active totale)",
+        "Debt to equity (Datorii totale/Capital Propiu)",
+        "%Datorii (Datorii totale/CA)",
+        "ROE DuPont (%Profit Net*Sales on asset*equity multiplier)",
+        f"%CAGR ({start_year_full} - {end_year_full}) - creștere medie anuală",
+        cagr_3y_label,
+        yoy_ca_label,
+    ]
+
+    values_list = [
+        *absolute_values,
+        format_percent(indicators_current.get("profit_margin"), digits=2),
+        format_percent(indicators_prev_1.get("profit_margin"), digits=2) if prev_year_1 else "N/A",
+        format_percent(indicators_prev_2.get("profit_margin"), digits=2) if prev_year_2 else "N/A",
+        format_number(indicators_current.get("sales_on_assets")),
+        format_number(indicators_current.get("equity_multiplier")),
+        format_integer_number(indicators_current.get("zile_stoc")),
+        format_integer_number(indicators_current.get("zile_creante")),
+        format_integer_number(indicators_current.get("capital_blocat")),
+        format_percent(indicators_current.get("capital_blocat_ratio"), digits=1),
+        format_integer_number(indicators_current.get("salariu_mediu_lunar")),
+        format_integer_number(indicators_current.get("salariu_anual")),
+        format_integer_number(indicators_current.get("fond_salarial")),
+        format_percent(indicators_current.get("pondere_fond_salarial"), digits=1),
+        format_integer_number(indicators_current.get("productivitate")),
+        format_number(indicators_current.get("randament")),
+        format_percent(indicators_current.get("debt_ratio"), digits=1),
+        format_number(indicators_current.get("debt_to_equity")),
+        format_percent(indicators_current.get("datorii_ratio_ca"), digits=1),
+        format_percent(indicators_current.get("roe_dupont"), digits=1),
+        format_percent(cagr_ca, digits=1) if cagr_ca is not None else "N/A",
+        format_percent(cagr_3y, digits=1) if cagr_3y is not None else "N/A",
+        format_percent(yoy_ca, digits=1) if yoy_ca is not None else "N/A",
+    ]
+
     return {
-        "Indicator": [
-            f"%Profit Net {latest_year} (Profit Net/CA)",
-            f"%Profit Net {prev_year_1} (Profit Net/CA)" if prev_year_1 else "%Profit Net an anterior",
-            f"%Profit Net {prev_year_2} (Profit Net/CA)" if prev_year_2 else "%Profit Net cu 2 ani în urmă",
-            "Sales on asset (CA/Active totale)",
-            "Equity multiplier (Active totale/Capital Propiu)",
-            "Zile stoc (Stoc/CA medie zilnică)",
-            "Zile creanțe (Creanțe/CA medie zilnică)",
-            "Capital Blocat (Creanțe + Stocuri)",
-            "%Capital Blocat (Capital Blocat / CA)",
-            "Salariu brut mediu lunar (salariu brut mediu pe economie)",
-            "Salariu brut anual (Salariu mediu brut lunar*12)",
-            "Fond salarial (Salariu brut anual*număr angajați)",
-            "%Fond Salarial (Fond salarial/CA)",
-            "Productivitate (CA/Nr Angajați)",
-            "Randament angajat (Productivitate/Salariu brut anual per angajat)",
-            "Debt Ratio (Datorii totale/Active totale)",
-            "Debt to equity (Datorii totale/Capital Propiu)",
-            "%Datorii (Datorii totale/CA)",
-            "ROE DuPont (%Profit Net*Sales on asset*equity multiplier)",
-            f"%CAGR ({start_year_full} - {end_year_full}) - creștere medie anuală",
-            cagr_3y_label,
-            yoy_ca_label,
-        ],
-        "Valoare": [
-            format_percent(indicators_current.get("profit_margin"), digits=2),
-            format_percent(indicators_prev_1.get("profit_margin"), digits=2) if prev_year_1 else "N/A",
-            format_percent(indicators_prev_2.get("profit_margin"), digits=2) if prev_year_2 else "N/A",
-            format_number(indicators_current.get("sales_on_assets")),
-            format_number(indicators_current.get("equity_multiplier")),
-            format_integer_number(indicators_current.get("zile_stoc")),
-            format_integer_number(indicators_current.get("zile_creante")),
-            format_integer_number(indicators_current.get("capital_blocat")),
-            format_percent(indicators_current.get("capital_blocat_ratio"), digits=1),
-            format_integer_number(indicators_current.get("salariu_mediu_lunar")),
-            format_integer_number(indicators_current.get("salariu_anual")),
-            format_integer_number(indicators_current.get("fond_salarial")),
-            format_percent(indicators_current.get("pondere_fond_salarial"), digits=1),
-            format_integer_number(indicators_current.get("productivitate")),
-            format_number(indicators_current.get("randament")),
-            format_percent(indicators_current.get("debt_ratio"), digits=1),
-            format_number(indicators_current.get("debt_to_equity")),
-            format_percent(indicators_current.get("datorii_ratio_ca"), digits=1),
-            format_percent(indicators_current.get("roe_dupont"), digits=1),
-            format_percent(cagr_ca, digits=1) if cagr_ca is not None else "N/A",
-            format_percent(cagr_3y, digits=1) if cagr_3y is not None else "N/A",
-            format_percent(yoy_ca, digits=1) if yoy_ca is not None else "N/A",
-        ],
+        "Indicator": indicators_list,
+        "Valoare": values_list,
     }
 
 
@@ -296,9 +347,6 @@ def render_company_analysis_result():
     with col_ai_3:
         speech_clicked = st.button("Speech Agent", key="btn_speech_agent")
 
-    # =========================
-    # Date pentru Dinamica Companie
-    # =========================
     years_last_3 = years_sorted[-3:] if len(years_sorted) >= 3 else years_sorted
 
     profit_margin_last_3y = []
@@ -333,9 +381,6 @@ def render_company_analysis_result():
         previous_ca = get_year_dict(result["normalized_by_year"], previous_year).get("cifra_afaceri")
         revenue_growth_last_year = calculate_yoy_change(current_ca, previous_ca)
 
-    # =========================
-    # Buton 1 — Concluzie TPC
-    # =========================
     if concluzie_clicked:
         try:
             with st.spinner("Se generează Concluzia TPC..."):
@@ -352,9 +397,6 @@ def render_company_analysis_result():
         except Exception as e:
             st.error(f"A apărut o eroare la generarea concluziei: {str(e)}")
 
-    # =========================
-    # Buton 2 — Dinamica Companie
-    # =========================
     if dinamica_clicked:
         try:
             with st.spinner("Se generează Dinamica Companiei..."):
@@ -371,9 +413,6 @@ def render_company_analysis_result():
         except Exception as e:
             st.error(f"A apărut o eroare la generarea dinamicii: {str(e)}")
 
-    # =========================
-    # Buton 3 — Speech Agent
-    # =========================
     if speech_clicked:
         try:
             with st.spinner("Se generează Speech Agent..."):
@@ -391,6 +430,7 @@ def render_company_analysis_result():
             st.error(f"A apărut o eroare la generarea speech-ului: {str(e)}")
 
     st.subheader("Interpretare TPC")
+
     if st.session_state.active_ai_mode == "conclusion" and st.session_state.active_ai_text:
         st.subheader("Concluzie TPC")
         st.write(st.session_state.active_ai_text)
@@ -554,7 +594,7 @@ def render_search_tab():
 
         st.divider()
         st.subheader("Pasul 2 — Enrichment Termene pentru companiile selectate")
-        st.caption(f"⚠️ Fiecare companie consumă 1 request din limita de 500.")
+        st.caption("⚠️ Fiecare companie consumă 1 request din limita de 500.")
 
         enrich_clicked = st.button(
             f"Enrichment Termene ({len(selected_cuis)} selectate)",
@@ -616,6 +656,10 @@ def render_search_tab():
 
                             st.session_state.result = result
                             st.session_state.analysis_text = None
+                            st.session_state.dynamic_text = None
+                            st.session_state.speech_text = None
+                            st.session_state.active_ai_mode = None
+                            st.session_state.active_ai_text = None
                             st.success("✅ Gata! Vezi tab-ul 'Analiză companie'.")
                         except Exception as e:
                             st.error(f"Eroare: {str(e)}")

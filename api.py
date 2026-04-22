@@ -8,7 +8,6 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-# Cache thread-safe — 128 companii, TTL 30 minute
 _analysis_cache: TTLCache = TTLCache(maxsize=128, ttl=1800)
 _cache_lock = Lock()
 
@@ -50,6 +49,14 @@ def _fmt_int(v):
     if v is None: return "N/A"
     return f"{int(v):,}".replace(",", ".")
 
+def _fmt_abs(v):
+    """Valori absolute — cifra afaceri, profit net, angajati."""
+    if v is None: return "-"
+    try:
+        return f"{int(round(v)):,}".replace(",", ".")
+    except Exception:
+        return "-"
+
 def _get_year_dict(data, year):
     return data.get(str(year), data.get(year, {}))
 
@@ -81,6 +88,11 @@ def _get_cagr_3y(result):
 
 
 def _build_table_data(result):
+    """
+    Construieste tabelul complet — identic cu build_table_data din streamlit_app.py.
+    Primele 9 randuri = valori absolute (CA, Profit Net, Angajati) pe ultimii 3 ani.
+    Restul = indicatori calculati.
+    """
     iby  = result["indicators_by_year"]
     nby  = result["normalized_by_year"]
     yrs  = result["years_sorted"]
@@ -95,12 +107,17 @@ def _build_table_data(result):
 
     sy = yrs[0]; ey = yrs[-1]
 
+    # Ultimii 3 ani in ordine descrescatoare pentru valorile absolute
+    years_last_3_desc = list(reversed(yrs[-3:] if len(yrs) >= 3 else yrs))
+
+    # CAGR 3 ani
     cagr_3y, c3s, c3e = _get_cagr_3y(result)
     cagr_3y_label = (
         f"%CAGR ({c3s} - {c3e}) - crestere medie anuala"
         if c3s else "%CAGR ultimii 3 ani"
     )
 
+    # YoY CA
     yoy = None
     yoy_label = "%Dinamica CA vs anul anterior"
     if prev1:
@@ -110,7 +127,24 @@ def _build_table_data(result):
             _get_year_dict(nby, prev1).get("cifra_afaceri"),
         )
 
-    rows = [
+    # ── Valori absolute (nu intra in AI) ────────────────────
+    abs_rows = []
+
+    for year in years_last_3_desc:
+        yd = _get_year_dict(nby, year)
+        abs_rows.append({"name": f"Cifra Afaceri - {year}", "value": _fmt_abs(yd.get("cifra_afaceri"))})
+
+    for year in years_last_3_desc:
+        yd = _get_year_dict(nby, year)
+        abs_rows.append({"name": f"Profit Net - {year}", "value": _fmt_abs(yd.get("profit_net"))})
+
+    for year in years_last_3_desc:
+        yd = _get_year_dict(nby, year)
+        emp = yd.get("numar_angajati") or yd.get("numar_mediu_angajati")
+        abs_rows.append({"name": f"Numar Salariati - {year}", "value": _fmt_abs(emp)})
+
+    # ── Indicatori calculati ─────────────────────────────────
+    calc_rows = [
         {"name": f"%Profit Net {last} (Profit Net/CA)",                              "value": _fmt_pct(i_cur.get("profit_margin"), 2)},
         {"name": f"%Profit Net {prev1} (Profit Net/CA)" if prev1 else "%Profit Net an anterior", "value": _fmt_pct(i_p1.get("profit_margin"), 2) if prev1 else "N/A"},
         {"name": f"%Profit Net {prev2} (Profit Net/CA)" if prev2 else "%Profit Net cu 2 ani in urma", "value": _fmt_pct(i_p2.get("profit_margin"), 2) if prev2 else "N/A"},
@@ -135,11 +169,13 @@ def _build_table_data(result):
         {"name": yoy_label,                                                           "value": _fmt_pct(yoy, 1) if yoy else "N/A"},
     ]
 
+    all_rows = abs_rows + calc_rows
+
     table_data = {
-        "Indicator": [r["name"] for r in rows],
-        "Valoare":   [r["value"] for r in rows],
+        "Indicator": [r["name"] for r in all_rows],
+        "Valoare":   [r["value"] for r in all_rows],
     }
-    return rows, table_data
+    return all_rows, table_data
 
 
 def _get_dynamic_inputs(result):
@@ -171,9 +207,7 @@ def _get_dynamic_inputs(result):
 
 
 def _generate_ai_text(result, mode):
-    """Genereaza textul AI pentru modul ales."""
     i = _get_year_dict(result["indicators_by_year"], result["latest_year"])
-
     if mode == "dinamica":
         from app.openai_dynamic_client import generate_tpc_dynamic_insight_openai
         dynamic = _get_dynamic_inputs(result)
@@ -193,7 +227,7 @@ def _generate_ai_text(result, mode):
             indicators=i,
             cagr_ca=result["cagr_ca"],
         )
-    else:  # concluzie (default)
+    else:
         from app.openai_client import generate_tpc_analysis_openai
         return generate_tpc_analysis_openai(
             company_info=result["company_info"],
@@ -205,33 +239,22 @@ def _generate_ai_text(result, mode):
 
 
 # ═══════════════════════════════════════════════════════════════
-# ENDPOINTS
-# ═══════════════════════════════════════════════════════════════
-
 @app.route("/health")
 def health():
     with _cache_lock:
-        cache_size = len(_analysis_cache)
-    return jsonify({
-        "status":     "ok",
-        "service":    "TPC Analyzer API",
-        "cache_size": cache_size,
-    })
+        sz = len(_analysis_cache)
+    return jsonify({"status": "ok", "service": "TPC Analyzer API", "cache_size": sz})
 
 
 @app.route("/analyze")
 def analyze():
-    """Date companie + tabel indicatori. Fara AI — rapid."""
     cui_param = request.args.get("cui", "")
     cui, err, code = _parse_cui(cui_param)
     if err: return err, code
-
     force = request.args.get("refresh", "0") == "1"
-
     try:
         result = _cached_build_analysis(cui, force=force)
         rows, _ = _build_table_data(result)
-
         return jsonify({
             "success":          True,
             "company": {
@@ -245,7 +268,6 @@ def analyze():
             "indicators_table": rows,
             "cagr_ca":          _fmt_pct(result["cagr_ca"], 1) if result["cagr_ca"] else "N/A",
         })
-
     except Exception as e:
         traceback.print_exc()
         return jsonify({"error": str(e)}), 500
@@ -257,7 +279,7 @@ def ai_concluzie():
     cui, err, code = _parse_cui(cui_param)
     if err: return err, code
     try:
-        result = _cached_build_analysis(cui)  # din cache — instant
+        result = _cached_build_analysis(cui)
         text   = _generate_ai_text(result, "concluzie")
         return jsonify({"success": True, "mode": "concluzie", "text": text})
     except Exception as e:
@@ -271,7 +293,7 @@ def ai_dinamica():
     cui, err, code = _parse_cui(cui_param)
     if err: return err, code
     try:
-        result = _cached_build_analysis(cui)  # din cache — instant
+        result = _cached_build_analysis(cui)
         text   = _generate_ai_text(result, "dinamica")
         return jsonify({"success": True, "mode": "dinamica", "text": text})
     except Exception as e:
@@ -285,7 +307,7 @@ def ai_speech():
     cui, err, code = _parse_cui(cui_param)
     if err: return err, code
     try:
-        result = _cached_build_analysis(cui)  # din cache — instant
+        result = _cached_build_analysis(cui)
         text   = _generate_ai_text(result, "speech")
         return jsonify({"success": True, "mode": "speech", "text": text})
     except Exception as e:
@@ -295,31 +317,24 @@ def ai_speech():
 
 @app.route("/pdf")
 def pdf_data():
-    """
-    Returneaza JSON cu datele pentru PDF.
-    pdf.php din PHP primeste aceste date si genereaza PDF-ul in browser.
-    Nu foloseste WeasyPrint — compatibil cu orice hosting.
-    """
+    """Returneaza JSON pentru pdf.php — fara WeasyPrint."""
     cui_param = request.args.get("cui", "")
     mode      = request.args.get("mode", "concluzie")
     cui, err, code = _parse_cui(cui_param)
     if err: return err, code
-
     try:
-        result     = _cached_build_analysis(cui)  # din cache — instant
-        _, td      = _build_table_data(result)
-        text       = _generate_ai_text(result, mode)
-
+        result = _cached_build_analysis(cui)
+        _, td  = _build_table_data(result)
+        text   = _generate_ai_text(result, mode)
         return jsonify({
-            "success":    True,
-            "mode":       mode,
-            "company":    result["company_info"],
-            "years":      result["years_sorted"],
+            "success":     True,
+            "mode":        mode,
+            "company":     result["company_info"],
+            "years":       result["years_sorted"],
             "latest_year": result["latest_year"],
-            "table_data": td,
-            "ai_text":    text,
+            "table_data":  td,
+            "ai_text":     text,
         })
-
     except Exception as e:
         traceback.print_exc()
         return jsonify({"error": str(e)}), 500
