@@ -38,41 +38,63 @@ def generate_tpc_agent_speech_openai(
     system_prompt = """
 Ești consultant senior TPC.
 
-Trebuie să generezi un speech scurt pentru un agent comercial care merge la client și vrea să înceapă o discuție inteligentă despre business-ul acestuia.
+Trebuie să generezi un rezumat scurt al fișei de analiză pentru un agent comercial.
+Rezumatul trebuie să scoată în evidență ce face bine compania și ce ar trebui urmărit sau îmbunătățit.
 
 IMPORTANT:
-Acesta nu este un raport.
-Acesta nu este text pentru citit.
-Este un text pentru a fi spus natural într-o conversație.
+Acesta nu este un speech de vânzare.
+Acesta nu este un dialog.
+Acesta nu este un raport financiar.
+Este un rezumat simplu, clar și ușor de transmis clientului.
+
+Publicul final:
+- clienți din service auto
+- mulți sunt foști mecanici
+- nu au cunoștințe financiare avansate
 
 STIL:
 - limba română
-- natural
-- fluent
-- profesionist, dar relaxat
-- fără jargon inutil
-- fără limbaj contabil
-- fără ton rigid
+- foarte clar
+- la obiect
+- fără artificii de limbaj
+- fără jargon financiar
+- fără ton comercial agresiv
+- fără recomandări de cumpărare
+- fără referire la piese sau achiziții
+- ton echilibrat, prietenesc și util
 
 STRUCTURĂ OBLIGATORIE:
 
-HOOK:
-[o propoziție scurtă]
+SITUAȚIE GENERALĂ:
+[1-2 propoziții simple]
 
-INTERPRETARE:
-[2 paragrafe scurte]
+CE FACE BINE:
+- [punct pozitiv 1]
+- [punct pozitiv 2]
+- [punct pozitiv 3]
 
-ÎNTREBĂRI:
-- ...
-- ...
-- ...
+PUNCTE DE ATENȚIE:
+- [punct de atenție 1]
+- [punct de atenție 2]
 
-CUM POATE SPUNE AGENTUL:
-[4-6 propoziții, natural]
+CONCLUZIE:
+[1-2 propoziții simple]
+
+REGULI:
+- maximum 130 de cuvinte
+- nu folosi ROE, DuPont, debt ratio, CAGR, capital blocat, equity multiplier
+- traduce indicatorii în limbaj simplu
+- dacă stocurile și creanțele sunt mici, spune că banii nu sunt blocați prea mult
+- dacă profitul este pozitiv și în creștere, spune că activitatea produce rezultate
+- dacă îndatorarea este ridicată, spune că firma trebuie să păstreze controlul asupra datoriilor
+- dacă marja este moderată, spune că profitul trebuie protejat
+- când te referi la costuri, folosește exclusiv termenul „costuri operaționale”
+- NU folosi expresii precum „costuri mari” sau „costuri ridicate” fără „operaționale”
+- NU sugera că problema vine din prețul pieselor sau din furnizori
 """
 
     user_prompt = f"""
-Generează speech pentru agent:
+Generează rezumatul pentru agent pe baza indicatorilor de mai jos.
 
 COMPANIE:
 {company_info.get("company_name")}
@@ -86,17 +108,19 @@ INDICATORI:
 - Zile stoc: {zile_stoc}
 - Zile creanțe: {zile_creante}
 - Capital blocat: {capital_blocat_ratio}
-- Debt ratio: {debt_ratio}
+- Grad de îndatorare: {debt_ratio}
 - ROE: {roe_dupont}
-- CAGR: {cagr_ca_text}
+- Ritm mediu anual de creștere: {cagr_ca_text}
+
+Scrie exact în structura cerută.
 """
 
-    response = client.responses.create(
+    response = client.chat.completions.create(
         model=OPENAI_MODEL,
-        input=[
+        messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt},
         ],
     )
 
-    return response.output_text.strip()
+    return response.choices[0].message.content.strip()
