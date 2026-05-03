@@ -140,13 +140,13 @@ def calculate_credit_limit(indicators: dict, normalized_latest: dict) -> dict:
     gap               = limita_potential - limita_curenta
 
     # ── Wording TPC ───────────────────────────────────────────
-  def fmt(v):
-    if v >= 1_000_000:
-        return f"{v/1_000_000:.2f} mil. lei"
-    elif v >= 1_000:
-        return f"{v/1_000:.1f} mii lei".replace(".", ",")
-    else:
-        return f"{int(v):,} lei".replace(",", ".")
+    def fmt(v):
+        if v >= 1_000_000:
+            return f"{v/1_000_000:.2f} mil. lei"
+        elif v >= 1_000:
+            return f"{v/1_000:.1f} mii lei".replace(".", ",")
+        else:
+            return f"{int(v):,} lei".replace(",", ".")
 
     wording_premium = (
         f"Pe baza structurii financiare actuale, o limita sanatoasa de credit "
