@@ -50,7 +50,6 @@ def _fmt_int(v):
     return f"{int(v):,}".replace(",", ".")
 
 def _fmt_abs(v):
-    """Valori absolute — cifra afaceri, profit net, angajati."""
     if v is None: return "-"
     try:
         return f"{int(round(v)):,}".replace(",", ".")
@@ -82,17 +81,12 @@ def _get_cagr_3y(result):
     y3s, y3e = yrs[-3], yrs[-1]
     ca_s = _get_year_dict(nby, y3s).get("cifra_afaceri")
     ca_e = _get_year_dict(nby, y3e).get("cifra_afaceri")
-    if ca_s not in (None, 0) and ca_e is not None and y3e > y3s:
+    if ca_s not in (None, 0) and ca_e not in (None, 0) and y3e > y3s:
         return calculate_cagr(ca_s, ca_e, y3e - y3s), y3s, y3e
     return None, y3s, y3e
 
 
 def _build_table_data(result):
-    """
-    Construieste tabelul complet — identic cu build_table_data din streamlit_app.py.
-    Primele 9 randuri = valori absolute (CA, Profit Net, Angajati) pe ultimii 3 ani.
-    Restul = indicatori calculati.
-    """
     iby  = result["indicators_by_year"]
     nby  = result["normalized_by_year"]
     yrs  = result["years_sorted"]
@@ -107,17 +101,14 @@ def _build_table_data(result):
 
     sy = yrs[0]; ey = yrs[-1]
 
-    # Ultimii 3 ani in ordine descrescatoare pentru valorile absolute
     years_last_3_desc = list(reversed(yrs[-3:] if len(yrs) >= 3 else yrs))
 
-    # CAGR 3 ani
     cagr_3y, c3s, c3e = _get_cagr_3y(result)
     cagr_3y_label = (
         f"%CAGR ({c3s} - {c3e}) - crestere medie anuala"
         if c3s else "%CAGR ultimii 3 ani"
     )
 
-    # YoY CA
     yoy = None
     yoy_label = "%Dinamica CA vs anul anterior"
     if prev1:
@@ -127,23 +118,18 @@ def _build_table_data(result):
             _get_year_dict(nby, prev1).get("cifra_afaceri"),
         )
 
-    # ── Valori absolute (nu intra in AI) ────────────────────
     abs_rows = []
-
     for year in years_last_3_desc:
         yd = _get_year_dict(nby, year)
         abs_rows.append({"name": f"Cifra Afaceri - {year}", "value": _fmt_abs(yd.get("cifra_afaceri"))})
-
     for year in years_last_3_desc:
         yd = _get_year_dict(nby, year)
         abs_rows.append({"name": f"Profit Net - {year}", "value": _fmt_abs(yd.get("profit_net"))})
-
     for year in years_last_3_desc:
         yd = _get_year_dict(nby, year)
-        emp = yd.get("numar_angajati") or yd.get("numar_mediu_angajati")
+        emp = yd.get("numar_angajati") if yd.get("numar_angajati") is not None else yd.get("numar_mediu_angajati")
         abs_rows.append({"name": f"Numar Salariati - {year}", "value": _fmt_abs(emp)})
 
-    # ── Indicatori calculati ─────────────────────────────────
     calc_rows = [
         {"name": f"%Profit Net {last} (Profit Net/CA)",                              "value": _fmt_pct(i_cur.get("profit_margin"), 2)},
         {"name": f"%Profit Net {prev1} (Profit Net/CA)" if prev1 else "%Profit Net an anterior", "value": _fmt_pct(i_p1.get("profit_margin"), 2) if prev1 else "N/A"},
@@ -165,12 +151,11 @@ def _build_table_data(result):
         {"name": "%Datorii (Datorii totale/CA)",                                     "value": _fmt_pct(i_cur.get("datorii_ratio_ca"), 1)},
         {"name": "ROE DuPont (%Profit Net*Sales on asset*equity multiplier)",        "value": _fmt_pct(i_cur.get("roe_dupont"), 1)},
         {"name": f"%CAGR ({sy} - {ey}) - crestere medie anuala",                    "value": _fmt_pct(cagr, 1) if cagr else "N/A"},
-        {"name": cagr_3y_label,                                                      "value": _fmt_pct(cagr_3y, 1) if cagr_3y else "N/A"},
-        {"name": yoy_label,                                                           "value": _fmt_pct(yoy, 1) if yoy else "N/A"},
+        {"name": cagr_3y_label,                                                      "value": _fmt_pct(cagr_3y, 1) if cagr_3y is not None else "N/A"},
+        {"name": yoy_label,                                                          "value": _fmt_pct(yoy, 1) if yoy is not None else "N/A"},
     ]
 
     all_rows = abs_rows + calc_rows
-
     table_data = {
         "Indicator": [r["name"] for r in all_rows],
         "Valoare":   [r["value"] for r in all_rows],
@@ -188,16 +173,13 @@ def _get_dynamic_inputs(result):
     profit_margin_last_3y = [
         _get_year_dict(iby, y).get("profit_margin") for y in years_last_3
     ]
-
     cagr_3y, _, _ = _get_cagr_3y(result)
-
     revenue_growth = None
     if len(yrs) >= 2:
         revenue_growth = _calculate_yoy_change(
             _get_year_dict(nby, last).get("cifra_afaceri"),
             _get_year_dict(nby, yrs[-2]).get("cifra_afaceri"),
         )
-
     return {
         "profit_margin_last_3y":    profit_margin_last_3y,
         "cagr_3y":                  cagr_3y,
@@ -239,6 +221,9 @@ def _generate_ai_text(result, mode):
 
 
 # ═══════════════════════════════════════════════════════════════
+# ENDPOINTS
+# ═══════════════════════════════════════════════════════════════
+
 @app.route("/health")
 def health():
     with _cache_lock:
@@ -266,7 +251,7 @@ def analyze():
             "years":            result["years_sorted"],
             "latest_year":      result["latest_year"],
             "indicators_table": rows,
-            "cagr_ca":          _fmt_pct(result["cagr_ca"], 1) if result["cagr_ca"] else "N/A",
+            "cagr_ca":          _fmt_pct(result["cagr_ca"], 1) if result["cagr_ca"] is not None else "N/A",
         })
     except Exception as e:
         traceback.print_exc()
@@ -310,6 +295,44 @@ def ai_speech():
         result = _cached_build_analysis(cui)
         text   = _generate_ai_text(result, "speech")
         return jsonify({"success": True, "mode": "speech", "text": text})
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
+
+
+# ── NOU: Limita de Credit Comercial ─────────────────────────
+@app.route("/credit")
+def credit_limit():
+    """GET /credit?cui=... — Calculeaza limita de credit comercial TPC"""
+    cui_param = request.args.get("cui", "")
+    cui, err, code = _parse_cui(cui_param)
+    if err: return err, code
+    try:
+        from app.credit_limit import calculate_credit_limit
+
+        result      = _cached_build_analysis(cui)
+        latest_year = result["latest_year"]
+        indicators  = _get_year_dict(result["indicators_by_year"], latest_year)
+        normalized  = _get_year_dict(result["normalized_by_year"], latest_year)
+
+        # Adaugam cagr_ca in indicators
+        indicators_with_cagr = dict(indicators)
+        indicators_with_cagr["cagr_ca"] = result.get("cagr_ca")
+
+        credit = calculate_credit_limit(indicators_with_cagr, normalized)
+
+        if "error" in credit:
+            return jsonify({"error": credit["error"]}), 422
+
+        return jsonify({
+            "success":     True,
+            "company": {
+                "name": result["company_info"].get("company_name"),
+                "cui":  str(cui),
+            },
+            "latest_year": latest_year,
+            "credit":      credit,
+        })
     except Exception as e:
         traceback.print_exc()
         return jsonify({"error": str(e)}), 500
