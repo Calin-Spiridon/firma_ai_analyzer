@@ -1,5 +1,4 @@
 from openai import OpenAI
-
 from app.config import OPENAI_API_KEY, OPENAI_MODEL
 
 
@@ -27,170 +26,143 @@ def generate_tpc_analysis_openai(
     latest_year: int,
     indicators: dict,
     cagr_ca: float | None,
+    tpc_profile: dict | None = None,
 ) -> str:
     if not OPENAI_API_KEY:
         raise ValueError("Lipsește OPENAI_API_KEY din .env")
 
     client = OpenAI(api_key=OPENAI_API_KEY, timeout=60.0)
 
-    # =========================
-    # FORMATARE PENTRU PROMPT
-    # =========================
-    profit_margin = _format_percent(indicators.get("profit_margin"), digits=2)
-    sales_on_assets = _format_number(indicators.get("sales_on_assets"))
-    equity_multiplier = _format_number(indicators.get("equity_multiplier"))
-    zile_stoc = _format_integer(indicators.get("zile_stoc"))
-    zile_creante = _format_integer(indicators.get("zile_creante"))
-    capital_blocat = _format_integer(indicators.get("capital_blocat"))
+    # Formatare indicatori
+    profit_margin        = _format_percent(indicators.get("profit_margin"), digits=2)
+    sales_on_assets      = _format_number(indicators.get("sales_on_assets"))
+    equity_multiplier    = _format_number(indicators.get("equity_multiplier"))
+    zile_stoc            = _format_integer(indicators.get("zile_stoc"))
+    zile_creante         = _format_integer(indicators.get("zile_creante"))
+    capital_blocat       = _format_integer(indicators.get("capital_blocat"))
     capital_blocat_ratio = _format_percent(indicators.get("capital_blocat_ratio"), digits=1)
-    salariu_mediu_lunar = _format_integer(indicators.get("salariu_mediu_lunar"))
-    salariu_anual = _format_integer(indicators.get("salariu_anual"))
-    fond_salarial = _format_integer(indicators.get("fond_salarial"))
-    pondere_fond_salarial = _format_percent(indicators.get("pondere_fond_salarial"), digits=1)
-    productivitate = _format_integer(indicators.get("productivitate"))
-    randament = _format_number(indicators.get("randament"))
-    debt_ratio = _format_percent(indicators.get("debt_ratio"), digits=1)
-    debt_to_equity = _format_number(indicators.get("debt_to_equity"))
-    datorii_ratio_ca = _format_percent(indicators.get("datorii_ratio_ca"), digits=1)
-    roe_dupont = _format_percent(indicators.get("roe_dupont"), digits=1)
-    cagr_ca_text = _format_percent(cagr_ca, digits=1)
+    salariu_mediu_lunar  = _format_integer(indicators.get("salariu_mediu_lunar"))
+    fond_salarial        = _format_integer(indicators.get("fond_salarial"))
+    pondere_fond_salarial= _format_percent(indicators.get("pondere_fond_salarial"), digits=1)
+    productivitate       = _format_integer(indicators.get("productivitate"))
+    randament            = _format_number(indicators.get("randament"))
+    debt_ratio           = _format_percent(indicators.get("debt_ratio"), digits=1)
+    debt_to_equity       = _format_number(indicators.get("debt_to_equity"))
+    datorii_ratio_ca     = _format_percent(indicators.get("datorii_ratio_ca"), digits=1)
+    roe_dupont           = _format_percent(indicators.get("roe_dupont"), digits=1)
+    cagr_ca_text         = _format_percent(cagr_ca, digits=1)
 
-    system_prompt = """
-Ești un consultant senior de business și strategie din cadrul TPC.
+    # Profil TPC scoring — daca e disponibil
+    profile_section = ""
+    if tpc_profile:
+        def score_line(domain, data):
+            return f"- {domain}: {data.get('score','')} {data.get('label','')} — {data.get('profile','')}"
+        profile_section = f"""
+PROFILUL TPC AL COMPANIEI (generat automat de Motorul TPC):
+{score_line('Creștere', tpc_profile.get('growth', {}))}
+{score_line('Profitabilitate', tpc_profile.get('profitability', {}))}
+{score_line('Cash Flow', tpc_profile.get('cashflow', {}))}
+{score_line('Utilizarea capitalului', tpc_profile.get('assets', {}))}
+{score_line('Capital uman', tpc_profile.get('human_capital', {}))}
 
-Misiunea ta este să transformi indicatorii financiari ai unei companii într-o interpretare executivă foarte clară, elegantă, matură și strategică, în limba română.
-
-Tu nu descrii doar cifre. Tu explici ce spun ele despre modelul de business.
-
-STIL OBLIGATORIU:
-- Scrie clar, profesionist și executiv.
-- Tonul trebuie să pară de consultant bun, nu de AI.
-- Nu scrie academic, rigid sau contabil.
-- Nu inventa date.
-- Nu repeta mecanic cifrele.
-- Nu folosi bullet points clasice.
-- Nu face paragrafe foarte lungi.
-- Folosește propoziții clare și ferme.
-- După ideile importante, adaugă linii scurte care încep cu 👉
-- Fiecare secțiune trebuie să aibă logică și concluzie.
-- Interpretarea trebuie să fie ușor de pus direct într-un PDF pentru client.
-
-OBIECTIV:
-Textul trebuie să răspundă la întrebarea:
-„Ce spune această structură financiară despre calitatea și sustenabilitatea business-ului?"
-
-STRUCTURA OBLIGATORIE:
-Scrie exact în acest format:
-
-1. Creștere. Modelul are tracțiune?
-[1-2 paragrafe scurte]
-- ...
-- ...
-
-2. Profitabilitate. Creșterea generează valoare?
-[1-2 paragrafe scurte]
-- ...
-- ...
-
-3. Cash Flow. Creșterea este sustenabilă?
-[1-2 paragrafe scurte]
-- ...
-- ...
-- ...
-
-4. Eficiența activelor. Cât de bine este utilizat capitalul?
-[1-2 paragrafe scurte]
-- ...
-- ...
-
-5. Capital uman. Organizația creează sau consumă valoare?
-[1-2 paragrafe scurte]
-- ...
-- ...
-
-Concluzie strategică
-[un paragraf de concluzie]
-- ...
-- ...
-- ...
-
-REGULI DE INTERPRETARE:
-- CAGR mare = model cu tracțiune, dar verifică dacă această creștere este susținută sănătos.
-- Marjă mică = business fragil la șocuri de cost sau presiune concurențială.
-- Capital blocat mare = presiune pe lichiditate.
-- Zile mari de stoc și creanțe = cash tensionat și ciclu operațional greu.
-- Debt ratio mare și debt-to-equity mare = dependență de finanțare externă.
-- Sales on assets bun = active utilizate eficient.
-- Productivitate bună și fond salarial echilibrat = organizație eficientă.
-- ROE mare trebuie interpretat cu atenție: poate veni din performanță reală sau din levier.
-- Concluzia trebuie să spună clar unde este punctul forte și unde este riscul structural.
-
-CE SĂ EVIȚI:
-- Nu spune „indicatorul sugerează că".
-- Nu spune „pe baza datelor oferite".
-- Nu suna ca un profesor.
-- Nu repeta în fiecare secțiune aceleași idei.
-- Nu transforma textul într-un comentariu contabil.
-- Nu scrie prea general.
-- Nu folosi formulări goale precum „în contextul actual al pieței" dacă nu ai date despre piață.
-
-EXEMPLU DE NIVEL DORIT:
-Un text care explică limpede:
-- dacă modelul crește
-- dacă profitul este suficient
-- dacă lichiditatea este sub presiune
-- dacă activele sunt eficiente
-- dacă oamenii creează valoare
-- care este concluzia strategică reală
-
-IMPORTANT:
-Textul trebuie să sune natural, clar și puternic.
-Nu trebuie să fie nici prea scurt, nici prea lung.
-Trebuie să fie mai degrabă „diagnostic executiv" decât „descriere de indicatori".
+MESAJELE DE CLASIFICARE TPC:
+- Creștere: {tpc_profile.get('growth', {}).get('message', '')}
+- Profitabilitate: {tpc_profile.get('profitability', {}).get('message', '')}
+- Cash Flow: {tpc_profile.get('cashflow', {}).get('message', '')}
+- Capital: {tpc_profile.get('assets', {}).get('message', '')}
+- Capital uman: {tpc_profile.get('human_capital', {}).get('message', '')}
 """
 
-    user_prompt = f"""
-Analizează compania de mai jos și oferă o interpretare TPC premium, în română.
+    system_prompt = """Ești consultant senior de business și strategie din cadrul TPC.
+
+Misiunea ta este să transformi profilul TPC al unei companii într-un diagnostic managerial clar, profesionist și ușor de înțeles de către antreprenori, CEO și acționari.
+
+IMPORTANT:
+Nu interpreta indicatorii financiari brut.
+Indicatorii au fost deja analizați și clasificați de Motorul TPC.
+Rolul tău este să explici implicațiile manageriale ale profilului rezultat.
+
+Scopul raportului este să răspundă la cinci întrebări:
+1. Creștem suficient?
+2. Creșterea produce valoare?
+3. Generăm numerar sau îl consumăm?
+4. Dacă vrem să creștem, ne costă mult?
+5. Oamenii creează suficientă valoare?
+
+STIL:
+- Scrie clar și profesionist.
+- Scrie ca un consultant experimentat.
+- Evită limbajul academic.
+- Evită explicațiile financiare complicate.
+- Nu explica formule.
+- Nu repeta cifre inutil.
+- Concentrează-te pe implicațiile manageriale.
+- Fii direct și pragmatic.
+- Nu folosi expresii de tipul: "indicatorul sugerează", "pe baza datelor disponibile", "conform informațiilor furnizate".
+- CEO-ul trebuie să înțeleagă: ce funcționează bine, ce necesită atenție, care sunt prioritățile.
+- Nu folosi bullet points clasice — scrie propoziții complete, curgătoare.
+- După ideile importante, adaugă linii scurte care încep cu 👉
+
+STRUCTURA OBLIGATORIE — respecta exact ordinea și titlurile:
+
+Imagine de ansamblu
+(maxim 3 paragrafe despre tabloul general al companiei — fără cifre brute, fără semafor, fără priorități)
+
+1. Creștere. Creștem suficient?
+(un paragraf narativ + Implicație managerială: o propoziție directă)
+
+2. Profitabilitate și creare de valoare. Creșterea produce valoare?
+(un paragraf narativ + Implicație managerială: o propoziție directă)
+
+3. Cash Flow. Generăm numerar sau îl consumăm?
+(un paragraf narativ + Implicație managerială: o propoziție directă)
+
+4. Utilizarea capitalului. Dacă vrem să creștem, ne costă mult?
+(un paragraf narativ + Implicație managerială: o propoziție directă)
+
+5. Capital uman. Oamenii creează suficientă valoare?
+(un paragraf narativ + Implicație managerială: o propoziție directă)
+
+REGULI IMPORTANTE:
+- NU include semafor managerial — acesta este generat separat.
+- NU include priorități sugerate — acestea sunt generate separat.
+- NU include nota importantă — aceasta este generată separat.
+- Fiecare secțiune trebuie să aibă o implicație managerială clară.
+- Raportul trebuie să semene cu o discuție dintre un consultant și un CEO, nu cu o analiză contabilă.
+- Nu comenta indicatorii secundari dacă nu schimbă concluzia.
+"""
+
+    user_prompt = f"""Analizează compania de mai jos și oferă un diagnostic managerial TPC premium, în română.
 
 COMPANIE
 - Denumire: {company_info.get("company_name")}
 - CUI: {company_info.get("cui")}
-- CAEN: {company_info.get("caen_code")}
-- Denumire CAEN: {company_info.get("caen_label")}
+- CAEN: {company_info.get("caen_code")} — {company_info.get("caen_label")}
 
 FEREASTRĂ DE ANALIZĂ
 - Ani analizați: {years_sorted}
-- Ultimul an eligibil analizat: {latest_year}
+- Ultimul an analizat: {latest_year}
 
-INDICATORI CHEIE PENTRU {latest_year}
+INDICATORI {latest_year}
 - Marjă profit net: {profit_margin}
 - Sales on assets: {sales_on_assets}
 - Equity multiplier: {equity_multiplier}
-- Zile stoc: {zile_stoc}
-- Zile creanțe: {zile_creante}
-- Capital blocat: {capital_blocat}
-- % Capital blocat din CA: {capital_blocat_ratio}
-- Salariu brut mediu lunar estimat: {salariu_mediu_lunar}
-- Salariu brut anual estimat: {salariu_anual}
-- Fond salarial estimat: {fond_salarial}
-- % Fond salarial din CA: {pondere_fond_salarial}
+- Zile stoc: {zile_stoc} | Zile creanțe: {zile_creante}
+- Capital blocat: {capital_blocat} ({capital_blocat_ratio} din CA)
+- Fond salarial: {fond_salarial} ({pondere_fond_salarial} din CA)
 - Productivitate per angajat: {productivitate}
 - Randament angajat: {randament}
-- Debt ratio: {debt_ratio}
-- Debt to equity: {debt_to_equity}
+- Debt ratio: {debt_ratio} | Debt to equity: {debt_to_equity}
 - % Datorii din CA: {datorii_ratio_ca}
 - ROE DuPont: {roe_dupont}
 - CAGR cifră de afaceri: {cagr_ca_text}
-
-INSTRUCȚIUNI FINALE
-- Vreau o interpretare foarte bună, nu generică.
-- Vreau să explici ce înseamnă cifrele pentru business.
-- Pune accent pe logică, claritate și implicații.
-- Fiecare secțiune trebuie să aibă concluzie.
-- Concluzia strategică trebuie să spună limpede dacă modelul este sănătos, fragil sau tensionat.
-- Dacă vezi un dezechilibru între creștere, profitabilitate și lichiditate, spune asta direct.
-- Dacă vezi eficiență reală, spune asta direct.
-- Dacă ROE este influențat de levier, explică clar.
+{profile_section}
+INSTRUCȚIUNI FINALE:
+- Scrie un diagnostic executiv matur, nu o descriere de indicatori.
+- Explică CE ÎNSEAMNĂ cifrele pentru management, nu ce arată ele tehnic.
+- Fii direct, ferm și constructiv.
+- Structurează exact cum ți-am cerut — Imagine de ansamblu + 5 secțiuni numerotate.
+- NU include semafor, NU include priorități, NU include notă importantă.
 """
 
     response = client.chat.completions.create(
