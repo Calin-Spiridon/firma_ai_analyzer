@@ -131,28 +131,28 @@ def _build_table_data(result):
         abs_rows.append({"name": f"Numar Salariati - {year}", "value": _fmt_abs(emp)})
 
     calc_rows = [
-        {"name": f"%Profit Net {last} (Profit Net/CA)",                              "value": _fmt_pct(i_cur.get("profit_margin"), 2)},
+        {"name": f"%Profit Net {last} (Profit Net/CA)",                               "value": _fmt_pct(i_cur.get("profit_margin"), 2)},
         {"name": f"%Profit Net {prev1} (Profit Net/CA)" if prev1 else "%Profit Net an anterior", "value": _fmt_pct(i_p1.get("profit_margin"), 2) if prev1 else "N/A"},
         {"name": f"%Profit Net {prev2} (Profit Net/CA)" if prev2 else "%Profit Net cu 2 ani in urma", "value": _fmt_pct(i_p2.get("profit_margin"), 2) if prev2 else "N/A"},
-        {"name": "Sales on asset (CA/Active totale)",                                "value": _fmt_num(i_cur.get("sales_on_assets"))},
-        {"name": "Equity multiplier (Active totale/Capital Propriu)",                "value": _fmt_num(i_cur.get("equity_multiplier"))},
-        {"name": "Zile stoc (Stoc/CA medie zilnica)",                                "value": _fmt_int(i_cur.get("zile_stoc"))},
-        {"name": "Zile creante (Creante/CA medie zilnica)",                          "value": _fmt_int(i_cur.get("zile_creante"))},
-        {"name": "Capital Blocat (Creante + Stocuri)",                               "value": _fmt_int(i_cur.get("capital_blocat"))},
-        {"name": "%Capital Blocat (Capital Blocat / CA)",                            "value": _fmt_pct(i_cur.get("capital_blocat_ratio"), 1)},
-        {"name": "Salariu brut mediu lunar (salariu brut mediu pe economie)",        "value": _fmt_int(i_cur.get("salariu_mediu_lunar")) + " lei"},
-        {"name": "Salariu brut anual (Salariu mediu brut lunar*12)",                 "value": _fmt_int(i_cur.get("salariu_anual"))},
-        {"name": "Fond salarial (Salariu brut anual*numar angajati)",                "value": _fmt_int(i_cur.get("fond_salarial"))},
-        {"name": "%Fond Salarial (Fond salarial/CA)",                                "value": _fmt_pct(i_cur.get("pondere_fond_salarial"), 1)},
-        {"name": "Productivitate (CA/Nr Angajati)",                                  "value": _fmt_int(i_cur.get("productivitate"))},
-        {"name": "Randament angajat (Productivitate/Salariu brut anual per angajat)","value": _fmt_num(i_cur.get("randament"))},
-        {"name": "Debt Ratio (Datorii totale/Active totale)",                        "value": _fmt_pct(i_cur.get("debt_ratio"), 1)},
-        {"name": "Debt to equity (Datorii totale/Capital Propriu)",                  "value": _fmt_num(i_cur.get("debt_to_equity"))},
-        {"name": "%Datorii (Datorii totale/CA)",                                     "value": _fmt_pct(i_cur.get("datorii_ratio_ca"), 1)},
-        {"name": "ROE DuPont (%Profit Net*Sales on asset*equity multiplier)",        "value": _fmt_pct(i_cur.get("roe_dupont"), 1)},
-        {"name": f"%CAGR ({sy} - {ey}) - crestere medie anuala",                    "value": _fmt_pct(cagr, 1) if cagr else "N/A"},
-        {"name": cagr_3y_label,                                                      "value": _fmt_pct(cagr_3y, 1) if cagr_3y is not None else "N/A"},
-        {"name": yoy_label,                                                          "value": _fmt_pct(yoy, 1) if yoy is not None else "N/A"},
+        {"name": "Sales on asset (CA/Active totale)",                                  "value": _fmt_num(i_cur.get("sales_on_assets"))},
+        {"name": "Equity multiplier (Active totale/Capital Propriu)",                  "value": _fmt_num(i_cur.get("equity_multiplier"))},
+        {"name": "Zile stoc (Stoc/CA medie zilnica)",                                  "value": _fmt_int(i_cur.get("zile_stoc"))},
+        {"name": "Zile creante (Creante/CA medie zilnica)",                            "value": _fmt_int(i_cur.get("zile_creante"))},
+        {"name": "Capital Blocat (Creante + Stocuri)",                                 "value": _fmt_int(i_cur.get("capital_blocat"))},
+        {"name": "%Capital Blocat (Capital Blocat / CA)",                              "value": _fmt_pct(i_cur.get("capital_blocat_ratio"), 1)},
+        {"name": "Salariu brut mediu lunar (salariu brut mediu pe economie)",          "value": _fmt_int(i_cur.get("salariu_mediu_lunar")) + " lei"},
+        {"name": "Salariu brut anual (Salariu mediu brut lunar*12)",                   "value": _fmt_int(i_cur.get("salariu_anual"))},
+        {"name": "Fond salarial (Salariu brut anual*numar angajati)",                  "value": _fmt_int(i_cur.get("fond_salarial"))},
+        {"name": "%Fond Salarial (Fond salarial/CA)",                                  "value": _fmt_pct(i_cur.get("pondere_fond_salarial"), 1)},
+        {"name": "Productivitate (CA/Nr Angajati)",                                    "value": _fmt_int(i_cur.get("productivitate"))},
+        {"name": "Randament angajat (Productivitate/Salariu brut anual per angajat)",  "value": _fmt_num(i_cur.get("randament"))},
+        {"name": "Debt Ratio (Datorii totale/Active totale)",                          "value": _fmt_pct(i_cur.get("debt_ratio"), 1)},
+        {"name": "Debt to equity (Datorii totale/Capital Propriu)",                    "value": _fmt_num(i_cur.get("debt_to_equity"))},
+        {"name": "%Datorii (Datorii totale/CA)",                                       "value": _fmt_pct(i_cur.get("datorii_ratio_ca"), 1)},
+        {"name": "ROE DuPont (%Profit Net*Sales on asset*equity multiplier)",          "value": _fmt_pct(i_cur.get("roe_dupont"), 1)},
+        {"name": f"%CAGR ({sy} - {ey}) - crestere medie anuala",                      "value": _fmt_pct(cagr, 1) if cagr else "N/A"},
+        {"name": cagr_3y_label,                                                        "value": _fmt_pct(cagr_3y, 1) if cagr_3y is not None else "N/A"},
+        {"name": yoy_label,                                                            "value": _fmt_pct(yoy, 1) if yoy is not None else "N/A"},
     ]
 
     all_rows = abs_rows + calc_rows
@@ -210,13 +210,30 @@ def _generate_ai_text(result, mode):
             cagr_ca=result["cagr_ca"],
         )
     else:
+        # Concluzie TPC — cu profil TPC scoring
         from app.openai_client import generate_tpc_analysis_openai
+        from app.tpc_scoring import build_tpc_scoring_profile
+
+        iby  = result["indicators_by_year"]
+        yrs  = result["years_sorted"]
+        last = result["latest_year"]
+        prev = yrs[-2] if len(yrs) >= 2 else None
+        i_prev = _get_year_dict(iby, prev) if prev else {}
+
+        tpc_profile = build_tpc_scoring_profile(
+            indicators=i,
+            cagr_ca=result["cagr_ca"],
+            profit_margin_base=i_prev.get("profit_margin"),
+            equity_base=i_prev.get("capital_propriu"),
+        )
+
         return generate_tpc_analysis_openai(
             company_info=result["company_info"],
             years_sorted=result["years_sorted"],
             latest_year=result["latest_year"],
             indicators=i,
             cagr_ca=result["cagr_ca"],
+            tpc_profile=tpc_profile,
         )
 
 
@@ -300,7 +317,6 @@ def ai_speech():
         return jsonify({"error": str(e)}), 500
 
 
-# ── NOU: Limita de Credit Comercial ─────────────────────────
 @app.route("/credit")
 def credit_limit():
     """GET /credit?cui=... — Calculeaza limita de credit comercial TPC"""
@@ -315,7 +331,6 @@ def credit_limit():
         indicators  = _get_year_dict(result["indicators_by_year"], latest_year)
         normalized  = _get_year_dict(result["normalized_by_year"], latest_year)
 
-        # Adaugam cagr_ca in indicators
         indicators_with_cagr = dict(indicators)
         indicators_with_cagr["cagr_ca"] = result.get("cagr_ca")
 
