@@ -6,12 +6,17 @@ import traceback
 import os
 import sentry_sdk
 
-sentry_sdk.init(
-    dsn=os.environ.get("SENTRY_DSN"),
-    environment="production",
-    traces_sample_rate=0.0,   # doar erori, fără performance monitoring (rămâne gratuit)
-    send_default_pii=True,    # atașează datele requestului (ex. CUI-ul cerut)
-)
+_sentry_dsn = os.environ.get("SENTRY_DSN", "").strip()
+if _sentry_dsn:
+    try:
+        sentry_sdk.init(
+            dsn=_sentry_dsn,
+            environment="production",
+            traces_sample_rate=0.0,
+            send_default_pii=True,
+        )
+    except Exception as e:
+        print(f"[WARN] Sentry init a esuat, continui fara el: {e}")
 
 app = Flask(__name__)
 CORS(app)
