@@ -4,6 +4,14 @@ from cachetools import TTLCache
 from threading import Lock
 import traceback
 import os
+import sentry_sdk
+
+sentry_sdk.init(
+    dsn=os.environ.get("SENTRY_DSN"),
+    environment="production",
+    traces_sample_rate=0.0,   # doar erori, fără performance monitoring (rămâne gratuit)
+    send_default_pii=True,    # atașează datele requestului (ex. CUI-ul cerut)
+)
 
 app = Flask(__name__)
 CORS(app)
