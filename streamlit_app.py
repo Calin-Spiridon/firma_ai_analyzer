@@ -388,7 +388,7 @@ def render_company_analysis_result():
                     company_info=company_info,
                     years_sorted=years_sorted,
                     latest_year=latest_year,
-                    indicators=indicators,
+                    indicators=result["ai_indicators"],
                     cagr_ca=cagr_ca,
                 )
                 st.session_state.analysis_text = text

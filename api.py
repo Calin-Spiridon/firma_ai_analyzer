@@ -244,7 +244,7 @@ def _generate_ai_text(result, mode):
             company_info=result["company_info"],
             years_sorted=result["years_sorted"],
             latest_year=result["latest_year"],
-            indicators=i,
+            indicators=result["ai_indicators"],
             cagr_ca=result["cagr_ca"],
             tpc_profile=tpc_profile,
         )

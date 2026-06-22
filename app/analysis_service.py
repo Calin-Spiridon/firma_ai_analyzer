@@ -7,6 +7,77 @@ from app.utils import calculate_cagr
 from app.year_selector import select_analysis_year
 
 
+def _by_year(mapping: dict, year) -> dict:
+    """Acceptă chei int sau str pentru an (defensiv)."""
+    if not mapping:
+        return {}
+    return mapping.get(year) or mapping.get(str(year)) or {}
+
+
+def build_ai_indicators(
+    years_sorted: list[int],
+    latest_year: int,
+    indicators_by_year: dict,
+    normalized_by_year: dict,
+) -> dict:
+    """
+    Asamblează dicționarul PLAT de indicatori folosit de
+    generate_tpc_analysis_openai() pentru „Concluzie TPC”.
+
+    Pornește de la indicatorii ultimului an analizat și adaugă tot ce are
+    nevoie interpretarea narativă, dar NU rezultă din calculul pe un singur an:
+      - cifra de afaceri brută (pentru „Imagine de ansamblu”),
+      - cifra de afaceri și marja netă pe fiecare an disponibil,
+      - dinamica CA an/an,
+      - CAGR pe ultimii 3 ani,
+      - capital propriu și număr angajați.
+
+    Totul este derivat DINAMIC din `latest_year`. Nu există ani hardcodați:
+    dacă ultimul an cu date devine 2025 (sau 2026), cheile se ajustează singure
+    (ca_2025, profit_margin_2025 etc.).
+    """
+    latest_ind = dict(_by_year(indicators_by_year, latest_year))
+    latest_norm = _by_year(normalized_by_year, latest_year)
+
+    # Toți indicatorii ultimului an (rate, zile, capital blocat, productivitate...)
+    flat = dict(latest_ind)
+
+    # Valori brute ale ultimului an
+    ca_now = latest_norm.get("cifra_afaceri")
+    flat["cifra_afaceri"] = ca_now
+    flat[f"ca_{latest_year}"] = ca_now
+    flat["capital_propriu"] = latest_ind.get(
+        "capital_propriu", latest_norm.get("capital_propriu")
+    )
+    flat["numar_angajati"] = latest_ind.get(
+        "numar_angajati", latest_norm.get("numar_angajati")
+    )
+
+    # Serii pe ani: cifră de afaceri și marjă netă pentru fiecare an disponibil
+    for y in years_sorted:
+        ca_y = _by_year(normalized_by_year, y).get("cifra_afaceri")
+        if ca_y is not None:
+            flat[f"ca_{y}"] = ca_y
+        pm_y = _by_year(indicators_by_year, y).get("profit_margin")
+        if pm_y is not None:
+            flat[f"profit_margin_{y}"] = pm_y
+
+    # Dinamica CA an/an — DOAR dacă există exact anul anterior (latest - 1),
+    # ca să nu etichetăm greșit un salt peste un an lipsă.
+    ca_prev = _by_year(normalized_by_year, latest_year - 1).get("cifra_afaceri")
+    if ca_now is not None and ca_prev not in (None, 0):
+        flat["dinamica_ca_ultim_an"] = (ca_now - ca_prev) / ca_prev
+
+    # CAGR pe ultimii 3 ani — fereastra [latest-2 .. latest], dacă ambele capete există
+    ca_3y_start = _by_year(normalized_by_year, latest_year - 2).get("cifra_afaceri")
+    if ca_now and ca_3y_start:
+        cagr_3y = calculate_cagr(ca_3y_start, ca_now, 2)
+        if cagr_3y is not None:
+            flat["cagr_ca_3y"] = cagr_3y
+
+    return flat
+
+
 def build_company_analysis(cui: int) -> dict:
     client = TermeneClient()
 
@@ -28,7 +99,7 @@ def build_company_analysis(cui: int) -> dict:
 
     latest_year, valid_years, rejected_years, max_comparable_year = select_analysis_year(
         normalized_by_year=normalized_by_year,
-        safety_month=8,
+        deadline_month=6,
     )
 
     if latest_year is None:
@@ -58,12 +129,21 @@ def build_company_analysis(cui: int) -> dict:
             end_year - start_year,
         )
 
+    # Dicționarul PLAT pentru AI (Concluzie TPC), derivat dinamic din ultimul an.
+    ai_indicators = build_ai_indicators(
+        years_sorted=years_sorted,
+        latest_year=latest_year,
+        indicators_by_year=indicators_by_year,
+        normalized_by_year=normalized_by_year,
+    )
+
     return {
         "company_info": company_info,
         "years_sorted": years_sorted,
         "latest_year": latest_year,
         "normalized_by_year": {str(k): v for k, v in normalized_by_year.items()},
         "indicators_by_year": {str(k): v for k, v in indicators_by_year.items()},
+        "ai_indicators": ai_indicators,
         "cagr_ca": cagr_ca,
         "max_comparable_year": max_comparable_year,
         "rejected_years": rejected_years,

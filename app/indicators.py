@@ -4,12 +4,26 @@ def safe_div(numerator, denominator):
     return numerator / denominator
 
 
+# Salariul mediu brut pe economie, pe an (lei/lună).
+# Completează aici valorile oficiale pe care le folosești. Fallback-ul NU mai e
+# o valoare fixă veche, ci ultimul an cunoscut — așa rămâne corect și când
+# ultimul an analizat devine 2026, 2027 etc.
+AVERAGE_GROSS_SALARY_BY_YEAR = {
+    # 2020: 5429,
+    # 2021: 5950,
+    # 2022: 6485,
+    # 2023: 7567,
+    2024: 8532,
+    2025: 8938,
+}
+
+
 def get_salary_monthly_for_year(year: int) -> float:
-    if year == 2025:
-        return 8938
-    return 8532
-
-
+    if year in AVERAGE_GROSS_SALARY_BY_YEAR:
+        return AVERAGE_GROSS_SALARY_BY_YEAR[year]
+    # Fallback: cel mai recent an cunoscut (nu o valoare fixă).
+    latest_known = max(AVERAGE_GROSS_SALARY_BY_YEAR)
+    return AVERAGE_GROSS_SALARY_BY_YEAR[latest_known]
 
 
 def calculate_indicators_for_year(year: int, data: dict) -> dict:
@@ -50,6 +64,13 @@ def calculate_indicators_for_year(year: int, data: dict) -> dict:
 
     return {
         "year": year,
+        # valori brute (utile interpretării narative și asamblării pentru AI)
+        "cifra_afaceri": cifra_afaceri,
+        "profit_net": profit_net,
+        "total_active": total_active,
+        "capital_propriu": capital_propriu,
+        "numar_angajati": numar_angajati,
+        # indicatori calculați
         "profit_margin": profit_margin,
         "sales_on_assets": sales_on_assets,
         "equity_multiplier": equity_multiplier,
