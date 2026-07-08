@@ -149,6 +149,7 @@ def _build_table_data(result):
         {"name": f"%Profit Net {prev2} (Profit Net/CA)" if prev2 else "%Profit Net cu 2 ani in urma", "value": _fmt_pct(i_p2.get("profit_margin"), 2) if prev2 else "N/A"},
         {"name": "Sales on asset (CA/Active totale)",                                  "value": _fmt_num(i_cur.get("sales_on_assets"))},
         {"name": "Equity multiplier (Active totale/Capital Propriu)",                  "value": _fmt_num(i_cur.get("equity_multiplier"))},
+        {"name": "Capital propriu (total)",                                            "value": _fmt_abs(i_cur.get("capital_propriu"))},
         {"name": "Zile stoc (Stoc/CA medie zilnica)",                                  "value": _fmt_int(i_cur.get("zile_stoc"))},
         {"name": "Zile creante (Creante/CA medie zilnica)",                            "value": _fmt_int(i_cur.get("zile_creante"))},
         {"name": "Capital Blocat (Creante + Stocuri)",                                 "value": _fmt_int(i_cur.get("capital_blocat"))},
@@ -223,21 +224,28 @@ def _generate_ai_text(result, mode):
             cagr_ca=result["cagr_ca"],
         )
     else:
-        # Concluzie TPC — cu profil TPC scoring
+        # Concluzie TPC — cu profil TPC scoring (semafor aliniat cu frontend-ul)
         from app.openai_client import generate_tpc_analysis_openai
         from app.tpc_scoring import build_tpc_scoring_profile
 
         iby  = result["indicators_by_year"]
         yrs  = result["years_sorted"]
-        last = result["latest_year"]
         prev = yrs[-2] if len(yrs) >= 2 else None
         i_prev = _get_year_dict(iby, prev) if prev else {}
 
+        dynamic = _get_dynamic_inputs(result)
+
+        # Aceleasi inputuri ca in scoring_engine.js (frontend):
+        # dinamica YoY, marja curenta + baza, capital propriu,
+        # capital blocat + zile creante/stoc, sales on assets,
+        # productivitate + randament.
+        scoring_inputs = dict(i)
+        scoring_inputs["profit_margin_base"] = i_prev.get("profit_margin")
+        scoring_inputs["dinamica_ca_ultim_an"] = dynamic["revenue_growth_last_year"]
+
         tpc_profile = build_tpc_scoring_profile(
-            indicators=i,
-            cagr_ca=result["cagr_ca"],
-            profit_margin_base=i_prev.get("profit_margin"),
-            equity_base=i_prev.get("capital_propriu"),
+            indicators=scoring_inputs,
+            company_info=result["company_info"],
         )
 
         return generate_tpc_analysis_openai(
